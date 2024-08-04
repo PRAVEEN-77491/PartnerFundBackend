@@ -42,9 +42,10 @@ public class PageDetailsController {
 	@PostMapping("/addPageAttributes")
 	 public ResponseEntity<?> addPageProperties(@RequestBody pageAttributesEntity pageAttribute) {
        try {
+    	   
+    	   System.out.println("pageAttribute"+pageAttribute);
            pageAttributesEntity savedAttribute = pageService.savePageAttributeDetails(pageAttribute);
 
-           // Create a simplified JSON response containing only attribute_id and attribute_type
            JSONObject response = new JSONObject();
            response.put("attribute_id", savedAttribute.getAttribute_id());
            response.put("attribute_type", savedAttribute.getAttribute_type());
@@ -70,4 +71,5 @@ public class PageDetailsController {
         return pageService.callFunction(attr_id, params);
 	}
 	
+
 }

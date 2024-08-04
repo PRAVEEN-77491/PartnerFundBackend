@@ -4,7 +4,10 @@ import java.sql.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
@@ -12,6 +15,8 @@ import jakarta.persistence.Table;
 public class pageAttrPropConditionsEntity {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "xxpf_page_attr_prop_conditions_s")
+	@SequenceGenerator(name = "xxpf_page_attr_prop_conditions_s", sequenceName = "xxpf_page_attr_prop_conditions_s", allocationSize = 1)
 	@Column(name="condition_id")
 	private Integer condition_id;
 	

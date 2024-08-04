@@ -57,9 +57,10 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 
    public pageAttributesEntity savePageAttributeDetails(pageAttributesEntity pageAttribute) {
       try {
+    	  System.out.println("pageAttribute"+pageAttribute);
          return (pageAttributesEntity)this.pageAttributeRepo.save(pageAttribute);
-      } catch (Exception var3) {
-         throw new RuntimeException("Failed to save page attribute details", var3);
+      } catch (Exception e) {
+         throw new RuntimeException("Failed to save page attribute details", e);
       }
    }
 

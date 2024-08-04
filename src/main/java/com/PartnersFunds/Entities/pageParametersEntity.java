@@ -2,7 +2,10 @@ package com.PartnersFunds.Entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
@@ -10,6 +13,8 @@ import jakarta.persistence.Table;
 public class pageParametersEntity {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "XXPF_PAGE_PARAMETERS_S")
+	@SequenceGenerator(name = "XXPF_PAGE_PARAMETERS_S", sequenceName = "XXPF_PAGE_PARAMETERS_S", allocationSize = 1)
 	@Column(name = "parameter_id")
 	private Integer parameter_id;
 	

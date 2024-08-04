@@ -4,14 +4,19 @@ import java.sql.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="lookups")
+@Table(name="xxpf_lookups")
 public class lookupsEntity {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "xxpf_lookups_s")
+	@SequenceGenerator(name = "xxpf_lookups_s", sequenceName = "xxpf_lookups_s", allocationSize = 1)
 	@Column(name="lookup_type")
 	private String lookup_type;
 	

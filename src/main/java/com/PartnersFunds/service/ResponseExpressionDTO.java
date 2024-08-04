@@ -2,7 +2,6 @@ package com.PartnersFunds.service;
 
 import java.sql.Date;
 import java.util.List;
-
 import com.PartnersFunds.Entities.ExpressionConditionEntity;
 
 public class ResponseExpressionDTO {

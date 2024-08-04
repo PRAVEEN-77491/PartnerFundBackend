@@ -4,7 +4,10 @@ import java.sql.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
@@ -13,6 +16,8 @@ public class pageAttributesEntity {
 
 	
 	@Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "xxpf_page_attributes_s")
+	@SequenceGenerator(name = "xxpf_page_attributes_s", sequenceName = "xxpf_page_attributes_s", allocationSize = 1)
 	@Column(name="attribute_id")
 	private Integer attribute_id;
 	
@@ -115,7 +120,7 @@ public class pageAttributesEntity {
 		return last_update_date;
 	}
 
-	public void setLast_updated_date(Date last_update_date) {
+	public void setLast_update_date(Date last_update_date) {
 		this.last_update_date = last_update_date;
 	}
 
