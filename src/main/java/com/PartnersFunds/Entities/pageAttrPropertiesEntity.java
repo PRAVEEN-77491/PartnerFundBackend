@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
@@ -47,6 +49,10 @@ public class pageAttrPropertiesEntity {
 	@Column(name = "last_update_date")
 	private Date last_update_date;
 
+	@ManyToOne
+	@JoinColumn(name = "attribute_id", insertable = false, updatable = false)
+	private pageAttributesEntity pageAttributesEntity; 
+	
 	public pageAttrPropertiesEntity() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -145,6 +151,18 @@ public class pageAttrPropertiesEntity {
 	}
 
 	public void setLast_updated_date(Date last_update_date) {
+		this.last_update_date = last_update_date;
+	}
+
+	public pageAttributesEntity getPageAttributesEntity() {
+		return pageAttributesEntity;
+	}
+
+	public void setPageAttributesEntity(pageAttributesEntity pageAttributesEntity) {
+		this.pageAttributesEntity = pageAttributesEntity;
+	}
+
+	public void setLast_update_date(Date last_update_date) {
 		this.last_update_date = last_update_date;
 	}
 	

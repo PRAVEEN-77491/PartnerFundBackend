@@ -13,5 +13,5 @@ public interface AttrService {
 	public List<pageAttributesEntity> getPageAttributes();
 	public List<pageAttrPropertiesEntity> getPageProperties();
 	
-	public List<pagesEntity> getPageById(int page_id);
+	public pagesEntity getPageById(int page_id);
 }

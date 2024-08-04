@@ -66,7 +66,7 @@ public class AttrController {
 	}
 	
 	@GetMapping("/getPageById/{pageId}")
-	public List<pagesEntity> getById(@PathVariable("pageId") int pageId){
+	public pagesEntity getById(@PathVariable("pageId") int pageId){
 		return ser.getPageById(pageId);
 	}
 

@@ -1,12 +1,16 @@
 package com.PartnersFunds.Entities;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
@@ -44,6 +48,9 @@ public class pagesEntity {
 	@Column(name = "last_update_date")
 	private Date last_update_date;
 
+	@OneToMany(mappedBy = "pagesEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<pageAttributesEntity> pageAttributes = new ArrayList<>(); 
+	
 	public pagesEntity() {
 		super();
 	}
@@ -134,5 +141,15 @@ public class pagesEntity {
 	public void setLast_update_date(Date last_update_date) {
 		this.last_update_date = last_update_date;
 	}
+
+	public List<pageAttributesEntity> getPageAttributes() {
+		return pageAttributes;
+	}
+
+	public void setPageAttributes(List<pageAttributesEntity> pageAttributes) {
+		this.pageAttributes = pageAttributes;
+	}
+	
+	
 	
 }

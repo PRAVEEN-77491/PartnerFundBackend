@@ -54,7 +54,7 @@ public class AttrServiceImpl implements AttrService{
 	}
 
 	@Override
-	public List<pagesEntity> getPageById(int page_id) {
+	public pagesEntity getPageById(int page_id) {
 		try {
 			return Pagerepo.findByPage_id(page_id);
 			

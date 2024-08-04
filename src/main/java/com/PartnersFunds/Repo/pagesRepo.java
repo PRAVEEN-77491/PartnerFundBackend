@@ -14,6 +14,6 @@ import com.PartnersFunds.Entities.pagesEntity;
 public interface pagesRepo extends JpaRepository<pagesEntity, Integer>{
 	
 	@Query(value="select * from xxpf_pages xp where xp.page_id = :page_id" , nativeQuery = true)
-	List<pagesEntity> findByPage_id(@Param("page_id") int page_id);
+	pagesEntity findByPage_id(@Param("page_id") int page_id);
 
 }

@@ -11,4 +11,12 @@ public interface pageAttrPropertiesRepo extends JpaRepository<pageAttrProperties
       nativeQuery = true
    )
    String dBFuncName(@Param("attr_id") int attr_id);
-}
+
+   @Query(
+        value = "SELECT * FROM xxpf_page_attr_properties WHERE attribute_id = :attr_id AND property_name = :property_name",
+        nativeQuery = true
+    )
+	    pageAttrPropertiesEntity findByAttributeIdAndPropertyName(
+	        @Param("attr_id") Integer attribute_id, 
+	        @Param("property_name") String property_name
+	    );}

@@ -4,6 +4,9 @@ import com.PartnersFunds.Entities.pageAttrPropertiesEntity;
 
 import com.PartnersFunds.Entities.pageAttributesEntity;
 import com.PartnersFunds.Entities.pagesEntity;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Service;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Service;
 public interface PageDetailsService {
    List<Object[]> getAllDetails();
 
+   pagesEntity addPagePropDetails(pagePropDetailsDTO pagePropDetailsJSON) throws JsonMappingException, JsonProcessingException;
    pageAttributesEntity savePageAttributeDetails(pageAttributesEntity pageAttribute);
 
    Integer savePageDetails(pagesEntity page);

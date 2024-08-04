@@ -1,5 +1,6 @@
 package com.PartnersFunds.Controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -12,19 +13,27 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.PartnersFunds.Entities.pageAttrPropertiesEntity;
 import com.PartnersFunds.Entities.pageAttributesEntity;
 import com.PartnersFunds.Entities.pagesEntity;
+import com.PartnersFunds.service.JsonElementDTO;
 import com.PartnersFunds.service.PageDetailsService;
+import com.PartnersFunds.service.pagePropDetailsDTO;
 import com.PartnersFunds.service.procedureResult;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping("/page")
 @CrossOrigin(origins="*")
 public class PageDetailsController {
-
+	
+    private final ObjectMapper objectMapper = new ObjectMapper();
 	
 	@Autowired
 	PageDetailsService pageService;
@@ -42,10 +51,9 @@ public class PageDetailsController {
 	@PostMapping("/addPageAttributes")
 	 public ResponseEntity<?> addPageProperties(@RequestBody pageAttributesEntity pageAttribute) {
        try {
-    	   
-    	   System.out.println("pageAttribute"+pageAttribute);
            pageAttributesEntity savedAttribute = pageService.savePageAttributeDetails(pageAttribute);
 
+           // Create a simplified JSON response containing only attribute_id and attribute_type
            JSONObject response = new JSONObject();
            response.put("attribute_id", savedAttribute.getAttribute_id());
            response.put("attribute_type", savedAttribute.getAttribute_type());
@@ -71,5 +79,17 @@ public class PageDetailsController {
         return pageService.callFunction(attr_id, params);
 	}
 	
+	@PostMapping("/pagePropDetails")
+	public pagesEntity addPagePropDetails(@RequestBody String jsonString) throws Exception,JsonMappingException, JsonProcessingException {
+	     
+		 List<pagePropDetailsDTO> pagePropDetailsJSON = objectMapper.readValue(jsonString, new TypeReference<List<pagePropDetailsDTO>>() {});
+		 pagesEntity updatedPageEntity = null;
+		 
+	        for (pagePropDetailsDTO pagePropDetails : pagePropDetailsJSON) {
+	        	updatedPageEntity  = pageService.addPagePropDetails(pagePropDetails);
+	        }
 
+		return updatedPageEntity;
+		
+	}
 }

@@ -1,12 +1,18 @@
 package com.PartnersFunds.Entities;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
@@ -32,6 +38,7 @@ public class pageAttributesEntity {
 	
 	@Column(name = "created_by")
 	private  String created_by;
+ 
 	
 	@Column(name = "creation_date")
 	private Date creation_date;
@@ -42,6 +49,13 @@ public class pageAttributesEntity {
 	@Column(name = "last_update_date")
 	private Date last_update_date;
 
+	@ManyToOne
+	@JoinColumn(name = "page_id", insertable = false, updatable = false)
+	private pagesEntity pagesEntity;
+	
+	@OneToMany(mappedBy = "pageAttributesEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<pageAttrPropertiesEntity> pageAttrPropertiesEntity = new ArrayList<>(); 
+	
 	public pageAttributesEntity() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -122,6 +136,14 @@ public class pageAttributesEntity {
 
 	public void setLast_update_date(Date last_update_date) {
 		this.last_update_date = last_update_date;
+	}
+
+	public List<pageAttrPropertiesEntity> getPageAttrPropertiesEntity() {
+		return pageAttrPropertiesEntity;
+	}
+
+	public void setPageAttrPropertiesEntity(List<pageAttrPropertiesEntity> pageAttrPropertiesEntity) {
+		this.pageAttrPropertiesEntity = pageAttrPropertiesEntity;
 	}
 
 	
