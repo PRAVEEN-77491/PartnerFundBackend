@@ -6,5 +6,5 @@ public interface ExpressionService {
 	
 	ResponseExpressionDTO saveExpression(ExpressionDTO expressionDTO);
 
-	void saveAll(List<ExpressionAttrPropDTO> dtoList);
+	ResponseExpMappingDTO saveAll(List<ExpressionAttrPropDTO> dtoList);
 }

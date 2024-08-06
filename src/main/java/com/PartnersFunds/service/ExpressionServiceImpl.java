@@ -65,7 +65,7 @@ public class ExpressionServiceImpl implements ExpressionService {
 
 
    @Override
-   public void saveAll(List<ExpressionAttrPropDTO> dtoList) {
+   public ResponseExpMappingDTO saveAll(List<ExpressionAttrPropDTO> dtoList) {
 	 List<ExpressionAttrPropEntity> entities = dtoList.stream().map(dto -> new ExpressionAttrPropEntity(
 			 	dto.getPAGE_ID(),
 		        dto.getEXPRESSION_ID(),
@@ -77,6 +77,13 @@ public class ExpressionServiceImpl implements ExpressionService {
 		        dto.getLAST_UPDATE_DATE()
 		    )).collect(Collectors.toList());
 		    expressionAttrPropRepo.saveAll(entities);
+		    
+		    int expId= entities.get(0).getEXPRESSION_ID();
+		    ResponseExpMappingDTO responseExpMappingDTO = new ResponseExpMappingDTO();
+		    responseExpMappingDTO.setId(expId);
+		    responseExpMappingDTO.setExpName(expressionRepo.ExpNameQuery(expId));
+		    
+		    return responseExpMappingDTO;
 }
 
 }

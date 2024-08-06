@@ -3,6 +3,7 @@ package com.PartnersFunds.Controllers;
 import com.PartnersFunds.service.ExpressionAttrPropDTO;
 import com.PartnersFunds.service.ExpressionDTO;
 import com.PartnersFunds.service.ExpressionService;
+import com.PartnersFunds.service.ResponseExpMappingDTO;
 import com.PartnersFunds.service.ResponseExpressionDTO;
 
 import java.util.List;
@@ -27,8 +28,8 @@ public class ExpressionController {
    }
   
    @PostMapping("/expMapping")
-   public String saveAll(@RequestBody List<ExpressionAttrPropDTO> dtoList) {
-	   expressionService.saveAll(dtoList);
-	   return "ExpressionAttrProp saved successfully";
+   public ResponseExpMappingDTO saveAll(@RequestBody List<ExpressionAttrPropDTO> dtoList) {
+	   
+	   return expressionService.saveAll(dtoList);
    }
 }

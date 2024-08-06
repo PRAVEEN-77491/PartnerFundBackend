@@ -24,6 +24,8 @@ public class pageAttributesEntity {
 
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "xxpf_page_attributes_s")
+	@SequenceGenerator(name = "xxpf_page_attributes_s", sequenceName = "xxpf_page_attributes_s", allocationSize = 1) 
 	@Column(name="attribute_id")
 	private Integer attribute_id;
 	
