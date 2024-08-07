@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -42,6 +43,19 @@ public class PageDetailsController {
 	public List<Object[]> getDetails(){
 		return pageService.getAllDetails();
 	}
+	
+	@PostMapping("/pageNameValidation")
+	public boolean pageNameValidation(@RequestParam("pagename") String pageName) {	
+        if (pageName == null || pageName.trim().isEmpty()) {
+            throw new IllegalArgumentException("Page name cannot be null or empty.");
+        }
+        
+        try {
+            return pageService.validPageOrNot(pageName);
+        } catch (Exception e) {
+            throw new RuntimeException("An error occurred while validating the page name.");
+        }
+	}	
 	
 	@PostMapping("/addPage")
 	public Integer addPage(@RequestBody pagesEntity page) {	

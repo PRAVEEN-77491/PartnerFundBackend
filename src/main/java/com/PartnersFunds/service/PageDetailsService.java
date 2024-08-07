@@ -24,4 +24,6 @@ public interface PageDetailsService {
    procedureResult callFunction(Integer attribute_id, Map<String, Object> params);
 
    pagesEntity addPagePropDetails(pagePropDetailsDTO pagePropDetailsJSON) throws JsonMappingException, JsonProcessingException;
+
+   boolean validPageOrNot(String pageName);
 }
