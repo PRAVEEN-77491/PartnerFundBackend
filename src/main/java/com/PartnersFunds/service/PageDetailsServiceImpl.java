@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 
 import java.sql.CallableStatement;
-import java.sql.Types;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -33,10 +33,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ConnectionCallback;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.SqlOutParameter;
-import org.springframework.jdbc.core.SqlParameter;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -206,6 +202,14 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 								newProp.setAttribute_id(pageAttributesEntity.getAttribute_id());
 								newProp.setProperty_name(key);
 								newProp.setProperty_tag(key);
+								newProp.setCreated_by(pageAttributesEntity.getCreated_by());
+								newProp.setLast_updated_by(pageAttributesEntity.getLast_updated_by());
+								
+								Date currentDate = new Date(System.currentTimeMillis());
+
+								newProp.setCreation_date(currentDate);
+								newProp.setLast_updated_date(currentDate);
+								
 								if (List.of("onClick", "disabled", "form", "formAction", "formMethod", "formTarget")
 										.contains(key)) {
 									newProp.setProperty_type("EVENT");
@@ -218,7 +222,11 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 								return newProp;
 							});
 					property.setProperty_value(value.toString());
-					logger.info("Updated property with name: {} and value: {}", key, value);
+//					logger.info("Updated property with name: {} and value: {}", key, value);
+					
+			        Date now = new Date(System.currentTimeMillis());
+			        property.setLast_updated_date(now);
+//			        logger.info("Updated property with Last_Updated_Date: {}", now);
 				});
 				updatedAttributes.add(pageAttributesEntity);
 			});
