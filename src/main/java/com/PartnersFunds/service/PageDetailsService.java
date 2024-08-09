@@ -1,9 +1,11 @@
 package com.PartnersFunds.service;
 
+import com.PartnersFunds.Entities.entityObjectsEntity;
 import com.PartnersFunds.Entities.pageAttrPropertiesEntity;
 
 import com.PartnersFunds.Entities.pageAttributesEntity;
 import com.PartnersFunds.Entities.pagesEntity;
+import com.PartnersFunds.Entities.viewObjectsEntity;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
@@ -26,4 +28,10 @@ public interface PageDetailsService {
    pagesEntity addPagePropDetails(pagePropDetailsDTO pagePropDetailsJSON) throws JsonMappingException, JsonProcessingException;
 
    boolean validPageOrNot(String pageName);
+
+   entityObjectsEntity saveEntityObject(entityObjectsEntity entityObject);
+
+   viewObjectsEntity saveViewObject(viewObjectsEntity viewObject);
+
+   String deleteRemovedAttr(Integer removedAttr);
 }

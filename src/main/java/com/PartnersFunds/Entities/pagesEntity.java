@@ -149,7 +149,13 @@ public class pagesEntity {
 	public void setPageAttributes(List<pageAttributesEntity> pageAttributes) {
 		this.pageAttributes = pageAttributes;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "pagesEntity [page_id=" + page_id + ", page_name=" + page_name + ", page_file_name=" + page_file_name
+				+ ", page_title=" + page_title + ", parent_page_id=" + parent_page_id + ", created_by=" + created_by
+				+ ", creation_date=" + creation_date + ", last_updated_by=" + last_updated_by + ", last_update_date="
+				+ last_update_date + ", pageAttributes=" + pageAttributes + "]";
+	}
 	
 }

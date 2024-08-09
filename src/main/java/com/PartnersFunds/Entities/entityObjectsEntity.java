@@ -4,7 +4,10 @@ import java.sql.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
@@ -12,6 +15,8 @@ import jakarta.persistence.Table;
 public class entityObjectsEntity {
 
 	@Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "xxpf_entity_objects_s")
+    @SequenceGenerator(name = "xxpf_entity_objects_s", sequenceName = "xxpf_entity_objects_s", allocationSize = 1)
 	@Column(name="entity_object_id")
 	private Integer entity_object_id;
 	
@@ -105,6 +110,13 @@ public class entityObjectsEntity {
 	public void setLast_updated_date(Date last_update_date) {
 		this.last_update_date = last_update_date;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "entityObjectsEntity [entity_object_id=" + entity_object_id + ", entity_object_name="
+				+ entity_object_name + ", entity_table_name=" + entity_table_name + ", created_by=" + created_by
+				+ ", creation_date=" + creation_date + ", last_updated_by=" + last_updated_by + ", last_update_date="
+				+ last_update_date + "]";
+	}
 	
 }

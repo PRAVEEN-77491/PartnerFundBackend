@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.PartnersFunds.Entities.entityObjectsEntity;
 import com.PartnersFunds.Entities.pageAttrPropertiesEntity;
 import com.PartnersFunds.Entities.pageAttributesEntity;
 import com.PartnersFunds.Entities.pagesEntity;
+import com.PartnersFunds.Entities.viewObjectsEntity;
 import com.PartnersFunds.service.JsonElementDTO;
 import com.PartnersFunds.service.PageDetailsService;
 import com.PartnersFunds.service.pagePropDetailsDTO;
@@ -104,5 +106,27 @@ public class PageDetailsController {
 		 
 		return updatedPageEntity;
 		
+	}
+	
+	@PostMapping("/deletedAttribute")
+	@ResponseBody
+	public String deletedAttribute(@RequestParam("removedAttrId") Integer removedAttrId) {
+		return pageService.deleteRemovedAttr(removedAttrId);
+	}
+
+	@PostMapping("/saveEntityObject")
+	public entityObjectsEntity saveEntityObject(@RequestBody entityObjectsEntity entityObject) {
+		
+		entityObjectsEntity entityObj = pageService.saveEntityObject(entityObject);
+		
+		return entityObj;
+	}
+
+	@PostMapping("/saveViewObject")
+	public viewObjectsEntity saveViewObject(@RequestBody viewObjectsEntity viewObject) {
+		
+		viewObjectsEntity viewObj = pageService.saveViewObject(viewObject);
+		
+		return viewObj;
 	}
 }

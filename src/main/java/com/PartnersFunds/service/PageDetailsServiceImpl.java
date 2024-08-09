@@ -1,8 +1,10 @@
 package com.PartnersFunds.service;
 
+import com.PartnersFunds.Entities.entityObjectsEntity;
 import com.PartnersFunds.Entities.pageAttrPropertiesEntity;
 import com.PartnersFunds.Entities.pageAttributesEntity;
 import com.PartnersFunds.Entities.pagesEntity;
+import com.PartnersFunds.Entities.viewObjectsEntity;
 import com.PartnersFunds.Repo.PageDetailsRepo;
 import com.PartnersFunds.Repo.entityObjectsRepo;
 import com.PartnersFunds.Repo.pageAttrPropertiesRepo;
@@ -13,6 +15,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.PartnersFunds.Repo.viewObjectsRepo;
 
 import jakarta.transaction.Transactional;
 
@@ -52,6 +55,8 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 	DataSource datasource;
 	@Autowired
 	entityObjectsRepo entityObjectsRepo;
+	@Autowired
+	viewObjectsRepo viewObjectsRepo;
 	String status;
 	String message;
 
@@ -174,6 +179,8 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 					pagePropDetailsJSON.getPage_id(), attributeIds);
 			pagesEntity pagesEntity = pagesRepo.findByPageIdAndAttributeIds(pagePropDetailsJSON.getPage_id(),
 					attributeIds);
+			
+			System.out.println(pagesEntity);
 
 			// Deserialize JSON elements into a list of DTOs
 			logger.info("Deserializing JSON elements into a list of DTOs");
@@ -244,4 +251,20 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 			throw new RuntimeException("An unexpected error occurred while processing the request", e);
 		}
 	}
+
+	public String deleteRemovedAttr(Integer removedAttrId) {
+		pageAttributeRepo.deleteById(removedAttrId);
+		return "Attribute deleted having id : " + removedAttrId.toString();
+	}
+
+	public entityObjectsEntity saveEntityObject(entityObjectsEntity entityObject) {
+		entityObjectsEntity entityObjectsEntity = entityObjectsRepo.save(entityObject);
+		return entityObjectsEntity;
+	}
+	
+	public viewObjectsEntity saveViewObject(viewObjectsEntity viewObject) {
+		viewObjectsEntity viewObjectsEntity = viewObjectsRepo.save(viewObject);
+		return viewObjectsEntity;
+	}
+
 }
