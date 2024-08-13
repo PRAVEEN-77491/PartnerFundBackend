@@ -9,6 +9,8 @@ import com.PartnersFunds.Entities.viewObjectsEntity;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Service;
@@ -34,4 +36,8 @@ public interface PageDetailsService {
    viewObjectsEntity saveViewObject(viewObjectsEntity viewObject);
 
    String deleteRemovedAttr(Integer removedAttr);
+
+//   pageAttributesEntity saveEOData(Integer attrId, String entityObject, String entityObjectAttr, String  attribute_value);
+
+   pageAttributesEntity saveEOData(List<Map<String, String>> attributes) throws JsonMappingException, JsonProcessingException, IOException, SQLException;
 }

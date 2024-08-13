@@ -1,5 +1,7 @@
 package com.PartnersFunds.Controllers;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -128,5 +130,12 @@ public class PageDetailsController {
 		viewObjectsEntity viewObj = pageService.saveViewObject(viewObject);
 		
 		return viewObj;
+	}
+
+	@PostMapping("/saveEOData")
+	public pageAttributesEntity saveEOData(@RequestBody List<Map<String, String>> attributes) throws IOException, SQLException {
+		
+		return pageService.saveEOData(attributes);
+
 	}
 }

@@ -10,6 +10,10 @@ import com.PartnersFunds.Entities.entityObjectsEntity;
 
 public interface entityObjectsRepo extends JpaRepository<entityObjectsEntity, Integer> {
 
+	
+	@Query(value="SELECT entity_table_name FROM xxpf_entity_objects p WHERE p.entity_object_name = :entity_object_name",nativeQuery=true)
+	String findByObjectName(@Param("entity_object_name") String entity_object_name);
+
 //	@Query(value="SELECT * FROM XXPF_PAGE_CONFIGS_ATTR p WHERE p.attr_type = :type",nativeQuery=true)
 //	List<AttrEntity> findByAttrType(@Param("type") String type);
 //	
