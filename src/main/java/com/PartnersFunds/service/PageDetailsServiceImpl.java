@@ -290,42 +290,29 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 				.collect(Collectors.toMap(attr -> Integer.parseInt(attr.get("attid")), attr -> attr.get("value")));
 
 		// Fetch all attributes in one go
-		List<pageAttributesEntity> attributesEntities = pageAttributeRepo.findAllByAttributeIds(attributeIds);
+		List<Object[]> attributesEntities = pageAttributeRepo.findAllByAttributeIds(attributeIds);
 
 		Map<String, List<Map<String, String>>> queryToValue = new HashMap<>();
 
 		// Process each attribute entity
-		for (pageAttributesEntity attributesEntity : attributesEntities) {
+		for (Object[] attributesEntity : attributesEntities) {
 			Map<String, String> attributeToValuesMap = new HashMap<>();
-			List<String> eoValues = new ArrayList<>();
-			List<Integer> colId = new ArrayList<>();
-
-			for (pageAttrPropertiesEntity p : attributesEntity.getPageAttrPropertiesEntity()) {
-				if ("eovo".equals(p.getProperty_name()) || "select".equals(p.getProperty_value())) {
-					eoValues.add(p.getProperty_value());
-					colId.add(p.getAttribute_id());
-				}
-
-			}
 
 			// Pattern to match EO and VO values
 			Pattern pattern = Pattern.compile(
 					"EO=\\{entityobject=\"(.*?)\", entityattribute=(.*?)\\}, VO=\\{viewobject=\"(.*?)\", viewattribute=(.*?)\\}");
-			Matcher matcher = pattern.matcher(eoValues.toString());
+			Matcher matcher = pattern.matcher(String.valueOf(attributesEntity[1]));
 
 			if (matcher.find()) {
 				String eoEntityObject = matcher.group(1);
-				String eoEntityAttribute = matcher.group(2);
-				String voViewObject = matcher.group(3);
-				String voViewAttribute = matcher.group(4);
-
+				String eoEntityAttribute = matcher.group(2);				
 				String entityObjectsTableName = entityObjectsRepo.findByObjectName(eoEntityObject);
 
-				if (entityObjectsTableName != null && !eoValues.isEmpty()) {
+				if (entityObjectsTableName != null && !String.valueOf(attributesEntity[1]).isEmpty()) {
 
-					for (int i : colId) {
-						attributeToValuesMap.put(eoEntityAttribute, attributeMapValues.get(i));
-					}
+					attributeToValuesMap.put(eoEntityAttribute, attributeMapValues.get(Integer.parseInt(String.valueOf(attributesEntity[0]))));
+					
+					System.out.println("attributeToValuesMap : " +attributeToValuesMap);
 					if (queryToValue.containsKey(entityObjectsTableName)) {
 						// Get the current list of records
 						List<Map<String, String>> existingRecords = queryToValue.get(entityObjectsTableName);
