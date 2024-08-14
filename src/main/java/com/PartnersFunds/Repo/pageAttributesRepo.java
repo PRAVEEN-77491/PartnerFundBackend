@@ -21,5 +21,5 @@ public interface pageAttributesRepo extends JpaRepository<pageAttributesEntity, 
     
 	@Query(value = "SELECT xp.attribute_id, xp.property_value FROM xxpf_page_attr_properties xp "
 			+ "WHERE xp.attribute_id IN :attributeIds " + "AND xp.property_name = 'eovo'", nativeQuery = true)
-	List<Object[]> findAllByAttributeIds(@Param("attributeIds") List<Integer> attributeIds);
+	List<Object[]> findAllEOVOByAttributeIds(@Param("attributeIds") List<Integer> attributeIds);
 }

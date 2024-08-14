@@ -118,24 +118,23 @@ public class PageDetailsController {
 
 	@PostMapping("/saveEntityObject")
 	public entityObjectsEntity saveEntityObject(@RequestBody entityObjectsEntity entityObject) {
-		
 		entityObjectsEntity entityObj = pageService.saveEntityObject(entityObject);
-		
 		return entityObj;
 	}
 
 	@PostMapping("/saveViewObject")
 	public viewObjectsEntity saveViewObject(@RequestBody viewObjectsEntity viewObject) {
-		
 		viewObjectsEntity viewObj = pageService.saveViewObject(viewObject);
-		
 		return viewObj;
 	}
 
 	@PostMapping("/saveEOData")
 	public pageAttributesEntity saveEOData(@RequestBody List<Map<String, String>> attributes) throws IOException, SQLException {
-		
 		return pageService.saveEOData(attributes);
+	}
 
+	@PostMapping("/getVOData")
+	public List<Map<String, Object>> getVOData(@RequestBody List<Map<String, String>> voMaps) throws IOException, SQLException {
+		return pageService.getVOData(voMaps);
 	}
 }

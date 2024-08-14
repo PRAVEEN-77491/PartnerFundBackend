@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.PartnersFunds.Repo.viewObjectsRepo;
+import com.PartnersFunds.utils.queryBuilder;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -69,6 +70,9 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 	entityObjectsRepo entityObjectsRepo;
 	@Autowired
 	viewObjectsRepo viewObjectsRepo;
+	@Autowired
+	queryBuilder queryBuilder;
+
 	String status;
 	String message;
 
@@ -290,7 +294,7 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 				.collect(Collectors.toMap(attr -> Integer.parseInt(attr.get("attid")), attr -> attr.get("value")));
 
 		// Fetch all attributes in one go
-		List<Object[]> attributesEntities = pageAttributeRepo.findAllByAttributeIds(attributeIds);
+		List<Object[]> attributesEntities = pageAttributeRepo.findAllEOVOByAttributeIds(attributeIds);
 
 		Map<String, List<Map<String, String>>> queryToValue = new HashMap<>();
 
@@ -305,14 +309,15 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 
 			if (matcher.find()) {
 				String eoEntityObject = matcher.group(1);
-				String eoEntityAttribute = matcher.group(2);				
+				String eoEntityAttribute = matcher.group(2);
 				String entityObjectsTableName = entityObjectsRepo.findByObjectName(eoEntityObject);
 
 				if (entityObjectsTableName != null && !String.valueOf(attributesEntity[1]).isEmpty()) {
 
-					attributeToValuesMap.put(eoEntityAttribute, attributeMapValues.get(Integer.parseInt(String.valueOf(attributesEntity[0]))));
-					
-					System.out.println("attributeToValuesMap : " +attributeToValuesMap);
+					attributeToValuesMap.put(eoEntityAttribute,
+							attributeMapValues.get(Integer.parseInt(String.valueOf(attributesEntity[0]))));
+
+					System.out.println("attributeToValuesMap : " + attributeToValuesMap);
 					if (queryToValue.containsKey(entityObjectsTableName)) {
 						// Get the current list of records
 						List<Map<String, String>> existingRecords = queryToValue.get(entityObjectsTableName);
@@ -337,8 +342,8 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 			}
 		}
 
-		System.out.println(buildInsertQuery(queryToValue));
-		List<String> finalSQLQueries = buildInsertQuery(queryToValue);
+		System.out.println(queryBuilder.buildInsertQuery(queryToValue));
+		List<String> finalSQLQueries = queryBuilder.buildInsertQuery(queryToValue);
 
 		// Execute each query
 		for (String query : finalSQLQueries) {
@@ -361,42 +366,70 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 		return new pageAttributesEntity(); // Or return a meaningful response if needed
 	}
 
-	public static List<String> buildInsertQuery(Map<String, List<Map<String, String>>> queryToValue) {
-		List<String> queries = new LinkedList<>();
-		for (Map.Entry<String, List<Map<String, String>>> entry : queryToValue.entrySet()) {
-			System.out.println("entry.getKey() : " + entry.getKey());
-			System.out.println("entry.getValue() : " + entry.getValue());
+	@Transactional
+	public List<Map<String, Object>> getVOData(List<Map<String, String>> voMapList) {
+		// Extract all attribute IDs from the input JSON
+		List<Integer> attributeIds = voMapList.stream().map(attr -> Integer.parseInt(attr.get("attid"))).collect(Collectors.toList());
 
-			String tableName = entry.getKey();
-			List<Map<String, String>> records = entry.getValue();
+		// Fetch all attributes in one go
+		List<Object[]> attributesEntities = pageAttributeRepo.findAllEOVOByAttributeIds(attributeIds);
+		List<Map<String, Object>> result = new ArrayList<>();
 
-			// Initialize a map to hold all columns and corresponding values for the INSERT
-			Map<String, String> combinedRecord = new LinkedHashMap<>();
+		// Process each attribute entity
+		int counter = 0;
+		for (Object[] attributesEntity : attributesEntities) {
+			
+			Integer attributeId = Integer.parseInt(String.valueOf(attributesEntity[0]));
+			
+			// Pattern to match EO and VO values
+			Pattern pattern = Pattern.compile(
+					"EO=\\{entityobject=\"(.*?)\", entityattribute=(.*?)\\}, VO=\\{viewobject=\"(.*?)\", viewattribute=(.*?)\\}");
+			Matcher matcher = pattern.matcher(String.valueOf(attributesEntity[1]));
 
-			// Combine all entries from the list of maps into a single map
-			for (Map<String, String> record : records) {
-				combinedRecord.putAll(record);
+			if (matcher.find()) {
+				String eoEntityAttribute = matcher.group(2);  // eoEntityAttribute
+				String voEntityObject = matcher.group(3);    //voEntityObject
+				String voEntityAttribute = matcher.group(4);// voEntityAttribute
+
+				Map<String, Object> parameters = new HashMap<>();
+				parameters.put(voEntityAttribute, eoEntityAttribute);
+
+				if (voMapList.get(counter).get("viewObjectName").equals(voEntityObject)) {
+					String res = replaceFieldsWithEOValues2(voMapList.get(counter).get("viewObjectQuery"), parameters);
+					System.out.println(res);
+					List<Map<String, Object>> queryResult = template.queryForList(res);
+					System.out.println("queryResult : " + queryResult);
+					// Replace column names with voEntityAttribute values and include attributeId
+	                for (Map<String, Object> row : queryResult) {
+	                    Map<String, Object> modifiedRow = new HashMap<>();
+	                    modifiedRow.put("attid", attributeId);
+	                    modifiedRow.put("placeHolder", voEntityAttribute);
+	                    modifiedRow.put("attrValue", row.get(eoEntityAttribute));
+	                    result.add(modifiedRow);
+	                }
+					counter++;
+				}
 			}
-
-			// Now create the SQL query with all columns and values combined
-			StringBuilder sqlQuery = new StringBuilder();
-			sqlQuery.append("INSERT INTO ").append(tableName).append(" (");
-
-			// Append all column names
-			System.out.println("combinedRecord.keySet() : " + combinedRecord.keySet());
-			String columns = String.join(", ", combinedRecord.keySet());
-			sqlQuery.append(columns).append(") VALUES (");
-
-			// Append all values corresponding to the columns
-			String values = combinedRecord.values().stream().map(value -> "'" + value.replace("'", "''") + "'") 
-					.collect(Collectors.joining(", "));
-
-			sqlQuery.append(values).append(")");
-
-			// Add the final SQL query to the list
-			queries.add(sqlQuery.toString());
 		}
-		return queries;
+		return result;
+	}
+
+	private String replaceFieldsWithEOValues2(String query, Map<String, Object> parameters) {
+
+//		System.out.println("Input:- " + query + " ( " + parameters + " ) ");
+		Pattern pattern = Pattern.compile("\\$(.*?)\\$");
+		Matcher matcher = pattern.matcher(query);
+		StringBuffer updatedQuery = new StringBuffer();
+
+		while (matcher.find()) {
+			String fieldName = matcher.group(1);
+			if (parameters.containsKey(fieldName)) {
+				matcher.appendReplacement(updatedQuery, String.valueOf(parameters.get(fieldName)));
+			}
+		}
+		matcher.appendTail(updatedQuery);
+//		System.out.println("Replace from: ====>: " + updatedQuery.toString());
+		return updatedQuery.toString();
 	}
 
 }
