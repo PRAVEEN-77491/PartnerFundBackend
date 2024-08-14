@@ -23,15 +23,18 @@ public class ExpressionServiceImpl implements ExpressionService {
    private ExpressionAttrPropRepo expressionAttrPropRepo;
 
    public ResponseExpressionDTO saveExpression(ExpressionDTO expressionDTO) {
-	   
+	  System.out.println("Before=");
       ExpressionEntity expressionEntity = new ExpressionEntity();
       expressionEntity.setEXPRESSION_NAME(expressionDTO.getEXPRESSION_NAME());
       expressionEntity.setCREATED_BY(expressionDTO.getCREATED_BY());
       expressionEntity.setCREATION_DATE(expressionDTO.getCREATION_DATE());
       expressionEntity.setLAST_UPDATED_BY(expressionDTO.getLAST_UPDATED_BY());
       expressionEntity.setLAST_UPDATE_DATE(expressionDTO.getLAST_UPDATE_DATE());
-      ExpressionEntity exp = (ExpressionEntity)this.expressionRepo.save(expressionEntity);
+      System.out.println("Before="+expressionDTO.getEXPRESSION_NAME());
+      System.out.println();
+      ExpressionEntity exp = expressionRepo.save(expressionEntity);
       
+      System.out.println("After");
       @SuppressWarnings("unchecked")
       List<ExpressionConditionEntity> conditionEntities = (List)expressionDTO.getExp_attribute_data().stream().map((condDTO) -> {
          ExpressionConditionEntity conditionEntity = new ExpressionConditionEntity();

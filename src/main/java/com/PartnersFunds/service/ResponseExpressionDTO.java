@@ -6,7 +6,7 @@ import com.PartnersFunds.Entities.ExpressionConditionEntity;
 
 public class ResponseExpressionDTO {
 
-   private Long EXPRESSION_ID;
+   private Integer EXPRESSION_ID;
    private String EXPRESSION_NAME;
    private List<ExpressionConditionEntity> Exp_attribute_details;
    private String CREATED_BY;
@@ -14,10 +14,10 @@ public class ResponseExpressionDTO {
    private String LAST_UPDATED_BY;
    private Date LAST_UPDATE_DATE;
 	   
-	public Long getEXPRESSION_ID() {
+	public Integer getEXPRESSION_ID() {
 		return EXPRESSION_ID;
 	}
-	public void setEXPRESSION_ID(Long eXPRESSION_ID) {
+	public void setEXPRESSION_ID(Integer eXPRESSION_ID) {
 		EXPRESSION_ID = eXPRESSION_ID;
 	}
 	public String getEXPRESSION_NAME() {

@@ -27,11 +27,11 @@ public class ExpressionConditionEntity {
    @Column(
       name = "CONDITION_ID"
    )
-   private Long CONDITION_ID;
+   private Integer CONDITION_ID;
    @Column(
       name = "EXP_ID"
    )
-   private Long EXP_ID;
+   private Integer EXP_ID;
    @Column(
       name = "ATTRIBUTE_ID"
    )
@@ -68,7 +68,7 @@ public class ExpressionConditionEntity {
    public ExpressionConditionEntity() {
    }
 
-   public ExpressionConditionEntity(Long cONDITION_ID, Long eXP_ID, int aTTRIBUTE_ID, String eXP_OPERATOR, String vALUE, String pARENT_OPERATOR, String cREATED_BY, Date cREATION_DATE, String lAST_UPDATED_BY, Date lAST_UPDATE_DATE) {
+   public ExpressionConditionEntity(Integer cONDITION_ID, Integer eXP_ID, int aTTRIBUTE_ID, String eXP_OPERATOR, String vALUE, String pARENT_OPERATOR, String cREATED_BY, Date cREATION_DATE, String lAST_UPDATED_BY, Date lAST_UPDATE_DATE) {
       this.CONDITION_ID = cONDITION_ID;
       this.EXP_ID = eXP_ID;
       this.ATTRIBUTE_ID = aTTRIBUTE_ID;
@@ -81,20 +81,20 @@ public class ExpressionConditionEntity {
       this.LAST_UPDATE_DATE = lAST_UPDATE_DATE;
    }
 
-   public Long getCONDITION_ID() {
+   public Integer getCONDITION_ID() {
       return this.CONDITION_ID;
    }
 
-   public void setCONDITION_ID(Long cONDITION_ID) {
+   public void setCONDITION_ID(Integer cONDITION_ID) {
       this.CONDITION_ID = cONDITION_ID;
    }
 
-   public Long getEXP_ID() {
+   public Integer getEXP_ID() {
       return this.EXP_ID;
    }
 
-   public void setEXP_ID(Long long1) {
-      this.EXP_ID = long1;
+   public void setEXP_ID(Integer Integer1) {
+      this.EXP_ID = Integer1;
    }
 
    public int getATTRIBUTE_ID() {

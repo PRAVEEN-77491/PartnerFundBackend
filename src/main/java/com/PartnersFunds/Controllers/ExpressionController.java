@@ -23,7 +23,8 @@ public class ExpressionController {
    
    @PostMapping({"/expressions"})
    public ResponseExpressionDTO saveExpressions(@RequestBody ExpressionDTO expressionDTOs) {
-	   ResponseExpressionDTO response_data=this.expressionService.saveExpression(expressionDTOs);
+	   System.out.println("expController="+expressionDTOs.getEXPRESSION_NAME());
+	   ResponseExpressionDTO response_data=expressionService.saveExpression(expressionDTOs);
       return response_data;
    }
   

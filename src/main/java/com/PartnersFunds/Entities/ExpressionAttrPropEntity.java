@@ -11,16 +11,16 @@ public class ExpressionAttrPropEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EXP_ATTR_PROP_MAPPING_S")
     @SequenceGenerator(name = "EXP_ATTR_PROP_MAPPING_S", sequenceName = "EXP_ATTR_PROP_MAPPING_S", allocationSize = 1)
     @Column(name = "EAP_MAPPING_ID")
-    private int EAP_MAPPING_ID;
+    private Integer EAP_MAPPING_ID;
 
     @Column(name = "PAGE_ID")
-    private int PAGE_ID;
+    private Integer PAGE_ID;
     
     @Column(name = "EXPRESSION_ID")
-    private int EXPRESSION_ID;
+    private Integer EXPRESSION_ID;
 
     @Column(name = "ATTRIBUTE_ID")
-    private int ATTRIBUTE_ID;
+    private Integer ATTRIBUTE_ID;
 
     @Column(name = "ATTR_PROP_NAME")
     private String ATTR_PROP_NAME;
@@ -42,7 +42,7 @@ public class ExpressionAttrPropEntity {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public ExpressionAttrPropEntity(int pAGE_ID, int eXPRESSION_ID, int aTTRIBUTE_ID,
+	public ExpressionAttrPropEntity(Integer pAGE_ID, Integer eXPRESSION_ID, Integer aTTRIBUTE_ID,
 	        String aTTR_PROP_NAME, String cREATED_BY, Date cREATION_DATE, String lAST_UPDATED_BY,
 	        Date lAST_UPDATE_DATE) {
 	    super();
@@ -57,35 +57,35 @@ public class ExpressionAttrPropEntity {
 	}
 
 
-	public int getEAP_MAPPING_ID() {
+	public Integer getEAP_MAPPING_ID() {
 		return EAP_MAPPING_ID;
 	}
 
-	public void setEAP_MAPPING_ID(int eAP_MAPPING_ID) {
+	public void setEAP_MAPPING_ID(Integer eAP_MAPPING_ID) {
 		EAP_MAPPING_ID = eAP_MAPPING_ID;
 	}
 
-	public int getPAGE_ID() {
+	public Integer getPAGE_ID() {
 		return PAGE_ID;
 	}
 
-	public void setPAGE_ID(int pAGE_ID) {
+	public void setPAGE_ID(Integer pAGE_ID) {
 		PAGE_ID = pAGE_ID;
 	}
 
-	public int getEXPRESSION_ID() {
+	public Integer getEXPRESSION_ID() {
 		return EXPRESSION_ID;
 	}
 
-	public void setEXPRESSION_ID(int eXPRESSION_ID) {
+	public void setEXPRESSION_ID(Integer eXPRESSION_ID) {
 		EXPRESSION_ID = eXPRESSION_ID;
 	}
 
-	public int getATTRIBUTE_ID() {
+	public Integer getATTRIBUTE_ID() {
 		return ATTRIBUTE_ID;
 	}
 
-	public void setATTRIBUTE_ID(int aTTRIBUTE_ID) {
+	public void setATTRIBUTE_ID(Integer aTTRIBUTE_ID) {
 		ATTRIBUTE_ID = aTTRIBUTE_ID;
 	}
 

@@ -371,8 +371,10 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 		// Extract all attribute IDs from the input JSON
 		List<Integer> attributeIds = voMapList.stream().map(attr -> Integer.parseInt(attr.get("attid"))).collect(Collectors.toList());
 
+		System.out.println("attributeIds="+attributeIds);
 		// Fetch all attributes in one go
 		List<Object[]> attributesEntities = pageAttributeRepo.findAllEOVOByAttributeIds(attributeIds);
+		System.out.println("attributesEntities="+attributesEntities);
 		List<Map<String, Object>> result = new ArrayList<>();
 
 		// Process each attribute entity
@@ -396,7 +398,7 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 
 				if (voMapList.get(counter).get("viewObjectName").equals(voEntityObject)) {
 					String res = replaceFieldsWithEOValues2(voMapList.get(counter).get("viewObjectQuery"), parameters);
-					System.out.println(res);
+					System.out.println("res="+res);
 					List<Map<String, Object>> queryResult = template.queryForList(res);
 					System.out.println("queryResult : " + queryResult);
 					// Replace column names with voEntityAttribute values and include attributeId

@@ -15,19 +15,11 @@ import java.sql.Date;
 )
 public class ExpressionEntity {
    @Id
-   @GeneratedValue(
-      strategy = GenerationType.SEQUENCE,
-      generator = "XXPF_EXPRESSIONS_S"
-   )
-   @SequenceGenerator(
-      name = "XXPF_EXPRESSIONS_S",
-      sequenceName = "XXPF_EXPRESSIONS_S",
-      allocationSize = 1
-   )
-   @Column(
-      name = "EXPRESSION_ID"
-   )
-   private Long EXPRESSION_ID;
+   @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "XXPF_EXPRESSIONS_S")
+   @SequenceGenerator(name = "XXPF_EXPRESSIONS_S",sequenceName = "XXPF_EXPRESSIONS_S",allocationSize = 1)
+   @Column(name = "EXPRESSION_ID")
+   private Integer EXPRESSION_ID;
+   
    @Column(
       name = "EXPRESSION_NAME"
    )
@@ -52,7 +44,7 @@ public class ExpressionEntity {
    public ExpressionEntity() {
    }
 
-   public ExpressionEntity(Long eXPRESSION_ID, String eXPRESSION_NAME, String cREATED_BY, Date cREATION_DATE, String lAST_UPDATED_BY, Date lAST_UPDATE_DATE) {
+   public ExpressionEntity(Integer eXPRESSION_ID, String eXPRESSION_NAME, String cREATED_BY, Date cREATION_DATE, String lAST_UPDATED_BY, Date lAST_UPDATE_DATE) {
       this.EXPRESSION_ID = eXPRESSION_ID;
       this.EXPRESSION_NAME = eXPRESSION_NAME;
       this.CREATED_BY = cREATED_BY;
@@ -61,11 +53,11 @@ public class ExpressionEntity {
       this.LAST_UPDATE_DATE = lAST_UPDATE_DATE;
    }
 
-   public Long getEXPRESSION_ID() {
+   public Integer getEXPRESSION_ID() {
       return this.EXPRESSION_ID;
    }
 
-   public void setEXPRESSION_ID(Long eXPRESSION_ID) {
+   public void setEXPRESSION_ID(Integer eXPRESSION_ID) {
       this.EXPRESSION_ID = eXPRESSION_ID;
    }
 
@@ -108,4 +100,12 @@ public class ExpressionEntity {
    public void setLAST_UPDATE_DATE(Date lAST_UPDATE_DATE) {
       this.LAST_UPDATE_DATE = lAST_UPDATE_DATE;
    }
+
+@Override
+public String toString() {
+	return "ExpressionEntity [EXPRESSION_ID=" + EXPRESSION_ID + ", EXPRESSION_NAME=" + EXPRESSION_NAME + ", CREATED_BY="
+			+ CREATED_BY + ", CREATION_DATE=" + CREATION_DATE + ", LAST_UPDATED_BY=" + LAST_UPDATED_BY
+			+ ", LAST_UPDATE_DATE=" + LAST_UPDATE_DATE + "]";
+}
+   
 }
