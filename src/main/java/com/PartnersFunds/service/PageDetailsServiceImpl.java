@@ -304,7 +304,7 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 
 			// Pattern to match EO and VO values
 			Pattern pattern = Pattern.compile(
-					"EO=\\{entityobject=\"(.*?)\", entityattribute=(.*?)\\}, VO=\\{viewobject=\"(.*?)\", viewattribute=(.*?)\\}");
+					"EO=\\{entityobject=\"(.*?)\", entityattribute=(.*?)\\}");
 			Matcher matcher = pattern.matcher(String.valueOf(attributesEntity[1]));
 
 			if (matcher.find()) {
@@ -405,7 +405,7 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 	                for (Map<String, Object> row : queryResult) {
 	                    Map<String, Object> modifiedRow = new HashMap<>();
 	                    modifiedRow.put("attid", attributeId);
-	                    modifiedRow.put("placeHolder", voEntityAttribute);
+	                    modifiedRow.put("placeHolder_column", voEntityAttribute);
 	                    modifiedRow.put("attrValue", row.get(eoEntityAttribute));
 	                    result.add(modifiedRow);
 	                }

@@ -4,14 +4,19 @@ import java.sql.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="view_objects")
+@Table(name="xxpf_view_objects")
 public class viewObjectsEntity {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "xxpf_view_objects_s")
+    @SequenceGenerator(name = "xxpf_view_objects_s", sequenceName = "xxpf_view_objects_s", allocationSize = 1)
 	@Column(name="view_object_id")
 	private Integer view_object_id;
 	
