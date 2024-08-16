@@ -1,10 +1,10 @@
 package com.PartnersFunds.service;
 
-public class procedureResult {
+public class ProcedureResult {
    private String status;
    private String message;
 
-   public procedureResult(String status, String message) {
+   public ProcedureResult(String status, String message) {
       this.status = status;
       this.message = message;
    }
@@ -17,7 +17,7 @@ public class procedureResult {
       return this.message;
    }
 
-   public procedureResult() {
+   public ProcedureResult() {
    }
 
    public void setStatus(String status) {

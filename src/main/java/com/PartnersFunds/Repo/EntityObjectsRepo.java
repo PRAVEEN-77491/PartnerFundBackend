@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.PartnersFunds.Entities.entityObjectsEntity;
+import com.PartnersFunds.Entities.EntityObjectsEntity;
 
-public interface entityObjectsRepo extends JpaRepository<entityObjectsEntity, Integer> {
+public interface EntityObjectsRepo extends JpaRepository<EntityObjectsEntity, Integer> {
 
 	
 	@Query(value="SELECT entity_table_name FROM xxpf_entity_objects p WHERE p.entity_object_name = :entity_object_name",nativeQuery=true)

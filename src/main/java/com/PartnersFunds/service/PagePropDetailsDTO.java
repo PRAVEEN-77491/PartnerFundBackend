@@ -3,9 +3,9 @@ package com.PartnersFunds.service;
 import java.util.List;
 import java.util.Map;
 
-import com.PartnersFunds.Entities.pageAttrPropertiesEntity;
+import com.PartnersFunds.Entities.PageAttrPropertiesEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
-public class pagePropDetailsDTO {
+public class PagePropDetailsDTO {
 
 	@JsonProperty("id")
 	private int page_id;

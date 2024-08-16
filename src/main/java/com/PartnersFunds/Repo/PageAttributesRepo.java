@@ -7,14 +7,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.PartnersFunds.Entities.pageAttributesEntity;
-import com.PartnersFunds.Entities.pagesEntity;
+import com.PartnersFunds.Entities.PageAttributesEntity;
+import com.PartnersFunds.Entities.PagesEntity;
 
 @Repository
-public interface pageAttributesRepo extends JpaRepository<pageAttributesEntity, Integer> {
+public interface PageAttributesRepo extends JpaRepository<PageAttributesEntity, Integer> {
 	
 	@Query(value = "select * from xxpf_page_attributes xp where xp.attribute_id = :attribute_id", nativeQuery = true)
-	pageAttributesEntity findByattribute_id(@Param("attribute_id") int attribute_id);
+	PageAttributesEntity findByattribute_id(@Param("attribute_id") int attribute_id);
 	
 //    @Query(value = "SELECT * FROM xxpf_page_attributes xp WHERE xp.attribute_id IN :attributeIds", nativeQuery = true)
 //    List<pageAttributesEntity> findAllByAttributeIds(@Param("attributeIds") List<Integer> attributeIds);

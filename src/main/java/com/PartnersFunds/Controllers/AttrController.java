@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.PartnersFunds.Entities.pageAttrPropertiesEntity;
-import com.PartnersFunds.Entities.pageAttributesEntity;
-import com.PartnersFunds.Entities.pagesEntity;
+import com.PartnersFunds.Entities.PageAttrPropertiesEntity;
+import com.PartnersFunds.Entities.PageAttributesEntity;
+import com.PartnersFunds.Entities.PagesEntity;
 import com.PartnersFunds.service.AttrServiceImpl;
 
 @RestController
@@ -51,22 +51,22 @@ public class AttrController {
 //	}
 	
 	@GetMapping("/getPages")
-	public List<pagesEntity> getData1() {
+	public List<PagesEntity> getData1() {
 	   return ser.getPages();
 	}
 	
 	@GetMapping("/getPageAttributes")
-	public List<pageAttributesEntity> getData2() {
+	public List<PageAttributesEntity> getData2() {
 	   return ser.getPageAttributes();
 	}
 	
 	@GetMapping("/getPageProperties")
-	public List<pageAttrPropertiesEntity> getData3() {
+	public List<PageAttrPropertiesEntity> getData3() {
 	   return ser.getPageProperties();
 	}
 	
 	@GetMapping("/getPageById/{pageId}")
-	public pagesEntity getById(@PathVariable("pageId") int pageId){
+	public PagesEntity getById(@PathVariable("pageId") int pageId){
 		return ser.getPageById(pageId);
 	}
 

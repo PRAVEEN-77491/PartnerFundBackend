@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="xxpf_page_attr_prop_conditions")
-public class pageAttrPropConditionsEntity {
+public class PageAttrPropConditionsEntity {
 
 	@Id
 	@Column(name="condition_id")
@@ -48,12 +48,12 @@ public class pageAttrPropConditionsEntity {
 	@Column(name = "last_update_date")
 	private Date last_update_date;
 
-	public pageAttrPropConditionsEntity() {
+	public PageAttrPropConditionsEntity() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public pageAttrPropConditionsEntity(Integer condition_id, Integer property_id, Integer condition_sequence,
+	public PageAttrPropConditionsEntity(Integer condition_id, Integer property_id, Integer condition_sequence,
 			String condition_attribute_name, String condition_operator, String low_value, String high_value,
 			String parent_condition_operator, String created_by, Date creation_date, String last_updated_by,
 			Date last_update_date) {

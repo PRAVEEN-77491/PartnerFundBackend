@@ -5,25 +5,25 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.PartnersFunds.Entities.pageAttrPropertiesEntity;
-import com.PartnersFunds.Entities.pageAttributesEntity;
-import com.PartnersFunds.Entities.pagesEntity;
-import com.PartnersFunds.Repo.pageAttrPropertiesRepo;
-import com.PartnersFunds.Repo.pageAttributesRepo;
-import com.PartnersFunds.Repo.pagesRepo;
+import com.PartnersFunds.Entities.PageAttrPropertiesEntity;
+import com.PartnersFunds.Entities.PageAttributesEntity;
+import com.PartnersFunds.Entities.PagesEntity;
+import com.PartnersFunds.Repo.PageAttrPropertiesRepo;
+import com.PartnersFunds.Repo.PageAttributesRepo;
+import com.PartnersFunds.Repo.PagesRepo;
 
 
 @Service
 public class AttrServiceImpl implements AttrService{
 
 	@Autowired
-	pagesRepo Pagerepo;
+	PagesRepo Pagerepo;
 	@Autowired
-	pageAttributesRepo Attrrepo;
+	PageAttributesRepo Attrrepo;
 	@Autowired
-	pageAttrPropertiesRepo AttrPropertiesrepo;
+	PageAttrPropertiesRepo AttrPropertiesrepo;
 	
-	public List<pagesEntity> getPages(){
+	public List<PagesEntity> getPages(){
 		try {
 			return Pagerepo.findAll();
 		}catch(Exception e) {
@@ -33,7 +33,7 @@ public class AttrServiceImpl implements AttrService{
 		
 	}
 	
-	public List<pageAttributesEntity> getPageAttributes(){
+	public List<PageAttributesEntity> getPageAttributes(){
 		try {
 			return Attrrepo.findAll();
 		}catch(Exception e) {
@@ -43,7 +43,7 @@ public class AttrServiceImpl implements AttrService{
 		
 	}
 	
-	public List<pageAttrPropertiesEntity> getPageProperties(){
+	public List<PageAttrPropertiesEntity> getPageProperties(){
 		try {
 			return AttrPropertiesrepo.findAll();
 		}catch(Exception e) {
@@ -54,7 +54,7 @@ public class AttrServiceImpl implements AttrService{
 	}
 
 	@Override
-	public pagesEntity getPageById(int page_id) {
+	public PagesEntity getPageById(int page_id) {
 		try {
 			return Pagerepo.findByPage_id(page_id);
 			

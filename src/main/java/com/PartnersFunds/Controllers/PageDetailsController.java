@@ -19,15 +19,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.PartnersFunds.Entities.entityObjectsEntity;
-import com.PartnersFunds.Entities.pageAttrPropertiesEntity;
-import com.PartnersFunds.Entities.pageAttributesEntity;
-import com.PartnersFunds.Entities.pagesEntity;
-import com.PartnersFunds.Entities.viewObjectsEntity;
+import com.PartnersFunds.Entities.EntityObjectsEntity;
+import com.PartnersFunds.Entities.PageAttrPropertiesEntity;
+import com.PartnersFunds.Entities.PageAttributesEntity;
+import com.PartnersFunds.Entities.PagesEntity;
+import com.PartnersFunds.Entities.ViewObjectsEntity;
 import com.PartnersFunds.service.JsonElementDTO;
 import com.PartnersFunds.service.PageDetailsService;
-import com.PartnersFunds.service.pagePropDetailsDTO;
-import com.PartnersFunds.service.procedureResult;
+import com.PartnersFunds.service.PagePropDetailsDTO;
+import com.PartnersFunds.service.ProcedureResult;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -62,14 +62,14 @@ public class PageDetailsController {
 	}	
 	
 	@PostMapping("/addPage")
-	public Integer addPage(@RequestBody pagesEntity page) {	
+	public Integer addPage(@RequestBody PagesEntity page) {	
 		return pageService.savePageDetails(page);
 	}
 
 	@PostMapping("/addPageAttributes")
-	 public ResponseEntity<?> addPageProperties(@RequestBody pageAttributesEntity pageAttribute) {
+	 public ResponseEntity<?> addPageProperties(@RequestBody PageAttributesEntity pageAttribute) {
        try {
-           pageAttributesEntity savedAttribute = pageService.savePageAttributeDetails(pageAttribute);
+           PageAttributesEntity savedAttribute = pageService.savePageAttributeDetails(pageAttribute);
 
            // Create a simplified JSON response containing only attribute_id and attribute_type
            JSONObject response = new JSONObject();
@@ -85,24 +85,24 @@ public class PageDetailsController {
 
 
 	@PostMapping("/addPageAttrProperties")
-	public String addPage(@RequestBody List<pageAttrPropertiesEntity> pageAttrPropertiesList) {
+	public String addPage(@RequestBody List<PageAttrPropertiesEntity> pageAttrPropertiesList) {
 	pageService.savePageAttributePropertiesDetails(pageAttrPropertiesList);
 	return "Added Page Attribute properties details successfully";
 	}
 
 	@PostMapping("/call")
-	public procedureResult callProcedure(@RequestBody Map<String, Object> request){
+	public ProcedureResult callProcedure(@RequestBody Map<String, Object> request){
         Integer attr_id = (Integer) request.get("attribute_id");
         Map<String, Object> params = (Map<String, Object>) request.get("params");
         return pageService.callFunction(attr_id, params);
 	}
 	
 	@PostMapping("/pagePropDetails")
-	public pagesEntity addPagePropDetails(@RequestBody String jsonString) throws Exception,JsonMappingException, JsonProcessingException {
+	public PagesEntity addPagePropDetails(@RequestBody String jsonString) throws Exception,JsonMappingException, JsonProcessingException {
 		 
-		 pagePropDetailsDTO pagePropDetailsJSON = objectMapper.readValue(jsonString, new TypeReference<pagePropDetailsDTO>() {});
+		 PagePropDetailsDTO pagePropDetailsJSON = objectMapper.readValue(jsonString, new TypeReference<PagePropDetailsDTO>() {});
 		 
-		 pagesEntity updatedPageEntity = null;
+		 PagesEntity updatedPageEntity = null;
 		 
 		 updatedPageEntity  = pageService.addPagePropDetails(pagePropDetailsJSON);
 		 
@@ -117,19 +117,19 @@ public class PageDetailsController {
 	}
 
 	@PostMapping("/saveEntityObject")
-	public entityObjectsEntity saveEntityObject(@RequestBody entityObjectsEntity entityObject) {
-		entityObjectsEntity entityObj = pageService.saveEntityObject(entityObject);
+	public EntityObjectsEntity saveEntityObject(@RequestBody EntityObjectsEntity entityObject) {
+		EntityObjectsEntity entityObj = pageService.saveEntityObject(entityObject);
 		return entityObj;
 	}
 
 	@PostMapping("/saveViewObject")
-	public viewObjectsEntity saveViewObject(@RequestBody viewObjectsEntity viewObject) {
-		viewObjectsEntity viewObj = pageService.saveViewObject(viewObject);
+	public ViewObjectsEntity saveViewObject(@RequestBody ViewObjectsEntity viewObject) {
+		ViewObjectsEntity viewObj = pageService.saveViewObject(viewObject);
 		return viewObj;
 	}
 
 	@PostMapping("/saveEOData")
-	public pageAttributesEntity saveEOData(@RequestBody List<Map<String, String>> attributes) throws IOException, SQLException {
+	public PageAttributesEntity saveEOData(@RequestBody List<Map<String, String>> attributes) throws IOException, SQLException {
 		return pageService.saveEOData(attributes);
 	}
 

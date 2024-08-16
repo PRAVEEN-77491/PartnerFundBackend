@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="eo_vo_page_relationships")
-public class eovoPageRelationshipsEntity {
+public class EovoPageRelationshipsEntity {
 
 	@Id
 	@Column(name="relationship_id")
@@ -36,12 +36,12 @@ public class eovoPageRelationshipsEntity {
 	@Column(name = "last_update_date")
 	private Date last_update_date;
 
-	public eovoPageRelationshipsEntity() {
+	public EovoPageRelationshipsEntity() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public eovoPageRelationshipsEntity(Integer relationship_id, String object_type, Integer object_id, Integer page_id,
+	public EovoPageRelationshipsEntity(Integer relationship_id, String object_type, Integer object_id, Integer page_id,
 			String created_by, Date creation_date, String last_updated_by, Date last_update_date) {
 		super();
 		this.relationship_id = relationship_id;

@@ -1,11 +1,11 @@
 package com.PartnersFunds.service;
 
-import com.PartnersFunds.Entities.entityObjectsEntity;
-import com.PartnersFunds.Entities.pageAttrPropertiesEntity;
+import com.PartnersFunds.Entities.EntityObjectsEntity;
+import com.PartnersFunds.Entities.PageAttrPropertiesEntity;
 
-import com.PartnersFunds.Entities.pageAttributesEntity;
-import com.PartnersFunds.Entities.pagesEntity;
-import com.PartnersFunds.Entities.viewObjectsEntity;
+import com.PartnersFunds.Entities.PageAttributesEntity;
+import com.PartnersFunds.Entities.PagesEntity;
+import com.PartnersFunds.Entities.ViewObjectsEntity;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
@@ -19,27 +19,27 @@ import org.springframework.stereotype.Service;
 public interface PageDetailsService {
    List<Object[]> getAllDetails();
 
-   pageAttributesEntity savePageAttributeDetails(pageAttributesEntity pageAttribute);
+   PageAttributesEntity savePageAttributeDetails(PageAttributesEntity pageAttribute);
 
-   Integer savePageDetails(pagesEntity page);
+   Integer savePageDetails(PagesEntity page);
 
-   String savePageAttributePropertiesDetails(List<pageAttrPropertiesEntity> pageAttrPropertiesList);
+   String savePageAttributePropertiesDetails(List<PageAttrPropertiesEntity> pageAttrPropertiesList);
 
-   procedureResult callFunction(Integer attribute_id, Map<String, Object> params);
+   ProcedureResult callFunction(Integer attribute_id, Map<String, Object> params);
 
-   pagesEntity addPagePropDetails(pagePropDetailsDTO pagePropDetailsJSON) throws JsonMappingException, JsonProcessingException;
+   PagesEntity addPagePropDetails(PagePropDetailsDTO pagePropDetailsJSON) throws JsonMappingException, JsonProcessingException;
 
    boolean validPageOrNot(String pageName);
 
-   entityObjectsEntity saveEntityObject(entityObjectsEntity entityObject);
+   EntityObjectsEntity saveEntityObject(EntityObjectsEntity entityObject);
 
-   viewObjectsEntity saveViewObject(viewObjectsEntity viewObject);
+   ViewObjectsEntity saveViewObject(ViewObjectsEntity viewObject);
 
    String deleteRemovedAttr(Integer removedAttr);
 
 //   pageAttributesEntity saveEOData(Integer attrId, String entityObject, String entityObjectAttr, String  attribute_value);
 
-   pageAttributesEntity saveEOData(List<Map<String, String>> attributes) throws JsonMappingException, JsonProcessingException, IOException, SQLException;
+   PageAttributesEntity saveEOData(List<Map<String, String>> attributes) throws JsonMappingException, JsonProcessingException, IOException, SQLException;
 
    List<Map<String, Object>> getVOData(List<Map<String, String>> voMaps);
 }

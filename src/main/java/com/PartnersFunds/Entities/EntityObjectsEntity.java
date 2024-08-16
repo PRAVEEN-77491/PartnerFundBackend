@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="xxpf_entity_objects")
-public class entityObjectsEntity {
+public class EntityObjectsEntity {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "xxpf_entity_objects_s")
@@ -38,12 +38,12 @@ public class entityObjectsEntity {
 	@Column(name = "last_update_date")
 	private Date last_update_date;
 
-	public entityObjectsEntity() {
+	public EntityObjectsEntity() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public entityObjectsEntity(Integer entity_object_id, String entity_object_name, String entity_table_name,
+	public EntityObjectsEntity(Integer entity_object_id, String entity_object_name, String entity_table_name,
 			String created_by, Date creation_date, String last_updated_by, Date last_update_date) {
 		super();
 		this.entity_object_id = entity_object_id;

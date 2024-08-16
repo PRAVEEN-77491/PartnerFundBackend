@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="lookups")
-public class lookupsEntity {
+public class LookupsEntity {
 
 	@Id
 	@Column(name="lookup_type")
@@ -36,12 +36,12 @@ public class lookupsEntity {
 	@Column(name = "last_update_date")
 	private Date last_update_date;
 
-	public lookupsEntity() {
+	public LookupsEntity() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public lookupsEntity(String lookup_type, String lookup_code, String meaning, String enabled_flag, String created_by,
+	public LookupsEntity(String lookup_type, String lookup_code, String meaning, String enabled_flag, String created_by,
 			Date creation_date, String last_updated_by, Date last_update_date) {
 		super();
 		this.lookup_type = lookup_type;

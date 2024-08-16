@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="xxpf_view_objects")
-public class viewObjectsEntity {
+public class ViewObjectsEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "xxpf_view_objects_s")
@@ -41,12 +41,12 @@ public class viewObjectsEntity {
 	@Column(name = "last_update_date")
 	private Date last_update_date;
 
-	public viewObjectsEntity() {
+	public ViewObjectsEntity() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public viewObjectsEntity(Integer view_object_id, String view_object_name, String view_object_sql_query, String event_type,
+	public ViewObjectsEntity(Integer view_object_id, String view_object_name, String view_object_sql_query, String event_type,
 			String created_by, Date creation_date, String last_updated_by, Date last_update_date) {
 		super();
 		this.view_object_id = view_object_id;

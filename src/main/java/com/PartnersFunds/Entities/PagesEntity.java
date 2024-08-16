@@ -16,7 +16,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="xxpf_pages")
-public class pagesEntity {
+public class PagesEntity {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "xxpf_pages_s")
@@ -49,13 +49,13 @@ public class pagesEntity {
 	private Date last_update_date;
 	
     @OneToMany(mappedBy = "pagesEntity", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<pageAttributesEntity> pageAttributes = new ArrayList<>();
+    private List<PageAttributesEntity> pageAttributes = new ArrayList<>();
 
-	public pagesEntity() {
+	public PagesEntity() {
 		super();
 	}
 
-	public pagesEntity(Integer page_id, String page_name, String page_file_name, String page_title,
+	public PagesEntity(Integer page_id, String page_name, String page_file_name, String page_title,
 			Integer parent_page_id, String created_by, Date creation_date, String last_updated_by,
 			Date last_update_date) {
 		super();
@@ -142,11 +142,11 @@ public class pagesEntity {
 		this.last_update_date = last_update_date;
 	}
 
-	public List<pageAttributesEntity> getPageAttributes() {
+	public List<PageAttributesEntity> getPageAttributes() {
 		return pageAttributes;
 	}
 
-	public void setPageAttributes(List<pageAttributesEntity> pageAttributes) {
+	public void setPageAttributes(List<PageAttributesEntity> pageAttributes) {
 		this.pageAttributes = pageAttributes;
 	}
 

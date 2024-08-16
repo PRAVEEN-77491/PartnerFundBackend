@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="xxpf_page_attr_properties")
-public class pageAttrPropertiesEntity {
+public class PageAttrPropertiesEntity {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "xxpf_page_attr_properties_s")
@@ -51,14 +51,14 @@ public class pageAttrPropertiesEntity {
     
 	@ManyToOne
     @JoinColumn(name = "attribute_id", insertable = false, updatable = false)
-    private pageAttributesEntity pageAttributesEntity;
+    private PageAttributesEntity pageAttributesEntity;
 
-	public pageAttrPropertiesEntity() {
+	public PageAttrPropertiesEntity() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public pageAttrPropertiesEntity(Integer property_id, Integer attribute_id, String property_name, String property_tag,
+	public PageAttrPropertiesEntity(Integer property_id, Integer attribute_id, String property_name, String property_tag,
 			String property_value, String property_type, String created_by, Date creation_date, String last_updated_by,
 			Date last_update_date) {
 		super();

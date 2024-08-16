@@ -1,22 +1,22 @@
 package com.PartnersFunds.service;
 
-import com.PartnersFunds.Entities.entityObjectsEntity;
-import com.PartnersFunds.Entities.pageAttrPropertiesEntity;
-import com.PartnersFunds.Entities.pageAttributesEntity;
-import com.PartnersFunds.Entities.pagesEntity;
-import com.PartnersFunds.Entities.viewObjectsEntity;
+import com.PartnersFunds.Entities.EntityObjectsEntity;
+import com.PartnersFunds.Entities.PageAttrPropertiesEntity;
+import com.PartnersFunds.Entities.PageAttributesEntity;
+import com.PartnersFunds.Entities.PagesEntity;
+import com.PartnersFunds.Entities.ViewObjectsEntity;
 import com.PartnersFunds.Repo.PageDetailsRepo;
-import com.PartnersFunds.Repo.entityObjectsRepo;
-import com.PartnersFunds.Repo.pageAttrPropertiesRepo;
-import com.PartnersFunds.Repo.pageAttributesRepo;
-import com.PartnersFunds.Repo.pagesRepo;
+import com.PartnersFunds.Repo.EntityObjectsRepo;
+import com.PartnersFunds.Repo.PageAttrPropertiesRepo;
+import com.PartnersFunds.Repo.PageAttributesRepo;
+import com.PartnersFunds.Repo.PagesRepo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.PartnersFunds.Repo.viewObjectsRepo;
-import com.PartnersFunds.utils.queryBuilder;
+import com.PartnersFunds.Repo.ViewObjectsRepo;
+import com.PartnersFunds.utils.QueryBuilder;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,21 +57,21 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 	@Autowired
 	PageDetailsRepo pageRepo;
 	@Autowired
-	pageAttributesRepo pageAttributeRepo;
+	PageAttributesRepo pageAttributeRepo;
 	@Autowired
-	pageAttrPropertiesRepo pageAttrPropertiesRepo;
+	PageAttrPropertiesRepo pageAttrPropertiesRepo;
 	@Autowired
-	pagesRepo pagesRepo;
+	PagesRepo pagesRepo;
 	@Autowired
 	JdbcTemplate template;
 	@Autowired
 	DataSource datasource;
 	@Autowired
-	entityObjectsRepo entityObjectsRepo;
+	EntityObjectsRepo entityObjectsRepo;
 	@Autowired
-	viewObjectsRepo viewObjectsRepo;
+	ViewObjectsRepo viewObjectsRepo;
 	@Autowired
-	queryBuilder queryBuilder;
+	QueryBuilder queryBuilder;
 
 	String status;
 	String message;
@@ -87,9 +87,9 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 		return pagesRepo.findbyPageName(pageName);
 	}
 
-	public Integer savePageDetails(pagesEntity page) {
+	public Integer savePageDetails(PagesEntity page) {
 		try {
-			pagesEntity savedData = (pagesEntity) this.pageRepo.save(page);
+			PagesEntity savedData = (PagesEntity) this.pageRepo.save(page);
 			System.out.println(savedData.getPage_id());
 			return savedData.getPage_id();
 		} catch (Exception e) {
@@ -98,20 +98,20 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 		}
 	}
 
-	public pageAttributesEntity savePageAttributeDetails(pageAttributesEntity pageAttribute) {
+	public PageAttributesEntity savePageAttributeDetails(PageAttributesEntity pageAttribute) {
 		try {
-			return (pageAttributesEntity) this.pageAttributeRepo.save(pageAttribute);
+			return (PageAttributesEntity) this.pageAttributeRepo.save(pageAttribute);
 		} catch (Exception var3) {
 			throw new RuntimeException("Failed to save page attribute details", var3);
 		}
 	}
 
-	public String savePageAttributePropertiesDetails(List<pageAttrPropertiesEntity> pageAttrPropertiesList) {
+	public String savePageAttributePropertiesDetails(List<PageAttrPropertiesEntity> pageAttrPropertiesList) {
 		try {
-			Iterator<pageAttrPropertiesEntity> pageList = pageAttrPropertiesList.iterator();
+			Iterator<PageAttrPropertiesEntity> pageList = pageAttrPropertiesList.iterator();
 
 			while (pageList.hasNext()) {
-				pageAttrPropertiesEntity pageAttrProperties = (pageAttrPropertiesEntity) pageList.next();
+				PageAttrPropertiesEntity pageAttrProperties = (PageAttrPropertiesEntity) pageList.next();
 				this.pageAttrPropertiesRepo.save(pageAttrProperties);
 			}
 
@@ -121,7 +121,7 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 		}
 	}
 
-	public procedureResult callFunction(Integer attribute_id, Map<String, Object> parameters) {
+	public ProcedureResult callFunction(Integer attribute_id, Map<String, Object> parameters) {
 		String funcNameWithParams = this.pageAttrPropertiesRepo.dBFuncName(attribute_id);
 		String formattedFuncNameWithParams = this.replaceFunctionParameters(funcNameWithParams, parameters);
 		System.out.println("formattedFuncName: " + formattedFuncNameWithParams);
@@ -130,7 +130,7 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 
 		try {
 			template = new JdbcTemplate(this.datasource);
-			return template.execute((ConnectionCallback<procedureResult>) (conn) -> {
+			return template.execute((ConnectionCallback<ProcedureResult>) (conn) -> {
 				System.out.println(callableSql);
 				CallableStatement callableStatement = conn.prepareCall(callableSql);
 				callableStatement.registerOutParameter(1, 12);
@@ -139,12 +139,12 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 				JSONObject jsonObject = new JSONObject(callableStatement.getString(1));
 				String status = jsonObject.getString("status");
 				String message = jsonObject.getString("message");
-				return new procedureResult(status, message);
+				return new ProcedureResult(status, message);
 			});
 		} catch (Exception var7) {
 			System.err.println("Error executing stored Function: " + var7.getMessage());
 			var7.printStackTrace();
-			return new procedureResult("FAILURE", var7.getMessage());
+			return new ProcedureResult("FAILURE", var7.getMessage());
 		}
 	}
 
@@ -177,7 +177,7 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 	}
 
 	@Transactional
-	public pagesEntity addPagePropDetails(pagePropDetailsDTO pagePropDetailsJSON)
+	public PagesEntity addPagePropDetails(PagePropDetailsDTO pagePropDetailsJSON)
 			throws JsonMappingException, JsonProcessingException {
 		try {
 			logger.info("Logging : addPagePropDetails() : execution started ");
@@ -193,7 +193,7 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 			// Retrieve pages entity from repository
 			logger.info("Retrieving pages entity with page_id: {} and attributeIds: {}",
 					pagePropDetailsJSON.getPage_id(), attributeIds);
-			pagesEntity pagesEntity = pagesRepo.findByPageIdAndAttributeIds(pagePropDetailsJSON.getPage_id(),
+			PagesEntity pagesEntity = pagesRepo.findByPageIdAndAttributeIds(pagePropDetailsJSON.getPage_id(),
 					attributeIds);
 
 			System.out.println(pagesEntity);
@@ -206,22 +206,22 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 
 			// Create a map of existing attributes for faster lookup
 			logger.info("Creating a map of existing attributes for faster lookup");
-			Map<Integer, pageAttributesEntity> existingAttributes = pagesEntity.getPageAttributes().stream()
-					.collect(Collectors.toMap(pageAttributesEntity::getAttribute_id, Function.identity()));
+			Map<Integer, PageAttributesEntity> existingAttributes = pagesEntity.getPageAttributes().stream()
+					.collect(Collectors.toMap(PageAttributesEntity::getAttribute_id, Function.identity()));
 
 			// Create a list to hold the updated attribute details
-			List<pageAttributesEntity> updatedAttributes = new ArrayList<>();
+			List<PageAttributesEntity> updatedAttributes = new ArrayList<>();
 
 			// Iterate over JSON elements and update attributes and properties
 			pagePropDetailsJsonElements.forEach(element -> {
-				pageAttributesEntity pageAttributesEntity = existingAttributes.get(element.getId());
+				PageAttributesEntity pageAttributesEntity = existingAttributes.get(element.getId());
 				logger.info("Processing element with ID: {}", element.getId());
 
 				// Update attribute properties
 				element.getProperties().forEach((key, value) -> {
-					pageAttrPropertiesEntity property = pageAttributesEntity.getPageAttrPropertiesEntity().stream()
+					PageAttrPropertiesEntity property = pageAttributesEntity.getPageAttrPropertiesEntity().stream()
 							.filter(prop -> prop.getProperty_name().equals(key)).findFirst().orElseGet(() -> {
-								pageAttrPropertiesEntity newProp = new pageAttrPropertiesEntity();
+								PageAttrPropertiesEntity newProp = new PageAttrPropertiesEntity();
 								newProp.setAttribute_id(pageAttributesEntity.getAttribute_id());
 								newProp.setProperty_name(key);
 								newProp.setProperty_tag(key);
@@ -273,18 +273,18 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 		return "Attribute deleted having id : " + removedAttrId.toString();
 	}
 
-	public entityObjectsEntity saveEntityObject(entityObjectsEntity entityObject) {
-		entityObjectsEntity entityObjectsEntity = entityObjectsRepo.save(entityObject);
+	public EntityObjectsEntity saveEntityObject(EntityObjectsEntity entityObject) {
+		EntityObjectsEntity entityObjectsEntity = entityObjectsRepo.save(entityObject);
 		return entityObjectsEntity;
 	}
 
-	public viewObjectsEntity saveViewObject(viewObjectsEntity viewObject) {
-		viewObjectsEntity viewObjectsEntity = viewObjectsRepo.save(viewObject);
+	public ViewObjectsEntity saveViewObject(ViewObjectsEntity viewObject) {
+		ViewObjectsEntity viewObjectsEntity = viewObjectsRepo.save(viewObject);
 		return viewObjectsEntity;
 	}
 
 	@Transactional
-	public pageAttributesEntity saveEOData(List<Map<String, String>> attributes) throws IOException, SQLException {
+	public PageAttributesEntity saveEOData(List<Map<String, String>> attributes) throws IOException, SQLException {
 
 		// Extract all attribute IDs from the input JSON
 		List<Integer> attributeIds = attributes.stream().map(attr -> Integer.parseInt(attr.get("attid")))
@@ -292,7 +292,9 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 
 		Map<Integer, String> attributeMapValues = attributes.stream()
 				.collect(Collectors.toMap(attr -> Integer.parseInt(attr.get("attid")), attr -> attr.get("value")));
-
+		
+		
+		
 		// Fetch all attributes in one go
 		List<Object[]> attributesEntities = pageAttributeRepo.findAllEOVOByAttributeIds(attributeIds);
 
@@ -341,11 +343,33 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 				}
 			}
 		}
+		
+		Map<Integer, String> attIdToSequenceMap = attributes.stream()
 
-		System.out.println(queryBuilder.buildInsertQuery(queryToValue));
-		List<String> finalSQLQueries = queryBuilder.buildInsertQuery(queryToValue);
+				.collect(Collectors.toMap(
+							attr -> Integer.parseInt(attr.get("attid")),
+							attr -> attr.get("sequenceName")));
+		
+		System.out.println("MAP VALUE -==> "+ attIdToSequenceMap);
+		
+		//Getting sequenceName
+//		String sequreceName = attIdToSequenceMap.get()
+		
+		String sequenceName = "";
+		
+		List<String> finalSQLQueries = new ArrayList<>();
+		
+		for (Map.Entry<Integer, String> entry : attIdToSequenceMap.entrySet()) {
+			sequenceName = entry.getValue();
+		
+		
+		
 
-		// Execute each query
+		System.out.println(queryBuilder.buildInsertQuery(queryToValue,sequenceName));
+		 finalSQLQueries = queryBuilder.buildInsertQuery(queryToValue,sequenceName);
+
+		}
+//		 Execute each query
 		for (String query : finalSQLQueries) {
 			try {
 				// Print the query for debugging purposes
@@ -362,8 +386,7 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 				e.printStackTrace();
 			}
 		}
-
-		return new pageAttributesEntity(); // Or return a meaningful response if needed
+		return new PageAttributesEntity(); // Or return a meaningful response if needed
 	}
 
 	@Transactional

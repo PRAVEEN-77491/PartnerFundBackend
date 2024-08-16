@@ -20,7 +20,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="xxpf_page_attributes")
-public class pageAttributesEntity {
+public class PageAttributesEntity {
 
 	
 	@Id
@@ -53,17 +53,17 @@ public class pageAttributesEntity {
 	@JsonIgnore
 	@ManyToOne
     @JoinColumn(name = "page_id", insertable = false, updatable = false)
-    private pagesEntity pagesEntity;
+    private PagesEntity pagesEntity;
 
     @OneToMany(mappedBy = "pageAttributesEntity", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<pageAttrPropertiesEntity> pageAttrPropertiesEntity = new ArrayList<>();
+    private List<PageAttrPropertiesEntity> pageAttrPropertiesEntity = new ArrayList<>();
 
-	public pageAttributesEntity() {
+	public PageAttributesEntity() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public pageAttributesEntity(Integer attribute_id, Integer page_id, String attribute_name, String attribute_type,
+	public PageAttributesEntity(Integer attribute_id, Integer page_id, String attribute_name, String attribute_type,
 			String created_by, Date creation_date, String last_updated_by, Date last_update_date) {
 		super();
 		this.attribute_id = attribute_id;
@@ -140,19 +140,19 @@ public class pageAttributesEntity {
 		this.last_update_date = last_update_date;
 	}
 
-	public pagesEntity getPagesEntity() {
+	public PagesEntity getPagesEntity() {
 		return pagesEntity;
 	}
 
-	public void setPagesEntity(pagesEntity pagesEntity) {
+	public void setPagesEntity(PagesEntity pagesEntity) {
 		this.pagesEntity = pagesEntity;
 	}
 
-	public List<pageAttrPropertiesEntity> getPageAttrPropertiesEntity() {
+	public List<PageAttrPropertiesEntity> getPageAttrPropertiesEntity() {
 		return pageAttrPropertiesEntity;
 	}
 
-	public void setPageAttrPropertiesEntity(List<pageAttrPropertiesEntity> pageAttrPropertiesEntity) {
+	public void setPageAttrPropertiesEntity(List<PageAttrPropertiesEntity> pageAttrPropertiesEntity) {
 		this.pageAttrPropertiesEntity = pageAttrPropertiesEntity;
 	}
 
