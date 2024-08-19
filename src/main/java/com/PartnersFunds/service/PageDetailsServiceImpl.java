@@ -354,20 +354,13 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 		
 		//Getting sequenceName
 //		String sequreceName = attIdToSequenceMap.get()
-		
 		String sequenceName = "";
-		
 		List<String> finalSQLQueries = new ArrayList<>();
 		
 		for (Map.Entry<Integer, String> entry : attIdToSequenceMap.entrySet()) {
 			sequenceName = entry.getValue();
-		
-		
-		
-
-		System.out.println(queryBuilder.buildInsertQuery(queryToValue,sequenceName));
-		 finalSQLQueries = queryBuilder.buildInsertQuery(queryToValue,sequenceName);
-
+			System.out.println(queryBuilder.buildInsertQuery(queryToValue,sequenceName));
+			finalSQLQueries = queryBuilder.buildInsertQuery(queryToValue,sequenceName);
 		}
 //		 Execute each query
 		for (String query : finalSQLQueries) {
