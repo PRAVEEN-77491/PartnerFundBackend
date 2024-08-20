@@ -314,6 +314,7 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 			if (matcher.find()) {
 				String eoEntityObject = matcher.group(1);
 				String eoEntityAttribute = matcher.group(2);
+				System.out.println("eoEntityAttribute =====> " + eoEntityAttribute);
 				String entityObjectsTableName = entityObjectsRepo.findByObjectName(eoEntityObject);
 
 				if (entityObjectsTableName != null && !String.valueOf(attributesEntity[1]).isEmpty()) {
