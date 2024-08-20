@@ -290,6 +290,8 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 		List<Integer> attributeIds = attributes.stream().map(attr -> Integer.parseInt(attr.get("attid")))
 				.collect(Collectors.toList());
 
+		
+		
 		Map<Integer, String> attributeMapValues = attributes.stream()
 				.collect(Collectors.toMap(attr -> Integer.parseInt(attr.get("attid")), attr -> attr.get("value")));
 		
