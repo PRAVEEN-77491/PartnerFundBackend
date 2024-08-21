@@ -1,15 +1,14 @@
 package com.PartnersFunds.utils;
 
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -20,12 +19,19 @@ public class QueryBuilder {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	
+	 Logger logger = LoggerFactory.getLogger(getClass());
+	 
 	public List<String> buildInsertQuery(Map<String, List<Map<String, String>>> queryToValue, String sequenceName) throws SQLException {
+
 	    List<String> queries = new LinkedList<>();
+	    
+	    System.out.println("queryToValue ======>>>>> " + queryToValue);
 
 	    for (Map.Entry<String, List<Map<String, String>>> entry : queryToValue.entrySet()) {
-	        System.out.println("entry.getKey() : " + entry.getKey());
-	        System.out.println("entry.getValue() : " + entry.getValue());
+	    	logger.info("Logging : execution started ");
+	        logger.info("entry.getKey() : " + entry.getKey());
+
+	        logger.info("entry.getValue() : " + entry.getValue());
 
 	        String tableName = entry.getKey();
 	        List<Map<String, String>> records = entry.getValue();
@@ -62,7 +68,7 @@ public class QueryBuilder {
 	        sqlQuery.append("INSERT INTO ").append(tableName).append(" (");
 
 	        // Append all column names
-	        System.out.println("combinedRecord.keySet() : " + combinedRecord.keySet());
+	        logger.info("combinedRecord.keySet() : " + combinedRecord.keySet());
 	        String columns = String.join(", ", combinedRecord.keySet());
 	        sqlQuery.append(columns).append(") VALUES (");
 

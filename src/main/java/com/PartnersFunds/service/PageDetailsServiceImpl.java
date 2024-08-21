@@ -21,19 +21,15 @@ import com.PartnersFunds.utils.QueryBuilder;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.sql.CallableStatement;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Properties;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -41,7 +37,6 @@ import java.util.stream.Collectors;
 
 import javax.sql.DataSource;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +44,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ConnectionCallback;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 public class PageDetailsServiceImpl implements PageDetailsService {
@@ -437,7 +431,6 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 
 	private String replaceFieldsWithEOValues2(String query, Map<String, Object> parameters) {
 
-//		System.out.println("Input:- " + query + " ( " + parameters + " ) ");
 		Pattern pattern = Pattern.compile("\\$(.*?)\\$");
 		Matcher matcher = pattern.matcher(query);
 		StringBuffer updatedQuery = new StringBuffer();
@@ -449,7 +442,6 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 			}
 		}
 		matcher.appendTail(updatedQuery);
-//		System.out.println("Replace from: ====>: " + updatedQuery.toString());
 		return updatedQuery.toString();
 	}
 

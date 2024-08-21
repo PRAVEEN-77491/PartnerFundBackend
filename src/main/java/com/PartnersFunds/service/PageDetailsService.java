@@ -20,26 +20,15 @@ public interface PageDetailsService {
    List<Object[]> getAllDetails();
 
    PageAttributesEntity savePageAttributeDetails(PageAttributesEntity pageAttribute);
-
    Integer savePageDetails(PagesEntity page);
-
    String savePageAttributePropertiesDetails(List<PageAttrPropertiesEntity> pageAttrPropertiesList);
-
    ProcedureResult callFunction(Integer attribute_id, Map<String, Object> params);
-
    PagesEntity addPagePropDetails(PagePropDetailsDTO pagePropDetailsJSON) throws JsonMappingException, JsonProcessingException;
 
    boolean validPageOrNot(String pageName);
-
    EntityObjectsEntity saveEntityObject(EntityObjectsEntity entityObject);
-
    ViewObjectsEntity saveViewObject(ViewObjectsEntity viewObject);
-
    String deleteRemovedAttr(Integer removedAttr);
-
-//   pageAttributesEntity saveEOData(Integer attrId, String entityObject, String entityObjectAttr, String  attribute_value);
-
    PageAttributesEntity saveEOData(List<Map<String, String>> attributes) throws JsonMappingException, JsonProcessingException, IOException, SQLException;
-
    List<Map<String, Object>> getVOData(List<Map<String, String>> voMaps);
 }
