@@ -5,6 +5,7 @@ import com.PartnersFunds.Entities.PageAttrPropertiesEntity;
 import com.PartnersFunds.Entities.PageAttributesEntity;
 import com.PartnersFunds.Entities.PagesEntity;
 import com.PartnersFunds.Entities.ViewObjectsEntity;
+import com.PartnersFunds.FieldsEntites.CodeGeneratorTemplate;
 import com.PartnersFunds.Repo.PageDetailsRepo;
 import com.PartnersFunds.Repo.EntityObjectsRepo;
 import com.PartnersFunds.Repo.PageAttrPropertiesRepo;
@@ -46,6 +47,7 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.ConnectionCallback;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -75,6 +77,7 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 
 	String status;
 	String message;
+	String pageGeneratedCode=null;
 
 	private final ObjectMapper objectMapper = new ObjectMapper();
 	Logger logger = LoggerFactory.getLogger(getClass());
@@ -177,7 +180,7 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 	}
 
 	@Transactional
-	public PagesEntity addPagePropDetails(PagePropDetailsDTO pagePropDetailsJSON)
+	public ResponseEntity<Map<String, Object>> addPagePropDetails(PagePropDetailsDTO pagePropDetailsJSON)
 			throws JsonMappingException, JsonProcessingException {
 		try {
 			logger.info("Logging : addPagePropDetails() : execution started ");
@@ -211,7 +214,7 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 
 			// Create a list to hold the updated attribute details
 			List<PageAttributesEntity> updatedAttributes = new ArrayList<>();
-
+			
 			// Iterate over JSON elements and update attributes and properties
 			pagePropDetailsJsonElements.forEach(element -> {
 				PageAttributesEntity pageAttributesEntity = existingAttributes.get(element.getId());
@@ -250,11 +253,20 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 					Date now = new Date(System.currentTimeMillis());
 					property.setLast_updated_date(now);
 //			        logger.info("Updated property with Last_Updated_Date: {}", now);
+					
 				});
 				updatedAttributes.add(pageAttributesEntity);
+				pageGeneratedCode = CodeGeneratorTemplate.generateReactComponent(pagesEntity, updatedAttributes);
 			});
 			logger.info("Saving updated pages entity");
-			return pagesRepo.save(pagesEntity);
+			
+			
+	        // Prepare the response with both saved entity and generated code
+	        Map<String, Object> response = new HashMap<>();
+	        response.put("PageEntity", pagesRepo.save(pagesEntity));
+	        response.put("generatedPageCode", pageGeneratedCode);
+
+	        return ResponseEntity.ok(response);
 
 		} catch (JsonMappingException e) {
 			logger.error("Error mapping JSON to Java objects: {}", e.getMessage());

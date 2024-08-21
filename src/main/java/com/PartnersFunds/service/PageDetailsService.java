@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,7 +29,7 @@ public interface PageDetailsService {
 
    ProcedureResult callFunction(Integer attribute_id, Map<String, Object> params);
 
-   PagesEntity addPagePropDetails(PagePropDetailsDTO pagePropDetailsJSON) throws JsonMappingException, JsonProcessingException;
+   ResponseEntity<Map<String, Object>> addPagePropDetails(PagePropDetailsDTO pagePropDetailsJSON) throws JsonMappingException, JsonProcessingException;
 
    boolean validPageOrNot(String pageName);
 

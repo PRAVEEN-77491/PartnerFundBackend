@@ -98,11 +98,11 @@ public class PageDetailsController {
 	}
 	
 	@PostMapping("/pagePropDetails")
-	public PagesEntity addPagePropDetails(@RequestBody String jsonString) throws Exception,JsonMappingException, JsonProcessingException {
+	public ResponseEntity<Map<String, Object>> addPagePropDetails(@RequestBody String jsonString) throws Exception,JsonMappingException, JsonProcessingException {
 		 
 		 PagePropDetailsDTO pagePropDetailsJSON = objectMapper.readValue(jsonString, new TypeReference<PagePropDetailsDTO>() {});
 		 
-		 PagesEntity updatedPageEntity = null;
+		 ResponseEntity<Map<String, Object>> updatedPageEntity = null;
 		 
 		 updatedPageEntity  = pageService.addPagePropDetails(pagePropDetailsJSON);
 		 

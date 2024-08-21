@@ -153,6 +153,15 @@ public class PageAttrPropertiesEntity {
 	public void setLast_updated_date(Date last_update_date) {
 		this.last_update_date = last_update_date;
 	}
+
+	@Override
+	public String toString() {
+		return "PageAttrPropertiesEntity [property_id=" + property_id + ", attribute_id=" + attribute_id
+				+ ", property_name=" + property_name + ", property_tag=" + property_tag + ", property_value="
+				+ property_value + ", property_type=" + property_type + ", created_by=" + created_by
+				+ ", creation_date=" + creation_date + ", last_updated_by=" + last_updated_by + ", last_update_date="
+				+ last_update_date+"]";
+	}
 	
 	
 
