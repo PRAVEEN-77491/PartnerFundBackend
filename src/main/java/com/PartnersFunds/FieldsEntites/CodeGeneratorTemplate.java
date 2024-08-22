@@ -35,8 +35,8 @@ public class CodeGeneratorTemplate {
 			case "textfield":
 				reactComponent.append(TextField.generateTextField(attribute));
 				break;
-			case "checkbox":
-				reactComponent.append("checkBox TBD");
+			case "textarea":
+				reactComponent.append(TextField.generateTextAreaField(attribute));
 				break;
 			case "dropdown":
 				reactComponent.append(reactComponent.append("checkBox TBD"));
@@ -49,7 +49,7 @@ public class CodeGeneratorTemplate {
 			}
 		}
 
-		reactComponent.append("      <button onClick={handleSubmit}>Save</button>\n");
+//		reactComponent.append("      <button onClick={handleSubmit}>Save</button>\n");
 		reactComponent.append("    </div>\n");
 		reactComponent.append("  );\n");
 		reactComponent.append("};\n\n");

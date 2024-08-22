@@ -46,4 +46,42 @@ public class TextField {
 
 		return textField.toString();
 	}
+
+	public static String generateTextAreaField(PageAttributesEntity attribute) {
+		StringBuilder textAreaField = new StringBuilder();
+		// Create a map to store property names and values
+		Map<String, String> propertiesMap = new HashMap<>();
+
+		// Populate the map with property names and values
+		for (PageAttrPropertiesEntity prop : attribute.getPageAttrPropertiesEntity()) {
+			propertiesMap.put(prop.getProperty_name(), prop.getProperty_value());
+		}
+
+		// Check if the required property is present
+//		if (propertiesMap.containsKey("required")) {
+			textAreaField.append("      <div className='flex flex-col gap-2 w-full'>\n");
+			textAreaField.append("        <Label>\n");
+			textAreaField.append("          ").append(propertiesMap.get("label"));
+//			if (propertiesMap.get("required").equals("true")) {
+//				textAreaField.append(" <span className='text-red-600 font-bold'>*</span>");
+//			}
+			textAreaField.append("\n        </Label>\n");
+			textAreaField.append("        <Textarea\n");
+			textAreaField.append("          placeholder='").append(propertiesMap.get("placeholder")).append("'\n");
+			textAreaField.append("          rows={").append(propertiesMap.get("rows")).append("}\n");
+			textAreaField.append("          style={{\n");
+			textAreaField.append("            fontcolor: '").append(propertiesMap.get("fontcolor")).append("',\n");
+			textAreaField.append("            fontSize: ").append(propertiesMap.get("fontsize")).append(",\n");
+			textAreaField.append("            height: ").append(propertiesMap.get("height")).append(",\n");
+			textAreaField.append("            width: ").append(propertiesMap.get("width")).append(",\n");
+			textAreaField.append("          }}\n");
+//			textAreaField.append("          value={inputValue}\n");
+			textAreaField.append("          onChange={handleChange}\n");
+			textAreaField.append("        />\n");
+			textAreaField.append("      </div>\n");
+//		}
+
+		return textAreaField.toString();
+	}
+
 }

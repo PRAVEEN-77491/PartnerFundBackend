@@ -254,7 +254,7 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 			});
 			logger.info("Saving updated pages entity");
 			
-			
+			System.out.println(pageGeneratedCode);
 	        // Prepare the response with both saved entity and generated code
 	        Map<String, Object> response = new HashMap<>();
 	        response.put("PageEntity", pagesRepo.save(pagesEntity));
