@@ -21,7 +21,10 @@ import com.PartnersFunds.utils.QueryBuilder;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.sql.CallableStatement;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -253,6 +256,18 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 				pageGeneratedCode = CodeGeneratorTemplate.generateReactComponent(pagesEntity, updatedAttributes);
 			});
 			logger.info("Saving updated pages entity");
+			String fileName = "TextFieldComponent.jsx"; // Replace with your logic to determine the file name
+
+			// Define the output file path in the resources folder
+			File outputFile = Paths.get("src/main/resources/" + fileName).toFile();
+
+			// Write the generated code to the .jsx file
+			try (FileWriter writer = new FileWriter(outputFile)) {
+				writer.write(pageGeneratedCode);
+				System.out.println("Successfully wrote to the file: " + outputFile.getPath());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			
 			System.out.println(pageGeneratedCode);
 	        // Prepare the response with both saved entity and generated code
