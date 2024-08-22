@@ -6,7 +6,7 @@ import java.util.Map;
 import com.PartnersFunds.Entities.PageAttrPropertiesEntity;
 import com.PartnersFunds.Entities.PageAttributesEntity;
 
-public class TextField {
+public class Fields {
 	public static String generateTextField(PageAttributesEntity attribute) {
 //		System.out.println("attribute =====> " + attribute);
 		StringBuilder textField = new StringBuilder();
@@ -23,7 +23,7 @@ public class TextField {
 			textField.append("      <div className='flex flex-col gap-2 w-full'>\n");
 			textField.append("        <Label style={{\n");
 			textField.append("          color: '").append(propertiesMap.get("labelcolor")).append("',\n");
-			textField.append("          fontSize: ").append(propertiesMap.get("labelsize")).append(",\n");
+			textField.append("          fontSize: '").append(propertiesMap.get("labelsize")).append("',\n");
 			textField.append("        }}>\n");
 			textField.append("          ").append(propertiesMap.get("label"));
 			if (propertiesMap.get("required").equals("true")) {
@@ -34,9 +34,9 @@ public class TextField {
 			textField.append("          placeholder='").append(propertiesMap.get("placeholder")).append("'\n");
 			textField.append("          style={{\n");
 			textField.append("            color: '").append(propertiesMap.get("textcolor")).append("',\n");
-			textField.append("            fontSize: ").append(propertiesMap.get("textsize")).append("px,\n");
-			textField.append("            height: ").append(propertiesMap.get("height")).append("px,\n");
-			textField.append("            width: ").append(propertiesMap.get("width")).append("px,\n");
+			textField.append("            fontSize: '").append(propertiesMap.get("textsize")).append("px',\n");
+			textField.append("            height: '").append(propertiesMap.get("height")).append("px',\n");
+			textField.append("            width: '").append(propertiesMap.get("width")).append("px',\n");
 			textField.append("          }}\n");
 			textField.append("          name='").append(attribute.getAttribute_name()).append("'\n");
 			textField.append("          onChange={handleChange}\n");
@@ -71,9 +71,9 @@ public class TextField {
 			textAreaField.append("          rows={").append(propertiesMap.get("rows")).append("}\n");
 			textAreaField.append("          style={{\n");
 			textAreaField.append("            fontcolor: '").append(propertiesMap.get("fontcolor")).append("',\n");
-			textAreaField.append("            fontSize: ").append(propertiesMap.get("fontsize")).append(",\n");
-			textAreaField.append("            height: ").append(propertiesMap.get("height")).append(",\n");
-			textAreaField.append("            width: ").append(propertiesMap.get("width")).append(",\n");
+			textAreaField.append("            fontSize: '").append(propertiesMap.get("fontsize")).append("',\n");
+			textAreaField.append("            height: '").append(propertiesMap.get("height")).append("',\n");
+			textAreaField.append("            width: '").append(propertiesMap.get("width")).append("',\n");
 			textAreaField.append("          }}\n");
 //			textAreaField.append("          value={inputValue}\n");
 			textAreaField.append("          onChange={handleChange}\n");

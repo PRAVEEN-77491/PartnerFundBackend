@@ -11,8 +11,9 @@ public class CodeGeneratorTemplate {
 
 		reactComponent.append("import React from 'react';\n");
 		reactComponent.append("import { useState } from 'react';\n\n");
-		reactComponent.append("import { Label } from '../ui/label';\n\n");
-		reactComponent.append("import { Input } from '../ui/input';\n\n");
+		reactComponent.append("import { Label } from 'src/components/ui/label';\n\n");
+		reactComponent.append("import { Input } from 'src/components/ui/input';\n\n");
+		reactComponent.append("import { Textarea } from 'src/components/ui/textarea';\n\n");
 
 		reactComponent.append("const PageComponent = () => {\n");
 		reactComponent.append("  const [formData, setFormData] = useState({});\n\n");
@@ -33,10 +34,10 @@ public class CodeGeneratorTemplate {
 			System.out.println(attribute);
 			switch (attribute.getAttribute_type()) {
 			case "textfield":
-				reactComponent.append(TextField.generateTextField(attribute));
+				reactComponent.append(Fields.generateTextField(attribute));
 				break;
 			case "textarea":
-				reactComponent.append(TextField.generateTextAreaField(attribute));
+				reactComponent.append(Fields.generateTextAreaField(attribute));
 				break;
 			case "dropdown":
 				reactComponent.append(reactComponent.append("checkBox TBD"));

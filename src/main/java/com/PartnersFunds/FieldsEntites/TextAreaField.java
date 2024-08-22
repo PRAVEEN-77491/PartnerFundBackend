@@ -24,7 +24,7 @@ public class TextAreaField {
         reactCode.append("import {  Input } from '../ui/input';\n\n");
 
         // Add component definition
-        reactCode.append("const TextField = () => {\n");
+        reactCode.append("const Fields = () => {\n");
         reactCode.append("  const [values, setValues] = useState('');\n");
         reactCode.append("  const [submitValues, setSubmitValues] = useState(false);\n\n");
 
@@ -84,7 +84,7 @@ public class TextAreaField {
         reactCode.append("};\n\n");
 
         // Add export statement
-        reactCode.append("export default TextField;\n");
+        reactCode.append("export default Fields;\n");
 
         System.out.println(reactCode.toString());
     }
