@@ -133,7 +133,7 @@ public class PageDetailsController {
 		return pageService.saveEOData(attributes);
 	}
 
-	@PostMapping("/getVOData")
+	@PostMapping("/api/{VOObjNmae}")
 	public List<Map<String, Object>> getVOData(@RequestBody List<Map<String, String>> voMaps) throws IOException, SQLException {
 		return pageService.getVOData(voMaps);
 	}

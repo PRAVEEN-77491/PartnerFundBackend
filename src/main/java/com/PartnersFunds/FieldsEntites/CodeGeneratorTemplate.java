@@ -34,10 +34,10 @@ public class CodeGeneratorTemplate {
 			System.out.println(attribute);
 			switch (attribute.getAttribute_type()) {
 			case "textfield":
-				reactComponent.append(Fields.generateTextField(attribute));
+//				reactComponent.append(Fields.generateTextField(attribute));
 				break;
 			case "textarea":
-				reactComponent.append(Fields.generateTextAreaField(attribute));
+//				reactComponent.append(Fields.generateTextAreaField(attribute));
 				break;
 			case "dropdown":
 				reactComponent.append(reactComponent.append("checkBox TBD"));

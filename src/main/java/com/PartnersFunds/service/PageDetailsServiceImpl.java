@@ -6,6 +6,9 @@ import com.PartnersFunds.Entities.PageAttributesEntity;
 import com.PartnersFunds.Entities.PagesEntity;
 import com.PartnersFunds.Entities.ViewObjectsEntity;
 import com.PartnersFunds.FieldsEntites.CodeGeneratorTemplate;
+import com.PartnersFunds.FieldsEntites.ReactCodeGenerator;
+import com.PartnersFunds.FieldsEntites.UIAttribute;
+import com.PartnersFunds.FieldsEntites.ViewObject;
 import com.PartnersFunds.Repo.PageDetailsRepo;
 import com.PartnersFunds.Repo.EntityObjectsRepo;
 import com.PartnersFunds.Repo.PageAttrPropertiesRepo;
@@ -29,6 +32,7 @@ import java.sql.CallableStatement;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -193,10 +197,7 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 			// Retrieve pages entity from repository
 			logger.info("Retrieving pages entity with page_id: {} and attributeIds: {}",
 					pagePropDetailsJSON.getPage_id(), attributeIds);
-			PagesEntity pagesEntity = pagesRepo.findByPageIdAndAttributeIds(pagePropDetailsJSON.getPage_id(),
-					attributeIds);
-
-			System.out.println(pagesEntity);
+			PagesEntity pagesEntity = pagesRepo.findByPage_id(pagePropDetailsJSON.getPage_id());
 
 			// Deserialize JSON elements into a list of DTOs
 			logger.info("Deserializing JSON elements into a list of DTOs");
@@ -253,13 +254,98 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 					
 				});
 				updatedAttributes.add(pageAttributesEntity);
-				pageGeneratedCode = CodeGeneratorTemplate.generateReactComponent(pagesEntity, updatedAttributes);
+//				pageGeneratedCode = CodeGeneratorTemplate.generateReactComponent(pagesEntity, updatedAttributes);
 			});
 			logger.info("Saving updated pages entity");
-			String fileName = "TextFieldComponent.jsx"; // Replace with your logic to determine the file name
+			
+			PagesEntity codePagesEntity = pagesRepo.save(pagesEntity);
+		    // Temporary List to track added ViewObjects
+		    List<String> addedViewObjects = new ArrayList<>();
+		    logger.info("Filtering attributes based on the provided IDs");
+	        List<PageAttributesEntity> filteredAttributes = codePagesEntity.getPageAttributes().stream()
+	                .filter(attr -> attributeIds.contains(attr.getAttribute_id()))
+	                .collect(Collectors.toList());
+
+	        // Update the existing collection in place
+	        codePagesEntity.getPageAttributes().clear(); // This clears the collection but keeps the reference intact
+	        codePagesEntity.getPageAttributes().addAll(filteredAttributes); // Re-add the filtered attributes
+
+	        System.out.println(codePagesEntity);
+	        
+	        
+	        ReactCodeGenerator generator = new ReactCodeGenerator();
+			List<Object[]> attributesEOVO = pageAttributeRepo.findAllEOVOByAttributeIds(attributeIds);
+
+	        // Create a map to store eovo values
+	        Map<Integer, List<String>> eovoMap = new HashMap<>();
+
+	        // Define the regex pattern to match EO and VO values
+	        Pattern pattern = Pattern.compile(
+					"EO=\\{entityobject=\"(.*?)\", entityattribute=(.*?)\\}, VO=\\{viewobject=\"(.*?)\", viewattribute=(.*?)\\}"
+	        );
+
+	        // Populate the map with eovo values
+	        for (Object[] attributesEntity : attributesEOVO) {
+	            Integer attributeId = Integer.parseInt(String.valueOf(attributesEntity[0]));
+	            String eovoString = (String) attributesEntity[1];
+	            
+	            Matcher matcher = pattern.matcher(eovoString);
+	            if (matcher.find()) {
+	                // Extract values using regex groups
+	                String entityObject = matcher.group(1);
+	                String entityAttribute = matcher.group(2);
+	                String viewObject = matcher.group(3);
+	                String viewAttribute = matcher.group(4);
+	                
+	                // Store in the map
+	                eovoMap.put(attributeId, Arrays.asList(entityObject, entityAttribute, viewObject, viewAttribute));
+	            }
+	        }
+
+	        // Process each attribute and its eovo values
+		       // Create UIAttribute and ViewObject based on the filtered attributes and eovo values
+	        for (PageAttributesEntity attribute : codePagesEntity.getPageAttributes()) {
+	            Integer attributeId = attribute.getAttribute_id();
+	            List<String> eovoValues = eovoMap.get(attributeId);
+	            
+	            System.out.println(attribute);
+	            
+	            System.out.println("eovoValues===> " + eovoValues);
+
+	            if (eovoValues != null) {
+	                String viewObject = eovoValues.get(2);
+	                String viewAttribute = eovoValues.get(3);
+
+	                // Create UIAttribute and ViewObject instances
+	                UIAttribute uiAttribute = new UIAttribute(
+	                		attribute,
+	                        viewObject,
+	                        viewAttribute
+	                );
+
+	                generator.addAttribute(uiAttribute);
+
+                    // Check if ViewObject has already been added
+                    if (!addedViewObjects.contains(viewObject)) {
+                        // Create and add the ViewObject
+                        ViewObject viewObjectInstance = new ViewObject(
+                            viewObject,
+                            "SELECT * FROM SOME_TABLE WHERE SOME_CONDITION", // Adjust query as needed
+                            "onload_event"
+                        );
+                        generator.addViewObject(viewObjectInstance);
+
+                        // Add to the temporary list
+                        addedViewObjects.add(viewObject);
+                    }
+	            }
+	        }
+	        pageGeneratedCode = generator.generatePageReactCode();
+	        
+			String fileName = "test.jsx"; // Replace with your logic to determine the file name
 
 			// Define the output file path in the resources folder
-			File outputFile = Paths.get("src/main/resources/" + fileName).toFile();
+			File outputFile = Paths.get("C:/Users/akassha2/Downloads/react/my-app/src/components/" + fileName).toFile();
 
 			// Write the generated code to the .jsx file
 			try (FileWriter writer = new FileWriter(outputFile)) {
@@ -269,11 +355,10 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 				e.printStackTrace();
 			}
 			
-			System.out.println(pageGeneratedCode);
 	        // Prepare the response with both saved entity and generated code
 	        Map<String, Object> response = new HashMap<>();
-	        response.put("PageEntity", pagesRepo.save(pagesEntity));
-	        response.put("generatedPageCode", pageGeneratedCode);
+	        response.put("PageEntity", codePagesEntity);
+//	        response.put("generatedPageCode", pageGeneratedCode);
 
 	        return ResponseEntity.ok(response);
 
