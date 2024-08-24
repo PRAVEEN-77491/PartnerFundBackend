@@ -43,5 +43,5 @@ public interface PageDetailsService {
 
    PageAttributesEntity saveEOData(List<Map<String, String>> attributes) throws JsonMappingException, JsonProcessingException, IOException, SQLException;
 
-   List<Map<String, Object>> getVOData(List<Map<String, String>> voMaps);
+   List<Map<String, Object>> getVOData(String viewObjectName);
 }

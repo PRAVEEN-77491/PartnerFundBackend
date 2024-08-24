@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import jakarta.websocket.server.PathParam;
 
 @RestController
 @RequestMapping("/page")
@@ -133,8 +136,8 @@ public class PageDetailsController {
 		return pageService.saveEOData(attributes);
 	}
 
-	@PostMapping("/api/{VOObjNmae}")
-	public List<Map<String, Object>> getVOData(@RequestBody List<Map<String, String>> voMaps) throws IOException, SQLException {
-		return pageService.getVOData(voMaps);
+	@PostMapping("/api/{viewObjectName}")
+	public List<Map<String, Object>> getVOData(@PathVariable("viewObjectName") String voObjectName) throws IOException, SQLException {
+		return pageService.getVOData(voObjectName);
 	}
 }

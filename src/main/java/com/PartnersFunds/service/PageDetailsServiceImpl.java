@@ -5,10 +5,6 @@ import com.PartnersFunds.Entities.PageAttrPropertiesEntity;
 import com.PartnersFunds.Entities.PageAttributesEntity;
 import com.PartnersFunds.Entities.PagesEntity;
 import com.PartnersFunds.Entities.ViewObjectsEntity;
-import com.PartnersFunds.FieldsEntites.CodeGeneratorTemplate;
-import com.PartnersFunds.FieldsEntites.ReactCodeGenerator;
-import com.PartnersFunds.FieldsEntites.UIAttribute;
-import com.PartnersFunds.FieldsEntites.ViewObject;
 import com.PartnersFunds.Repo.PageDetailsRepo;
 import com.PartnersFunds.Repo.EntityObjectsRepo;
 import com.PartnersFunds.Repo.PageAttrPropertiesRepo;
@@ -20,7 +16,11 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.PartnersFunds.Repo.ViewObjectsRepo;
+import com.PartnersFunds.utils.PageCodeGeneration;
 import com.PartnersFunds.utils.QueryBuilder;
+import com.PartnersFunds.utils.ReactCodeGenerator;
+import com.PartnersFunds.utils.UIAttribute;
+import com.PartnersFunds.utils.ViewObject;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,10 +29,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.sql.CallableStatement;
+import java.sql.Clob;
 import java.sql.Date;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -52,6 +55,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.ConnectionCallback;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -75,10 +79,11 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 	ViewObjectsRepo viewObjectsRepo;
 	@Autowired
 	QueryBuilder queryBuilder;
+	@Autowired
+	PageCodeGeneration pageCodeGeneration;
 
 	String status;
 	String message;
-	String pageGeneratedCode=null;
 
 	private final ObjectMapper objectMapper = new ObjectMapper();
 	Logger logger = LoggerFactory.getLogger(getClass());
@@ -259,101 +264,8 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 			logger.info("Saving updated pages entity");
 			
 			PagesEntity codePagesEntity = pagesRepo.save(pagesEntity);
-		    // Temporary List to track added ViewObjects
-		    List<String> addedViewObjects = new ArrayList<>();
-		    logger.info("Filtering attributes based on the provided IDs");
-	        List<PageAttributesEntity> filteredAttributes = codePagesEntity.getPageAttributes().stream()
-	                .filter(attr -> attributeIds.contains(attr.getAttribute_id()))
-	                .collect(Collectors.toList());
-
-	        // Update the existing collection in place
-	        codePagesEntity.getPageAttributes().clear(); // This clears the collection but keeps the reference intact
-	        codePagesEntity.getPageAttributes().addAll(filteredAttributes); // Re-add the filtered attributes
-
-	        System.out.println(codePagesEntity);
-	        
-	        
-	        ReactCodeGenerator generator = new ReactCodeGenerator();
-			List<Object[]> attributesEOVO = pageAttributeRepo.findAllEOVOByAttributeIds(attributeIds);
-
-	        // Create a map to store eovo values
-	        Map<Integer, List<String>> eovoMap = new HashMap<>();
-
-	        // Define the regex pattern to match EO and VO values
-	        Pattern pattern = Pattern.compile(
-					"EO=\\{entityobject=\"(.*?)\", entityattribute=(.*?)\\}, VO=\\{viewobject=\"(.*?)\", viewattribute=(.*?)\\}"
-	        );
-
-	        // Populate the map with eovo values
-	        for (Object[] attributesEntity : attributesEOVO) {
-	            Integer attributeId = Integer.parseInt(String.valueOf(attributesEntity[0]));
-	            String eovoString = (String) attributesEntity[1];
-	            
-	            Matcher matcher = pattern.matcher(eovoString);
-	            if (matcher.find()) {
-	                // Extract values using regex groups
-	                String entityObject = matcher.group(1);
-	                String entityAttribute = matcher.group(2);
-	                String viewObject = matcher.group(3);
-	                String viewAttribute = matcher.group(4);
-	                
-	                // Store in the map
-	                eovoMap.put(attributeId, Arrays.asList(entityObject, entityAttribute, viewObject, viewAttribute));
-	            }
-	        }
-
-	        // Process each attribute and its eovo values
-		       // Create UIAttribute and ViewObject based on the filtered attributes and eovo values
-	        for (PageAttributesEntity attribute : codePagesEntity.getPageAttributes()) {
-	            Integer attributeId = attribute.getAttribute_id();
-	            List<String> eovoValues = eovoMap.get(attributeId);
-	            
-	            System.out.println(attribute);
-	            
-	            System.out.println("eovoValues===> " + eovoValues);
-
-	            if (eovoValues != null) {
-	                String viewObject = eovoValues.get(2);
-	                String viewAttribute = eovoValues.get(3);
-
-	                // Create UIAttribute and ViewObject instances
-	                UIAttribute uiAttribute = new UIAttribute(
-	                		attribute,
-	                        viewObject,
-	                        viewAttribute
-	                );
-
-	                generator.addAttribute(uiAttribute);
-
-                    // Check if ViewObject has already been added
-                    if (!addedViewObjects.contains(viewObject)) {
-                        // Create and add the ViewObject
-                        ViewObject viewObjectInstance = new ViewObject(
-                            viewObject,
-                            "SELECT * FROM SOME_TABLE WHERE SOME_CONDITION", // Adjust query as needed
-                            "onload_event"
-                        );
-                        generator.addViewObject(viewObjectInstance);
-
-                        // Add to the temporary list
-                        addedViewObjects.add(viewObject);
-                    }
-	            }
-	        }
-	        pageGeneratedCode = generator.generatePageReactCode();
-	        
-			String fileName = "test.jsx"; // Replace with your logic to determine the file name
-
-			// Define the output file path in the resources folder
-			File outputFile = Paths.get("C:/Users/akassha2/Downloads/react/my-app/src/components/" + fileName).toFile();
-
-			// Write the generated code to the .jsx file
-			try (FileWriter writer = new FileWriter(outputFile)) {
-				writer.write(pageGeneratedCode);
-				System.out.println("Successfully wrote to the file: " + outputFile.getPath());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			//Code Generation
+			pageCodeGeneration.generateCode(attributeIds, codePagesEntity);
 			
 	        // Prepare the response with both saved entity and generated code
 	        Map<String, Object> response = new HashMap<>();
@@ -492,53 +404,24 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 	}
 
 	@Transactional
-	public List<Map<String, Object>> getVOData(List<Map<String, String>> voMapList) {
-		// Extract all attribute IDs from the input JSON
-		List<Integer> attributeIds = voMapList.stream().map(attr -> Integer.parseInt(attr.get("attid"))).collect(Collectors.toList());
+	public List<Map<String, Object>> getVOData(String viewObjectName) {	    
+	    // Fetch the query for the given view object name
+		System.out.println(viewObjectName);
+        String sql = "SELECT view_object_sql_query FROM xxpf_view_objects WHERE view_object_name = ?";
+		RowMapper<String> rowMapper = new RowMapper<String>() {
+		    @Override
+		    public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+		        Clob clob = rs.getClob(1);
+		        return clob.getSubString(1, (int) clob.length());
+		    }
+		};
 
-		System.out.println("attributeIds="+attributeIds);
-		// Fetch all attributes in one go
-		List<Object[]> attributesEntities = pageAttributeRepo.findAllEOVOByAttributeIds(attributeIds);
-		System.out.println("attributesEntities="+attributesEntities);
-		List<Map<String, Object>> result = new ArrayList<>();
-
-		// Process each attribute entity
-		int counter = 0;
-		for (Object[] attributesEntity : attributesEntities) {
-			
-			Integer attributeId = Integer.parseInt(String.valueOf(attributesEntity[0]));
-			
-			// Pattern to match EO and VO values
-			Pattern pattern = Pattern.compile(
-					"EO=\\{entityobject=\"(.*?)\", entityattribute=(.*?)\\}, VO=\\{viewobject=\"(.*?)\", viewattribute=(.*?)\\}");
-			Matcher matcher = pattern.matcher(String.valueOf(attributesEntity[1]));
-
-			if (matcher.find()) {
-				String eoEntityAttribute = matcher.group(2);  // eoEntityAttribute
-				String voEntityObject = matcher.group(3);    //voEntityObject
-				String voEntityAttribute = matcher.group(4);// voEntityAttribute
-
-				Map<String, Object> parameters = new HashMap<>();
-				parameters.put(voEntityAttribute, eoEntityAttribute);
-
-				if (voMapList.get(counter).get("viewObjectName").equals(voEntityObject)) {
-					String res = replaceFieldsWithEOValues2(voMapList.get(counter).get("viewObjectQuery"), parameters);
-					System.out.println("res="+res);
-					List<Map<String, Object>> queryResult = template.queryForList(res);
-					System.out.println("queryResult : " + queryResult);
-					// Replace column names with voEntityAttribute values and include attributeId
-	                for (Map<String, Object> row : queryResult) {
-	                    Map<String, Object> modifiedRow = new HashMap<>();
-	                    modifiedRow.put("attid", attributeId);
-	                    modifiedRow.put("placeHolder_column", voEntityAttribute);
-	                    modifiedRow.put("attrValue", row.get(eoEntityAttribute));
-	                    result.add(modifiedRow);
-	                }
-					counter++;
-				}
-			}
-		}
-		return result;
+		String viewObjectQuery = template.queryForObject(sql, rowMapper, viewObjectName);
+        System.out.println("viewObjectQuery=" + viewObjectQuery);
+        
+        List<Map<String, Object>> queryResult = template.queryForList(viewObjectQuery);
+        System.out.println("queryResult : " + queryResult);
+	    return queryResult;
 	}
 
 	private String replaceFieldsWithEOValues2(String query, Map<String, Object> parameters) {
