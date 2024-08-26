@@ -337,8 +337,24 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 	}
 
 	public ViewObjectsEntity saveViewObject(ViewObjectsEntity viewObject) {
-		ViewObjectsEntity viewObjectsEntity = viewObjectsRepo.save(viewObject);
-		return viewObjectsEntity;
+	    // Check if the entity exists
+	    ViewObjectsEntity existingViewObject = viewObjectsRepo.findByViewObjectName(viewObject.getView_object_name()).orElse(null);
+	    if (existingViewObject != null) {
+	        // Update fields of the existing entity with values from viewObject
+	        existingViewObject.setView_object_sql_query(viewObject.getView_object_sql_query());
+	        existingViewObject.setEvent_type(viewObject.getEvent_type());
+	        existingViewObject.setCreated_by(viewObject.getCreated_by()); // Typically not updated
+	        existingViewObject.setCreation_date(viewObject.getCreation_date()); // Typically not updated
+	        existingViewObject.setLast_updated_by(viewObject.getLast_updated_by());
+	        existingViewObject.setLast_updated_date(viewObject.getLast_update_date());
+
+	        // Save the updated entity
+	        return viewObjectsRepo.save(existingViewObject);
+	    }
+	    else {
+	        // Save the new entity
+	        return viewObjectsRepo.save(viewObject);
+	    }
 	}
 
 	@Transactional
@@ -447,7 +463,7 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 	public List<Map<String, Object>> getVOData(String viewObjectName) {	    
 	    // Fetch the query for the given view object name
 		System.out.println(viewObjectName);
-        String sql = "SELECT view_object_sql_query FROM xxpf_view_objects WHERE view_object_name = ?";
+        String sql = "SELECT view_object_sql_query, event_type FROM xxpf_view_objects WHERE view_object_name = ?";
 		RowMapper<String> rowMapper = new RowMapper<String>() {
 		    @Override
 		    public String mapRow(ResultSet rs, int rowNum) throws SQLException {
