@@ -143,17 +143,16 @@ public class ReactCodeGenerator {
         reactCode.append("        </p>\n");
         reactCode.append("      </div>\n");
         reactCode.append("      <div className='bg-accent flex flex-col flex-grow items-center justify-center p-4 overflow-y-auto' style={{ backgroundImage: `url(${paperSvg})` }}>\n");
-        reactCode.append("        <div className='max-w-[620px] flex flex-col gap-4 flex-grow bg-background h-full w-full rounded-2xl p-8 overflow-y-auto'>\n");
-        reactCode.append("          <div className='flex flex-col gap-2 w-full'>\n");
+        reactCode.append("        <div className='max-w-[1100px] bg-background h-full w-full rounded-2xl  overflow-y-auto'>\n");
 
         // Generate React code for each UI attribute
         for (UIAttribute attribute : attributes) {
             reactCode.append("            ").append(attribute.generateReactCode()).append("\n");
         }
-//        reactCode.append("          </div>\n");
+        reactCode.append("          </div>\n");
         reactCode.append("        </div>\n");
         reactCode.append("      </div>\n");
-        reactCode.append("    </div>\n");
+//        reactCode.append("    </div>\n");
 //        reactCode.append("    </>\n");
         reactCode.append("  );\n");
         reactCode.append("};\n\n");

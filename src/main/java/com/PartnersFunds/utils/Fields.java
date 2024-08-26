@@ -22,6 +22,8 @@ public class Fields {
 		}
 
 		// Start building the React code
+		reactCode.append("<div className='relative'>\n");
+		reactCode.append("<div style={{ position: 'absolute', left: '").append(propertiesMap.get("x")).append("px', top: '").append(propertiesMap.get("y")).append("px' }}>\n");
 		reactCode.append("<div className='flex flex-col gap-2 w-full'>\n");
 
 		// Add label with styles and required indication
@@ -62,6 +64,9 @@ public class Fields {
 		}
 		reactCode.append("    onChange={handleChange}\n");
 		reactCode.append("  />\n");
+        reactCode.append("        </div>\n");
+        reactCode.append("        </div>\n");
+        reactCode.append("        </div>\n");
 		return reactCode.toString();
 	}
 
@@ -77,6 +82,8 @@ public class Fields {
 		}
 
 		// Start building the React code
+		reactCode.append("<div className='relative'>\n");
+		reactCode.append("<div style={{ position: 'absolute', left: '").append(propertiesMap.get("x")).append("px', top: '").append(propertiesMap.get("y")).append("px' }}>\n");
 		reactCode.append("<div className='flex flex-col gap-2 w-full'>\n");
 
 		// Add label with styles
@@ -114,7 +121,9 @@ public class Fields {
 		}
 		reactCode.append("    onChange={handleChange}\n");
 		reactCode.append("  />\n");
-//		reactCode.append("</div>\n");
+		reactCode.append("</div>\n");
+		reactCode.append("</div>\n");
+		reactCode.append("</div>\n");
 
 		return reactCode.toString();
 	}
@@ -132,6 +141,8 @@ public class Fields {
 		}
 
 		// Start building the React code
+		reactCode.append("<div className='relative'>\n");
+		reactCode.append("<div style={{ position: 'absolute', left: '").append(propertiesMap.get("x")).append("px', top: '").append(propertiesMap.get("y")).append("px' }}>\n");
 		reactCode.append("<div className='flex flex-col gap-2 w-full' style={{\n");
 		if (propertiesMap.containsKey("width")) {
 			reactCode.append("  width: '").append(propertiesMap.get("width")).append("',\n");
@@ -184,6 +195,8 @@ public class Fields {
 		reactCode.append("    </SelectContent>\n");
 		reactCode.append("  </Select>\n");
 		reactCode.append("</div>\n");
+		reactCode.append("</div>\n");
+		reactCode.append("</div>\n");
 
 		return reactCode.toString();
 	}
@@ -202,7 +215,10 @@ public class Fields {
 		StringBuilder reactCode = new StringBuilder();
 
 		// Start building the React code
+		reactCode.append("<div className='relative'>\n");
+		reactCode.append("<div style={{ position: 'absolute', left: '").append(propertiesMap.get("x")).append("px', top: '").append(propertiesMap.get("y")).append("px' }}>\n");
 		reactCode.append("<div className='flex flex-col gap-2 w-full'>\n");
+		
 
 		// Add label with styles and required indication
 		if (propertiesMap.containsKey("labelHeader")) {
@@ -247,8 +263,8 @@ public class Fields {
 
 		reactCode.append("  </RadioGroup>\n");
 		reactCode.append("</div>\n");
-        reactCode.append("            </div>\n");
-        reactCode.append("            </div>\n");
+		reactCode.append("</div>\n");
+		reactCode.append("</div>\n");
 
 		return reactCode.toString();
 	}
@@ -266,6 +282,8 @@ public class Fields {
 		StringBuilder reactCode = new StringBuilder();
 
 		// Start building the React code
+		reactCode.append("<div className='relative'>\n");
+		reactCode.append("<div style={{ position: 'absolute', left: '").append(propertiesMap.get("x")).append("px', top: '").append(propertiesMap.get("y")).append("px' }}>\n");
 		reactCode.append("<div className='flex flex-col gap-2 w-full'>\n");
 
 		// Add Label with styles
@@ -297,6 +315,8 @@ public class Fields {
 
 		reactCode.append("  </Label>\n");
 		reactCode.append("</div>\n");
+		reactCode.append("</div>\n");
+		reactCode.append("</div>\n");
 
 		return reactCode.toString();
 	}
@@ -305,13 +325,18 @@ public class Fields {
 			String viewObjectAttr) {
 
 		StringBuilder reactCode = new StringBuilder();
-		// Create a map to store property names and values
 		Map<String, String> propertiesMap = new HashMap<>();
-
+		
 		// Populate the map with property names and values
 		for (PageAttrPropertiesEntity prop : attribute.getPageAttrPropertiesEntity()) {
 			propertiesMap.put(prop.getProperty_name(), prop.getProperty_value());
 		}
+				
+		// Start building the React code
+		reactCode.append("<div className='relative'>\n");
+		reactCode.append("<div style={{ position: 'absolute', left: '").append(propertiesMap.get("x")).append("px', top: '").append(propertiesMap.get("y")).append("px' }}>\n");
+		reactCode.append("<div className='flex flex-col gap-2 w-full'>\n");
+		// Create a map to store property names and values
 
 		// Start building the React code
 	    reactCode.append("            <Label style={{\n");
@@ -347,7 +372,9 @@ public class Fields {
 	        }
 	    }
 	    
-	    
+	    reactCode.append("</div>\n");
+	    reactCode.append("</div>\n");
+	    reactCode.append("</div>\n");
 		
 	    return reactCode.toString();
 	}
@@ -365,6 +392,8 @@ public class Fields {
 	    StringBuilder reactCode = new StringBuilder();
 
 	    // Start building the React code
+		reactCode.append("<div className='relative'>\n");
+		reactCode.append("<div style={{ position: 'absolute', left: '").append(propertiesMap.get("x")).append("px', top: '").append(propertiesMap.get("y")).append("px' }}>\n");
 	    reactCode.append("<div className='flex flex-col gap-2 w-full'>\n");
 	    reactCode.append("  <Button onClick={alertFunc}\n");
 	    reactCode.append("    style={{\n");
@@ -400,6 +429,7 @@ public class Fields {
 	    }
 
 	    reactCode.append("  </Button>\n");
+	    reactCode.append("</div>\n");
 	    reactCode.append("</div>\n");
 	    reactCode.append("</div>\n");
 
