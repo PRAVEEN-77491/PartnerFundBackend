@@ -132,7 +132,20 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 
 	public ProcedureResult callFunction(Integer attribute_id, Map<String, Object> parameters) {
 		String funcNameWithParams = this.pageAttrPropertiesRepo.dBFuncName(attribute_id);
-		String formattedFuncNameWithParams = this.replaceFunctionParameters(funcNameWithParams, parameters);
+		System.out.println("funName" + funcNameWithParams);
+		
+        // Define regex patterns for extracting values
+//        String expPattern = "onclick_exp=([^,}]+)";
+        // Extract onclick_exp
+//        String onclickExp = extractValue(funcNameWithParams, expPattern);
+//        System.out.println("onclick_exp: " + onclickExp);
+
+        // Extract onclick_db
+		String dbPattern = "onclick_db=([^}]+)";
+        String onclickDb = extractValue(funcNameWithParams, dbPattern);
+        System.out.println("onclick_db: " + onclickDb);
+        
+		String formattedFuncNameWithParams = this.replaceFunctionParameters(onclickDb, parameters);
 		System.out.println("formattedFuncName: " + formattedFuncNameWithParams);
 		String callableSql = this.createCallableSql(formattedFuncNameWithParams);
 		System.out.println("callableSql" + callableSql);
@@ -156,6 +169,17 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 			return new ProcedureResult("FAILURE", var7.getMessage());
 		}
 	}
+	
+    private static String extractValue(String input, String pattern) {
+        Pattern regexPattern = Pattern.compile(pattern);
+        Matcher matcher = regexPattern.matcher(input);
+
+        if (matcher.find()) {
+            return matcher.group(1).trim(); // Extract and trim the matched value
+        }
+
+        return null; // Return null if no match found
+    }
 
 	private String replaceFunctionParameters(String funcNameWithParams, Map<String, Object> parameters) {
 		String paramName;
@@ -264,6 +288,22 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 			logger.info("Saving updated pages entity");
 			
 			PagesEntity codePagesEntity = pagesRepo.save(pagesEntity);
+			
+		    // Create a new list to hold the reordered attributes
+//		    List<PageAttributesEntity> reorderedAttributes = new ArrayList<>();
+
+//		    // Iterate over the attribute IDs and add corresponding entities to the reordered list
+//		    for (Integer id : attributeIds) {
+//		        for (PageAttributesEntity attribute : codePagesEntity.getPageAttributes()) {
+//		            if (attribute.getAttribute_id().equals(id)) {
+//		                reorderedAttributes.add(attribute);
+//		                break; // Break the inner loop once the match is found
+//		            }
+//		        }
+//		    }
+//		    // Clear the original list and add the reordered attributes back
+//		    codePagesEntity.getPageAttributes().clear();
+//		    codePagesEntity.getPageAttributes().addAll(reorderedAttributes);
 			//Code Generation
 			pageCodeGeneration.generateCode(attributeIds, codePagesEntity);
 			

@@ -41,8 +41,6 @@ public class ReactCodeGenerator {
         }
         reactCode.append("\n");
         
-        boolean hasCheckbox = attributes.stream().anyMatch(attr -> "checkbox".equalsIgnoreCase(attr.getAttributeType()));
-        
         reactCode.append("  const effectRan = useRef(false);\n");
 
      // Generate a single useEffect hook to fetch data for all view objects
@@ -91,7 +89,7 @@ public class ReactCodeGenerator {
         reactCode.append("  };\n");
         
         // Conditionally include handleCheckboxChange function
-        if (hasCheckbox) {
+        if (attributes.stream().anyMatch(attr -> "checkbox".equalsIgnoreCase(attr.getAttributeType()))) {
             reactCode.append("  const [checkedItems, setCheckedItems] = useState([]);\n");
             reactCode.append("  const handleCheckboxChange = (checked, option) => {\n");
             reactCode.append("    setCheckedItems(prevCheckedItems => {\n");
@@ -103,6 +101,37 @@ public class ReactCodeGenerator {
             reactCode.append("    });\n");
             reactCode.append("  };\n\n");
         }
+        
+        
+//        // Generate handleSelectChange function
+//        if (attributes.stream().anyMatch(attr -> "selectfield".equalsIgnoreCase(attr.getAttributeType()))) {
+//            reactCode.append("  const [selectedOption, setSelectedOption] = useState('');\n");
+//            reactCode.append("  const handleSelectChange = (value) => {\n");
+//            reactCode.append("    setSelectedOption(value);\n");
+//            reactCode.append("  };\n\n");
+//        }
+//
+//        // Generate handleRadioChange function
+//        if (attributes.stream().anyMatch(attr -> "radiofield".equalsIgnoreCase(attr.getAttributeType()))) {
+//            reactCode.append("  const [radioValue, setRadioValue] = useState('');\n");
+//            reactCode.append("  const handleRadioChange = (value) => {\n");
+//            reactCode.append("    setRadioValue(value);\n");
+//            reactCode.append("  };\n\n");
+//        }
+        
+        if (attributes.stream().anyMatch(attr -> "button".equalsIgnoreCase(attr.getAttributeType()))) {
+            reactCode.append("  const alertFunc = async () => {\n");
+            reactCode.append("    try {\n");
+            reactCode.append("        await axios.post('http://localhost:8080/page/call', {\n");
+            reactCode.append("        \"attribute_id\": ").append("2710").append(",\n");
+            reactCode.append("        \"params\": ").append("textField3VO").append("\n");
+            reactCode.append("      });\n");
+            reactCode.append("    } catch (error) {\n");
+            reactCode.append("      console.error('Error fetching data:', error);\n");
+            reactCode.append("    }\n");
+            reactCode.append("  };\n");            
+        }
+
 
         // Start the return block
         reactCode.append("  return (\n");
@@ -121,7 +150,7 @@ public class ReactCodeGenerator {
         for (UIAttribute attribute : attributes) {
             reactCode.append("            ").append(attribute.generateReactCode()).append("\n");
         }
-        reactCode.append("          </div>\n");
+//        reactCode.append("          </div>\n");
         reactCode.append("        </div>\n");
         reactCode.append("      </div>\n");
         reactCode.append("    </div>\n");

@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface PageAttrPropertiesRepo extends JpaRepository<PageAttrPropertiesEntity, Integer> {
    @Query(
-      value = "select property_value from xxpf_page_attr_properties where property_name = 'ONCLICK' AND attribute_id = :attr_id ",
+      value = "select property_value from xxpf_page_attr_properties where property_name = 'onclick' AND attribute_id = :attr_id ",
       nativeQuery = true
    )
    String dBFuncName(@Param("attr_id") int attr_id);

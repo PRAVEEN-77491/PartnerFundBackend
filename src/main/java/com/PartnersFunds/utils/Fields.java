@@ -158,10 +158,10 @@ public class Fields {
 		// Add select field with properties
 		reactCode.append("  <Select\n");
 		if (viewObjectName != null && viewObjectAttr != null) {
-			reactCode.append("    value={").append(viewObjectName).append(".").append(viewObjectAttr.toUpperCase())
-					.append("}\n");
+			reactCode.append("    value={").append(viewObjectName).append(".").append(viewObjectAttr.toUpperCase()).append(" || ''}\n");
 		}
-		reactCode.append("    onValueChange={handleChange}\n");
+		reactCode.append("    onValueChange={(value) => set").append(viewObjectName.substring(0, 1).toUpperCase() + viewObjectName.substring(1)).append("({ ...").append(viewObjectName).append(", ").append(viewObjectAttr.toUpperCase()).append(": value })}\n");
+
 		reactCode.append("  >\n");
 		reactCode.append("    <SelectTrigger>\n");
 		reactCode.append("      <SelectValue placeholder='");
@@ -221,10 +221,9 @@ public class Fields {
 		// Add RadioGroup and RadioGroupItem fields with properties
 		reactCode.append("  <RadioGroup\n");
 		if (viewObjectName != null && viewObjectAttr != null) {
-			reactCode.append("    defaultValue={").append(viewObjectName).append(".")
-					.append(viewObjectAttr.toUpperCase()).append("}\n");
+			reactCode.append("    value={").append(viewObjectName).append(".").append(viewObjectAttr.toUpperCase()).append(" || ''}\n");
 		}
-		reactCode.append("    onValueChange={handleChange}\n");
+		reactCode.append("    onValueChange={(value) => set").append(viewObjectName.substring(0, 1).toUpperCase() + viewObjectName.substring(1)).append("({ ...").append(viewObjectName).append(", ").append(viewObjectAttr.toUpperCase()).append(": value })}\n");
 		reactCode.append("    style={{\n");
 		reactCode.append("      color: '").append(propertiesMap.get("radiocolor")).append("',\n");
 		reactCode.append("      fontSize: '").append(propertiesMap.get("fontsize")).append("px',\n");
@@ -333,6 +332,7 @@ public class Fields {
 	        for (int i = 0; i < options.length; i++) {
 	            reactCode.append("            <div key={").append(i).append("} className='flex items-center space-x-2'>\n");
 	            reactCode.append("              <Checkbox id={'checkbox-").append(viewObjectAttr).append("-").append(i).append("'}\n");
+	            reactCode.append("                defaultChecked={checkedItems.includes('").append(options[i].replaceAll("^\\[|\\]$", "").trim()).append("')}\n");
 	            reactCode.append("                onCheckedChange={(checked) => handleCheckboxChange(checked, '").append(options[i].replaceAll("^\\[|\\]$", "").trim()).append("')}\n");
 	            if (propertiesMap.containsKey("fontweight")) {
 	                reactCode.append("                style={{ fontWeight: '").append(propertiesMap.get("fontweight")).append("' }}\n");
