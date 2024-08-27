@@ -1,10 +1,10 @@
 package com.PartnersFunds.Controllers;
 
-import com.PartnersFunds.service.ExpressionAttrPropDTO;
-import com.PartnersFunds.service.ExpressionDTO;
+import com.PartnersFunds.DTO.ExpressionAttrPropDTO;
+import com.PartnersFunds.DTO.ExpressionDTO;
+import com.PartnersFunds.DTO.ResponseExpMappingDTO;
+import com.PartnersFunds.DTO.ResponseExpressionDTO;
 import com.PartnersFunds.service.ExpressionService;
-import com.PartnersFunds.service.ResponseExpMappingDTO;
-import com.PartnersFunds.service.ResponseExpressionDTO;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

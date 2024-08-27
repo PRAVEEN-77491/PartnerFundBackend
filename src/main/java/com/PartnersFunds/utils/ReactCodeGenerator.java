@@ -2,6 +2,7 @@ package com.PartnersFunds.utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ReactCodeGenerator {
     private List<UIAttribute> attributes;
@@ -43,41 +44,10 @@ public class ReactCodeGenerator {
         
         reactCode.append("  const effectRan = useRef(false);\n");
 
-     // Generate a single useEffect hook to fetch data for all view objects
-        reactCode.append("  useEffect(() => {\n");
-        reactCode.append("    if (").append("effectRan").append(".current === false) {\n");
-        reactCode.append("      const fetchData = async () => {\n");
-        reactCode.append("        try {\n");
-        reactCode.append("          const promises = [];\n");
-
+        // Generate useEffect hooks to fetch data
         for (ViewObject vo : viewObjects) {
-            reactCode.append("          promises.push(axios.post('http://localhost:8080/page/api/").append(vo.getViewObjectName()).append("', {\n");
-            reactCode.append("            \"viewObjectName\": \"").append(vo.getViewObjectName()).append("\"\n");
-            reactCode.append("          }));\n");
+            reactCode.append("  ").append(vo.generateUseEffectCode("effectRan")).append("\n");
         }
-
-        reactCode.append("          const responses = await Promise.all(promises);\n");
-
-        int i = 0;
-        for (ViewObject vo : viewObjects) {
-            reactCode.append("          set").append(vo.getViewObjectName().substring(0, 1).toUpperCase() + vo.getViewObjectName().substring(1)).append("(responses[").append(i).append("].data[0]);\n");
-            i++;
-        }
-
-        reactCode.append("        } catch (error) {\n");
-        reactCode.append("          console.error('Error fetching data:', error);\n");
-        reactCode.append("        }\n");
-        reactCode.append("      };\n");
-        reactCode.append("      fetchData();\n");
-        reactCode.append("      ").append("effectRan").append(".current = true;\n");
-        reactCode.append("    }\n");
-        reactCode.append("  }, []);\n");
-        reactCode.append("\n");
-
-//        // Generate useEffect hooks to fetch data
-//        for (ViewObject vo : viewObjects) {
-//            reactCode.append("  ").append(vo.generateUseEffectCode("effectRan")).append("\n");
-//        }
 
         // Generate the handleChange function
         reactCode.append("  const handleChange = (e) => {\nconsole.log('Hello')\n");
@@ -87,7 +57,7 @@ public class ReactCodeGenerator {
 //        reactCode.append("      [name]: value,\n");
 //        reactCode.append("    }));\n");
         reactCode.append("  };\n");
-        
+
         // Conditionally include handleCheckboxChange function
         if (attributes.stream().anyMatch(attr -> "checkbox".equalsIgnoreCase(attr.getAttributeType()))) {
             reactCode.append("  const [checkedItems, setCheckedItems] = useState([]);\n");
@@ -124,7 +94,18 @@ public class ReactCodeGenerator {
             reactCode.append("    try {\n");
             reactCode.append("        await axios.post('http://localhost:8080/page/call', {\n");
             reactCode.append("        \"attribute_id\": ").append("2710").append(",\n");
-            reactCode.append("        \"params\": ").append("textField3VO").append("\n");
+            reactCode.append("        \"params\": [");
+
+            for (int j = 0; j < viewObjects.size(); j++) {
+            	if(viewObjects.get(j).getViewObjectName() != null) {
+	                reactCode.append(viewObjects.get(j).getViewObjectName());
+	                if (j < viewObjects.size() - 1) {
+	                    reactCode.append(", ");
+	                }
+            	}
+            }
+
+            reactCode.append("]\n");
             reactCode.append("      });\n");
             reactCode.append("    } catch (error) {\n");
             reactCode.append("      console.error('Error fetching data:', error);\n");
@@ -147,6 +128,7 @@ public class ReactCodeGenerator {
 
         // Generate React code for each UI attribute
         for (UIAttribute attribute : attributes) {
+        	System.out.println("UIAttribute ====> " + attribute);
             reactCode.append("            ").append(attribute.generateReactCode()).append("\n");
         }
         reactCode.append("          </div>\n");

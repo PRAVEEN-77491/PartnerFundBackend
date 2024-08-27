@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,14 +21,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.PartnersFunds.DTO.JsonElementDTO;
+import com.PartnersFunds.DTO.PagePropDetailsDTO;
 import com.PartnersFunds.Entities.EntityObjectsEntity;
 import com.PartnersFunds.Entities.PageAttrPropertiesEntity;
 import com.PartnersFunds.Entities.PageAttributesEntity;
 import com.PartnersFunds.Entities.PagesEntity;
 import com.PartnersFunds.Entities.ViewObjectsEntity;
-import com.PartnersFunds.service.JsonElementDTO;
 import com.PartnersFunds.service.PageDetailsService;
-import com.PartnersFunds.service.PagePropDetailsDTO;
 import com.PartnersFunds.service.ProcedureResult;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -94,10 +95,10 @@ public class PageDetailsController {
 	}
 
 	@PostMapping("/call")
-	public ProcedureResult callProcedure(@RequestBody Map<String, Object> request){
-        Integer attr_id = (Integer) request.get("attribute_id");
-        Map<String, Object> params = (Map<String, Object>) request.get("params");
-        return pageService.callFunction(attr_id, params);
+	public ProcedureResult callProcedure(@RequestBody Map<String, Object> request) {
+	    Integer attr_id = (Integer) request.get("attribute_id");
+	    List<Map<String, Object>> params = (List<Map<String, Object>>) request.get("params");
+	    return pageService.callFunction(attr_id, params);
 	}
 	
 	@PostMapping("/pagePropDetails")
@@ -137,7 +138,15 @@ public class PageDetailsController {
 	}
 
 	@PostMapping("/api/{viewObjectName}")
-	public List<Map<String, Object>> getVOData(@PathVariable("viewObjectName") String voObjectName) throws IOException, SQLException {
+	public Map<String, Object> getVOData(@PathVariable("viewObjectName") String voObjectName) throws IOException, SQLException {
 		return pageService.getVOData(voObjectName);
 	}
+	
+	@Secured("ROLE_ADMIN")
+	@PostMapping("/hello")
+	@ResponseBody
+	public String getHello() {
+		return "hello";
+	}
+	
 }

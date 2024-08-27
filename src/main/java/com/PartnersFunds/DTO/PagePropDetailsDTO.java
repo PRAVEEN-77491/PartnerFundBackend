@@ -1,4 +1,4 @@
-package com.PartnersFunds.service;
+package com.PartnersFunds.DTO;
 
 import java.util.List;
 import java.util.Map;

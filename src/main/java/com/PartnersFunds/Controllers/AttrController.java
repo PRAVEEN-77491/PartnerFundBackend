@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.PartnersFunds.Entities.PageAttrPropertiesEntity;
 import com.PartnersFunds.Entities.PageAttributesEntity;
 import com.PartnersFunds.Entities.PagesEntity;
-import com.PartnersFunds.service.AttrServiceImpl;
+import com.PartnersFunds.serviceImpl.AttrServiceImpl;
 
 @RestController
 @RequestMapping("/api")

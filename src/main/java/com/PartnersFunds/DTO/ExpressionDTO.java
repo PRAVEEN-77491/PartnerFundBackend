@@ -1,4 +1,4 @@
-package com.PartnersFunds.service;
+package com.PartnersFunds.DTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.sql.Date;

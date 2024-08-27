@@ -1,5 +1,6 @@
 package com.PartnersFunds.service;
 
+import com.PartnersFunds.DTO.PagePropDetailsDTO;
 import com.PartnersFunds.Entities.EntityObjectsEntity;
 import com.PartnersFunds.Entities.PageAttrPropertiesEntity;
 
@@ -27,7 +28,7 @@ public interface PageDetailsService {
 
    String savePageAttributePropertiesDetails(List<PageAttrPropertiesEntity> pageAttrPropertiesList);
 
-   ProcedureResult callFunction(Integer attribute_id, Map<String, Object> params);
+   ProcedureResult callFunction(Integer attribute_id, List<Map<String, Object>> params);
 
    ResponseEntity<Map<String, Object>> addPagePropDetails(PagePropDetailsDTO pagePropDetailsJSON) throws JsonMappingException, JsonProcessingException;
 
@@ -43,5 +44,5 @@ public interface PageDetailsService {
 
    PageAttributesEntity saveEOData(List<Map<String, String>> attributes) throws JsonMappingException, JsonProcessingException, IOException, SQLException;
 
-   List<Map<String, Object>> getVOData(String viewObjectName);
+   Map<String, Object> getVOData(String viewObjectName);
 }

@@ -1,4 +1,4 @@
-package com.PartnersFunds.service;
+package com.PartnersFunds.serviceImpl;
 
 import java.util.List;
 
@@ -11,6 +11,7 @@ import com.PartnersFunds.Entities.PagesEntity;
 import com.PartnersFunds.Repo.PageAttrPropertiesRepo;
 import com.PartnersFunds.Repo.PageAttributesRepo;
 import com.PartnersFunds.Repo.PagesRepo;
+import com.PartnersFunds.service.AttrService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

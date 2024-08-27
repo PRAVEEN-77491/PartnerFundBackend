@@ -1,4 +1,4 @@
-package com.PartnersFunds.service;
+package com.PartnersFunds.DTO;
 
 public class PageDetailsDTO {
    private String page_name;

@@ -20,13 +20,17 @@ import org.springframework.stereotype.Component;
 
 import com.PartnersFunds.Entities.PageAttributesEntity;
 import com.PartnersFunds.Entities.PagesEntity;
+import com.PartnersFunds.Entities.ViewObjectsEntity;
 import com.PartnersFunds.Repo.PageAttributesRepo;
+import com.PartnersFunds.Repo.ViewObjectsRepo;
 
 @Component
 public class PageCodeGeneration {
 
 	@Autowired
 	PageAttributesRepo pageAttributeRepo;
+	@Autowired
+	ViewObjectsRepo viewObjectsRepo;
 
 	Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -95,12 +99,16 @@ public class PageCodeGeneration {
 				// Check if ViewObject has already been added
 				if (!addedViewObjects.contains(viewObject)) {
 					// Create and add the ViewObject
-					ViewObject viewObjectInstance = new ViewObject(viewObject);
-					generator.addViewObject(viewObjectInstance);
-					// Add to the temporary list
-					addedViewObjects.add(viewObject);
+					ViewObjectsEntity voEntity = viewObjectsRepo.findByViewObjectName(viewObject).orElse(null);
+					System.out.println(voEntity.getEvent_type());
+					if(voEntity != null) {
+						ViewObject viewObjectInstance = new ViewObject(viewObject, voEntity.getEvent_type());
+						generator.addViewObject(viewObjectInstance);
+						// Add to the temporary list
+						addedViewObjects.add(viewObject);
+					}
 				}
-				
+
 				System.out.println("addedViewObjects =====> "+addedViewObjects);
 			} else if ("button".equalsIgnoreCase(attribute.getAttribute_type())) {
 		        // Handle the button attribute

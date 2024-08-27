@@ -1,5 +1,7 @@
-package com.PartnersFunds.service;
+package com.PartnersFunds.serviceImpl;
 
+import com.PartnersFunds.DTO.JsonElementDTO;
+import com.PartnersFunds.DTO.PagePropDetailsDTO;
 import com.PartnersFunds.Entities.EntityObjectsEntity;
 import com.PartnersFunds.Entities.PageAttrPropertiesEntity;
 import com.PartnersFunds.Entities.PageAttributesEntity;
@@ -16,26 +18,19 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.PartnersFunds.Repo.ViewObjectsRepo;
+import com.PartnersFunds.service.PageDetailsService;
+import com.PartnersFunds.service.ProcedureResult;
 import com.PartnersFunds.utils.PageCodeGeneration;
 import com.PartnersFunds.utils.QueryBuilder;
-import com.PartnersFunds.utils.ReactCodeGenerator;
-import com.PartnersFunds.utils.UIAttribute;
-import com.PartnersFunds.utils.ViewObject;
-
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.sql.CallableStatement;
 import java.sql.Clob;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -130,7 +125,7 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 		}
 	}
 
-	public ProcedureResult callFunction(Integer attribute_id, Map<String, Object> parameters) {
+	public ProcedureResult callFunction(Integer attribute_id, List<Map<String, Object>> parameters) {
 		String funcNameWithParams = this.pageAttrPropertiesRepo.dBFuncName(attribute_id);
 		System.out.println("funName" + funcNameWithParams);
 		
@@ -143,31 +138,33 @@ public class PageDetailsServiceImpl implements PageDetailsService {
         // Extract onclick_db
 		String dbPattern = "onclick_db=([^}]+)";
         String onclickDb = extractValue(funcNameWithParams, dbPattern);
-        System.out.println("onclick_db: " + onclickDb);
-        
-		String formattedFuncNameWithParams = this.replaceFunctionParameters(onclickDb, parameters);
-		System.out.println("formattedFuncName: " + formattedFuncNameWithParams);
-		String callableSql = this.createCallableSql(formattedFuncNameWithParams);
-		System.out.println("callableSql" + callableSql);
+		System.out.println("onclick_db: " + onclickDb);
+		for (Map<String, Object> parameter : parameters) {
+			String formattedFuncNameWithParams = this.replaceFunctionParameters(onclickDb, parameter);
+			System.out.println("formattedFuncName: " + formattedFuncNameWithParams);
+			String callableSql = this.createCallableSql(formattedFuncNameWithParams);
+			System.out.println("callableSql" + callableSql);
 
-		try {
-			template = new JdbcTemplate(this.datasource);
-			return template.execute((ConnectionCallback<ProcedureResult>) (conn) -> {
-				System.out.println(callableSql);
-				CallableStatement callableStatement = conn.prepareCall(callableSql);
-				callableStatement.registerOutParameter(1, 12);
-				callableStatement.execute();
+			try {
+				template = new JdbcTemplate(this.datasource);
+				return template.execute((ConnectionCallback<ProcedureResult>) (conn) -> {
+					System.out.println(callableSql);
+					CallableStatement callableStatement = conn.prepareCall(callableSql);
+					callableStatement.registerOutParameter(1, 12);
+					callableStatement.execute();
 
-				JSONObject jsonObject = new JSONObject(callableStatement.getString(1));
-				String status = jsonObject.getString("status");
-				String message = jsonObject.getString("message");
-				return new ProcedureResult(status, message);
-			});
-		} catch (Exception var7) {
-			System.err.println("Error executing stored Function: " + var7.getMessage());
-			var7.printStackTrace();
-			return new ProcedureResult("FAILURE", var7.getMessage());
+					JSONObject jsonObject = new JSONObject(callableStatement.getString(1));
+					String status = jsonObject.getString("status");
+					String message = jsonObject.getString("message");
+					return new ProcedureResult(status, message);
+				});
+			} catch (Exception var7) {
+				System.err.println("Error executing stored Function: " + var7.getMessage());
+				var7.printStackTrace();
+				return new ProcedureResult("FAILURE", var7.getMessage());
+			}
 		}
+        return new ProcedureResult("FAILURE", "No parameters provided");
 	}
 	
     private static String extractValue(String input, String pattern) {
@@ -460,7 +457,7 @@ public class PageDetailsServiceImpl implements PageDetailsService {
 	}
 
 	@Transactional
-	public List<Map<String, Object>> getVOData(String viewObjectName) {	    
+	public Map<String, Object> getVOData(String viewObjectName) {	    
 	    // Fetch the query for the given view object name
 		System.out.println(viewObjectName);
         String sql = "SELECT view_object_sql_query, event_type FROM xxpf_view_objects WHERE view_object_name = ?";
@@ -477,23 +474,6 @@ public class PageDetailsServiceImpl implements PageDetailsService {
         
         List<Map<String, Object>> queryResult = template.queryForList(viewObjectQuery);
         System.out.println("queryResult : " + queryResult);
-	    return queryResult;
+	    return queryResult.get(0);
 	}
-
-	private String replaceFieldsWithEOValues2(String query, Map<String, Object> parameters) {
-
-		Pattern pattern = Pattern.compile("\\$(.*?)\\$");
-		Matcher matcher = pattern.matcher(query);
-		StringBuffer updatedQuery = new StringBuffer();
-
-		while (matcher.find()) {
-			String fieldName = matcher.group(1);
-			if (parameters.containsKey(fieldName)) {
-				matcher.appendReplacement(updatedQuery, String.valueOf(parameters.get(fieldName)));
-			}
-		}
-		matcher.appendTail(updatedQuery);
-		return updatedQuery.toString();
-	}
-
 }
