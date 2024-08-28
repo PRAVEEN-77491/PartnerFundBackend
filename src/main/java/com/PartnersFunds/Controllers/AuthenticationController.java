@@ -66,5 +66,4 @@ public class AuthenticationController {
 			return new ResponseEntity<>("Incorrect Username or Password", HttpStatus.BAD_REQUEST);
 		}
 	}
-
 }
