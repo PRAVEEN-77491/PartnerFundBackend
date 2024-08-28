@@ -1,6 +1,7 @@
 package com.PartnersFunds.serviceImpl;
 
 import com.PartnersFunds.DTO.JsonElementDTO;
+
 import com.PartnersFunds.DTO.PagePropDetailsDTO;
 import com.PartnersFunds.Entities.EntityObjectsEntity;
 import com.PartnersFunds.Entities.PageAttrPropertiesEntity;
