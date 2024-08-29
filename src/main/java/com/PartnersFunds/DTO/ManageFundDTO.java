@@ -4,60 +4,113 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ManageFundDTO {
 
-	@JsonProperty("fundId")
-	private Integer p_fund_id;
-	
-	@JsonProperty("fundName")
-	private String p_fund_name;
-	
-	@JsonProperty("description")
-	private String p_description;
-	
-	@JsonProperty("activeFlag")
-	private String p_active_flag;
-	
+    @JsonProperty("fund_id")
+    private Integer fundId;
+
+    @JsonProperty("fundname")
+    private String fundName;
+
+    @JsonProperty("description")
+    private String description;
+
+    @JsonProperty("active")
+    private String activeFlag;
+
+    @JsonProperty("createdBy")
+    private String createdBy;
+
+    @JsonProperty("creationDate")
+    private String creationDate; // Format: dd/MM/yyyy HH:mm:ss
+
+    @JsonProperty("lastUpdatedBy")
+    private String lastUpdatedBy;
+
+    @JsonProperty("lastUpdateDate")
+    private String lastUpdateDate; // Format: dd/MM/yyyy HH:mm:ss
+    
 	@JsonProperty("userId")
-	private Integer p_user_id;
+	private Integer userId;
 
-	public Integer getP_fund_id() {
-		return p_fund_id;
+    // Getters and Setters
+
+    public Integer getFundId() {
+        return fundId;
+    }
+
+    public void setFundId(Integer fundId) {
+        this.fundId = fundId;
+    }
+
+    public String getFundName() {
+        return fundName;
+    }
+
+    public void setFundName(String fundName) {
+        this.fundName = fundName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getActiveFlag() {
+        return activeFlag;
+    }
+
+    public void setActiveFlag(String activeFlag) {
+        this.activeFlag = activeFlag;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(String creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public String getLastUpdatedBy() {
+        return lastUpdatedBy;
+    }
+
+    public void setLastUpdatedBy(String lastUpdatedBy) {
+        this.lastUpdatedBy = lastUpdatedBy;
+    }
+
+    public String getLastUpdateDate() {
+        return lastUpdateDate;
+    }
+
+    public void setLastUpdateDate(String lastUpdateDate) {
+        this.lastUpdateDate = lastUpdateDate;
+    }
+
+	public Integer getUserId() {
+		return userId;
 	}
 
-	public void setP_fund_id(Integer p_fund_id) {
-		this.p_fund_id = p_fund_id;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
-	public String getP_fund_name() {
-		return p_fund_name;
+	@Override
+	public String toString() {
+		return "ManageFundDTO [fundId=" + fundId + ", fundName=" + fundName + ", description=" + description
+				+ ", activeFlag=" + activeFlag + ", createdBy=" + createdBy + ", creationDate=" + creationDate
+				+ ", lastUpdatedBy=" + lastUpdatedBy + ", lastUpdateDate=" + lastUpdateDate + ", userId=" + userId
+				+ "]";
 	}
-
-	public void setP_fund_name(String p_fund_name) {
-		this.p_fund_name = p_fund_name;
-	}
-
-	public String getP_description() {
-		return p_description;
-	}
-
-	public void setP_description(String p_description) {
-		this.p_description = p_description;
-	}
-
-	public String getP_active_flag() {
-		return p_active_flag;
-	}
-
-	public void setP_active_flag(String p_active_flag) {
-		this.p_active_flag = p_active_flag;
-	}
-
-	public Integer getP_user_id() {
-		return p_user_id;
-	}
-
-	public void setP_user_id(Integer p_user_id) {
-		this.p_user_id = p_user_id;
-	}
-	
-	
+    
 }

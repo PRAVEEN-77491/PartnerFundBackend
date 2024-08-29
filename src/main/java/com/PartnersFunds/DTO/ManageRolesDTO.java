@@ -4,60 +4,65 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ManageRolesDTO {
 
-	@JsonProperty("roleId")
-	private Integer p_role_id;
+	@JsonProperty("role_id")
+	private Integer roleId;
 	
-	@JsonProperty("roleName")
-	private String p_role_name;
+	@JsonProperty("rolename")
+	private String roleName;
 	
 	@JsonProperty("description")
-	private String p_description;
+	private String description;
 	
-	@JsonProperty("activeFlag")
-	private String p_active_flag;
+	@JsonProperty("active")
+	private String activeFlag;
 	
 	@JsonProperty("userId")
-	private Integer p_user_id;
+	private Integer userId;
 
-	public Integer getP_role_id() {
-		return p_role_id;
+	@Override
+	public String toString() {
+		return "ManageRolesDTO [roleId=" + roleId + ", roleName=" + roleName + ", description=" + description
+				+ ", activeFlag=" + activeFlag + ", p_user_id=" + userId + "]";
 	}
 
-	public void setP_role_id(Integer p_role_id) {
-		this.p_role_id = p_role_id;
+	public Integer getRoleId() {
+		return roleId;
 	}
 
-	public String getP_role_name() {
-		return p_role_name;
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
 	}
 
-	public void setP_role_name(String p_role_name) {
-		this.p_role_name = p_role_name;
+	public String getRoleName() {
+		return roleName;
 	}
 
-	public String getP_description() {
-		return p_description;
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
 	}
 
-	public void setP_description(String p_description) {
-		this.p_description = p_description;
+	public String getDescription() {
+		return description;
 	}
 
-	public String getP_active_flag() {
-		return p_active_flag;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public void setP_active_flag(String p_active_flag) {
-		this.p_active_flag = p_active_flag;
+	public String getActiveFlag() {
+		return activeFlag;
 	}
 
-	public Integer getP_user_id() {
-		return p_user_id;
+	public void setActiveFlag(String activeFlag) {
+		this.activeFlag = activeFlag;
 	}
 
-	public void setP_user_id(Integer p_user_id) {
-		this.p_user_id = p_user_id;
+	public Integer getUserId() {
+		return userId;
 	}
-	
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}	
 	
 }

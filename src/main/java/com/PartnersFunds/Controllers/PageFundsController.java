@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,6 @@ import com.PartnersFunds.DTO.ManageFundRolesDTO;
 import com.PartnersFunds.DTO.ManageFundTablesAttrDTO;
 import com.PartnersFunds.DTO.ManageFundTablesDTO;
 import com.PartnersFunds.DTO.ManageRolesDTO;
-import com.PartnersFunds.Entities.FundPagesEntity;
 import com.PartnersFunds.service.FundPagesService;
 
 @RestController
@@ -28,29 +28,33 @@ public class PageFundsController {
 	@Autowired
 	FundPagesService ser;
 
-	@PostMapping("/create")
-	public FundPagesEntity saveViewObject(@RequestBody FundPagesEntity fundPages) {
-
-		return ser.saveData(fundPages);
-	}
-
-	@GetMapping("/getDetails")
-	public List<FundPagesEntity> getData() {
+	@GetMapping("/getFundDetails")
+	public List<Map<String, Object>> getFundDetails() {
 		return ser.getFundDetails();
 	}
 
-	@PostMapping("/manageFund")
-	public Map<String, Object> manageFund(@RequestBody ManageFundDTO mfData) {
-		return ser.manageFund(mfData);
+	@GetMapping("/getRoleDetails")
+	public List<Map<String, Object>> getRoleDetails() {
+		return ser.getRoleDetails();
 	}
 
-	@PostMapping("/manageRoles")
-	public Map<String, Object> manageRoles(@RequestBody ManageRolesDTO mrData) {
-		return ser.manageRoles(mrData);
+	@GetMapping("/getFundroleDetails")
+	public List<Map<String, Object>> getFundroleDetails() {
+		return ser.getFundroleDetails();
 	}
 
-	@PostMapping("/manageFundRoles")
-	public Map<String, Object> manageFundRoles(@RequestBody ManageFundRolesDTO mrData) {
+	@PostMapping("/saveOrUpdateManageFund")
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFund(@RequestBody ManageFundDTO mfData) {
+		return ser.saveOrUpdateManageFund(mfData);
+	}
+
+	@PostMapping("/saveOrUpdateManageRoles")
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManageRoles(@RequestBody ManageRolesDTO mrData) {
+		return ser.saveManageRoles(mrData);
+	}
+
+	@PostMapping("/saveOrUpdateManageFundRoles")
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFundRoles(@RequestBody ManageFundRolesDTO mrData) {
 		return ser.manageFundRoles(mrData);
 	}
 
