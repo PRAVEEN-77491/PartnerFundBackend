@@ -4,19 +4,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ManageRolesDTO {
 
-	@JsonProperty("p_role_id")
+	@JsonProperty("roleId")
 	private Integer p_role_id;
 	
-	@JsonProperty("p_role_name")
+	@JsonProperty("roleName")
 	private String p_role_name;
 	
-	@JsonProperty("p_description")
+	@JsonProperty("description")
 	private String p_description;
 	
-	@JsonProperty("p_active_flag")
+	@JsonProperty("activeFlag")
 	private String p_active_flag;
 	
-	@JsonProperty("p_user_id")
+	@JsonProperty("userId")
 	private Integer p_user_id;
 
 	public Integer getP_role_id() {

@@ -2,22 +2,30 @@ package com.PartnersFunds.DTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ManageFundDTO {
+public class ManageFundRolesDTO {
 
+	@JsonProperty("fundRoleId")
+	private Integer p_fund_role_id;
+	
 	@JsonProperty("fundId")
 	private Integer p_fund_id;
 	
-	@JsonProperty("fundName")
-	private String p_fund_name;
-	
-	@JsonProperty("description")
-	private String p_description;
+	@JsonProperty("roleId")
+	private Integer p_role_id;
 	
 	@JsonProperty("activeFlag")
 	private String p_active_flag;
 	
 	@JsonProperty("userId")
 	private Integer p_user_id;
+
+	public Integer getP_fund_role_id() {
+		return p_fund_role_id;
+	}
+
+	public void setP_fund_role_id(Integer p_fund_role_id) {
+		this.p_fund_role_id = p_fund_role_id;
+	}
 
 	public Integer getP_fund_id() {
 		return p_fund_id;
@@ -27,20 +35,12 @@ public class ManageFundDTO {
 		this.p_fund_id = p_fund_id;
 	}
 
-	public String getP_fund_name() {
-		return p_fund_name;
+	public Integer getP_role_id() {
+		return p_role_id;
 	}
 
-	public void setP_fund_name(String p_fund_name) {
-		this.p_fund_name = p_fund_name;
-	}
-
-	public String getP_description() {
-		return p_description;
-	}
-
-	public void setP_description(String p_description) {
-		this.p_description = p_description;
+	public void setP_role_id(Integer p_role_id) {
+		this.p_role_id = p_role_id;
 	}
 
 	public String getP_active_flag() {
