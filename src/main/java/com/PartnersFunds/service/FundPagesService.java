@@ -35,4 +35,12 @@ public interface FundPagesService {
 	public List<Map<String, Object>> getFundroleDetails();
 
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePageFeatures(ManagePageFeaturesDTO mpfData);
+
+	public List<Map<String, Object>> getManageFundPagesDetails();
+
+	public List<Map<String, Object>> getManageFundTablesDetails();
+
+	public List<Map<String, Object>> getManageFundTablesAttrDetails();
+
+	public List<Map<String, Object>> getManagePageFeaturesDetails();
 }

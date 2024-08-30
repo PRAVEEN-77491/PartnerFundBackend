@@ -43,6 +43,26 @@ public class PageFundsController {
 	public List<Map<String, Object>> getFundroleDetails() {
 		return ser.getFundroleDetails();
 	}
+	////////////////////////////////////////////////////////////////////////////////////
+	@GetMapping("/getManageFundPagesDetails")
+	public List<Map<String, Object>> getManageFundPagesDetails() {
+		return ser.getManageFundPagesDetails();
+	}
+	
+	@GetMapping("/getManageFundTablesDetails")
+	public List<Map<String, Object>> getManageFundTablesDetails() {
+		return ser.getManageFundTablesDetails();
+	}
+	
+	@GetMapping("/getManageFundTablesAttrDetails")
+	public List<Map<String, Object>> getManageFundTablesAttrDetails() {
+		return ser.getManageFundTablesAttrDetails();
+	}
+
+	@GetMapping("/getManagePageFeaturesDetails")
+	public List<Map<String, Object>> getManagePageFeaturesDetails() {
+		return ser.getManagePageFeaturesDetails();
+	}
 
 	@PostMapping("/saveOrUpdateManageFund")
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFund(@RequestBody ManageFundDTO mfData) {

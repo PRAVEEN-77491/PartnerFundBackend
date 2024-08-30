@@ -123,6 +123,38 @@ public class FundPagesServiceImpl implements FundPagesService {
         System.out.println("queryResult : " + queryResult);
 		return queryResult;
 	}
+	///////////////////////////////////////////////////////////////////////////////////////
+	@Override
+	public List<Map<String, Object>> getManageFundPagesDetails() {
+		String sql = "select * from xxpf_fund_pages";
+		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
+		System.out.println("queryResult : " + queryResult);
+		return queryResult;
+	}
+	
+	@Override
+	public List<Map<String, Object>> getManageFundTablesDetails() {
+		String sql = "select * from xxpf_fund_tables";
+		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
+		System.out.println("queryResult : " + queryResult);
+		return queryResult;
+	}
+	
+	@Override
+	public List<Map<String, Object>> getManageFundTablesAttrDetails() {
+		String sql = "select * from xxpf_fund_table_attributes";
+		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
+		System.out.println("queryResult : " + queryResult);
+		return queryResult;
+	}
+	
+	@Override
+	public List<Map<String, Object>> getManagePageFeaturesDetails() {
+		String sql = "select * from xxpf_page_features";
+		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
+		System.out.println("queryResult : " + queryResult);
+		return queryResult;
+	}
 	
 	@Override
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFund(ManageFundDTO mfData) {
@@ -137,12 +169,12 @@ public class FundPagesServiceImpl implements FundPagesService {
 						new SqlOutParameter("o_status", Types.VARCHAR),
 						new SqlOutParameter("o_message", Types.VARCHAR));
 
-		MapSqlParameterSource inParams = new MapSqlParameterSource();
-		inParams.addValue("p_fund_id", mfData.getFundId());
-		inParams.addValue("p_fund_name", mfData.getFundName());
-		inParams.addValue("p_description", mfData.getDescription());
-		inParams.addValue("p_active_flag", mfData.getActiveFlag());
-		inParams.addValue("p_user_id", mfData.getUserId());
+		Map<String, Object> inParams = new HashMap<>();
+		inParams.put("p_fund_id", mfData.getFundId());
+		inParams.put("p_fund_name", mfData.getFundName());
+		inParams.put("p_description", mfData.getDescription());
+		inParams.put("p_active_flag", mfData.getActiveFlag());
+		inParams.put("p_user_id", mfData.getUserId());
 		
 		Map<String, Object> outParams = jdbcCall.execute(inParams);
 
@@ -176,12 +208,12 @@ public class FundPagesServiceImpl implements FundPagesService {
 						new SqlOutParameter("o_status", Types.VARCHAR),
 						new SqlOutParameter("o_message", Types.VARCHAR));
 
-		MapSqlParameterSource inParams = new MapSqlParameterSource();
-		inParams.addValue("p_role_id", mrData.getRoleId());
-		inParams.addValue("p_role_name", mrData.getRoleName());
-		inParams.addValue("p_description", mrData.getDescription());
-		inParams.addValue("p_active_flag", mrData.getActiveFlag());
-		inParams.addValue("p_user_id", mrData.getUserId());
+		Map<String, Object> inParams = new HashMap<>();
+		inParams.put("p_role_id", mrData.getRoleId());
+		inParams.put("p_role_name", mrData.getRoleName());
+		inParams.put("p_description", mrData.getDescription());
+		inParams.put("p_active_flag", mrData.getActiveFlag());
+		inParams.put("p_user_id", mrData.getUserId());
 
 		Map<String, Object> outParams = jdbcCall.execute(inParams);
 
@@ -230,12 +262,12 @@ public class FundPagesServiceImpl implements FundPagesService {
 						new SqlOutParameter("o_status", Types.VARCHAR),
 						new SqlOutParameter("o_message", Types.VARCHAR));
 
-		MapSqlParameterSource inParams = new MapSqlParameterSource();
-		inParams.addValue("p_fund_role_id", mfrData.getFundRoleId());
-		inParams.addValue("p_fund_id", mfrData.getFundId());
-		inParams.addValue("p_role_id", mfrData.getRoleId());
-		inParams.addValue("p_active_flag", mfrData.getActiveFlag());
-		inParams.addValue("p_user_id", mfrData.getUserId());
+		Map<String, Object> inParams = new HashMap<>();
+		inParams.put("p_fund_role_id", mfrData.getFundRoleId());
+		inParams.put("p_fund_id", mfrData.getFundId());
+		inParams.put("p_role_id", mfrData.getRoleId());
+		inParams.put("p_active_flag", mfrData.getActiveFlag());
+		inParams.put("p_user_id", mfrData.getUserId());
 
 		Map<String, Object> outParams = jdbcCall.execute(inParams);
 
@@ -269,12 +301,12 @@ public class FundPagesServiceImpl implements FundPagesService {
 						new SqlOutParameter("o_status", Types.VARCHAR),
 						new SqlOutParameter("o_message", Types.VARCHAR));
 
-		MapSqlParameterSource inParams = new MapSqlParameterSource();
-		inParams.addValue("p_fund_page_id", mfpData.getP_fund_page_id());
-		inParams.addValue("p_fund_id", mfpData.getP_fund_id());
-		inParams.addValue("p_page_id", mfpData.getP_page_id());
-		inParams.addValue("p_active_flag", mfpData.getP_active_flag());
-		inParams.addValue("p_user_id", mfpData.getP_user_id());
+		Map<String, Object> inParams = new HashMap<>();
+		inParams.put("p_fund_page_id", mfpData.getP_fund_page_id());
+		inParams.put("p_fund_id", mfpData.getP_fund_id());
+		inParams.put("p_page_id", mfpData.getP_page_id());
+		inParams.put("p_active_flag", mfpData.getP_active_flag());
+		inParams.put("p_user_id", mfpData.getP_user_id());
 
 		Map<String, Object> outParams = jdbcCall.execute(inParams);
 
@@ -305,13 +337,13 @@ public class FundPagesServiceImpl implements FundPagesService {
 						new SqlOutParameter("o_status", Types.VARCHAR),
 						new SqlOutParameter("o_message", Types.VARCHAR));
 
-		MapSqlParameterSource inParams = new MapSqlParameterSource();
-		inParams.addValue("p_table_id", mftData.getP_table_id());
-		inParams.addValue("p_fund_id", mftData.getP_fund_id());
-		inParams.addValue("p_table_name", mftData.getP_table_name());
-		inParams.addValue("p_display_name", mftData.getP_display_name());
-		inParams.addValue("p_usage_level", mftData.getP_usage_level());
-		inParams.addValue("p_user_id", mftData.getP_user_id());
+		Map<String, Object> inParams = new HashMap<>();
+		inParams.put("p_table_id", mftData.getP_table_id());
+		inParams.put("p_fund_id", mftData.getP_fund_id());
+		inParams.put("p_table_name", mftData.getP_table_name());
+		inParams.put("p_display_name", mftData.getP_display_name());
+		inParams.put("p_usage_level", mftData.getP_usage_level());
+		inParams.put("p_user_id", mftData.getP_user_id());
 
 		Map<String, Object> outParams = jdbcCall.execute(inParams);
 
@@ -342,13 +374,13 @@ public class FundPagesServiceImpl implements FundPagesService {
 						new SqlOutParameter("o_status", Types.VARCHAR),
 						new SqlOutParameter("o_message", Types.VARCHAR));
 
-		MapSqlParameterSource inParams = new MapSqlParameterSource();
-		inParams.addValue("p_attribute_id", mftaData.getP_attribute_id());
-		inParams.addValue("p_table_id", mftaData.getP_table_id());
-		inParams.addValue("p_column_name", mftaData.getP_column_name());
-		inParams.addValue("p_display_name", mftaData.getP_display_name());
-		inParams.addValue("p_active_flag", mftaData.getP_active_flag());
-		inParams.addValue("p_user_id", mftaData.getP_user_id());
+		Map<String, Object> inParams = new HashMap<>();
+		inParams.put("p_attribute_id", mftaData.getP_attribute_id());
+		inParams.put("p_table_id", mftaData.getP_table_id());
+		inParams.put("p_column_name", mftaData.getP_column_name());
+		inParams.put("p_display_name", mftaData.getP_display_name());
+		inParams.put("p_active_flag", mftaData.getP_active_flag());
+		inParams.put("p_user_id", mftaData.getP_user_id());
 
 		Map<String, Object> outParams = jdbcCall.execute(inParams);
 
