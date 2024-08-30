@@ -1,8 +1,8 @@
 package com.PartnersFunds.Controllers;
 
 import java.io.IOException;
+
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.PartnersFunds.DTO.JsonElementDTO;
 import com.PartnersFunds.DTO.PagePropDetailsDTO;
 import com.PartnersFunds.Entities.EntityObjectsEntity;
 import com.PartnersFunds.Entities.PageAttrPropertiesEntity;
@@ -34,8 +33,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import jakarta.websocket.server.PathParam;
 
 @RestController
 @RequestMapping("/page")

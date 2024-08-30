@@ -2,12 +2,11 @@ package com.PartnersFunds.serviceImpl;
 
 import java.util.HashMap;
 
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import java.util.Map;
 import java.util.Optional;
-
-import javax.sql.DataSource;
 
 import java.util.List;
 
@@ -19,13 +18,19 @@ import com.PartnersFunds.DTO.ManageFundDTO;
 import com.PartnersFunds.DTO.ManageFundPagesDTO;
 import com.PartnersFunds.DTO.ManageRolesDTO;
 import com.PartnersFunds.Entities.ManageFundEntity;
+import com.PartnersFunds.Entities.ManageFundPagesEntity;
 import com.PartnersFunds.Entities.ManageFundRolesEntity;
+import com.PartnersFunds.Entities.ManageFundTableAttributesEntity;
+import com.PartnersFunds.Entities.ManageFundTablesEntity;
 import com.PartnersFunds.Entities.ManageRolesEntity;
 import com.PartnersFunds.DTO.ManageFundRolesDTO;
 import com.PartnersFunds.DTO.ManageFundTablesAttrDTO;
 import com.PartnersFunds.DTO.ManageFundTablesDTO;
+import com.PartnersFunds.Repo.ManageFundPagesRepo;
 import com.PartnersFunds.Repo.ManageFundRepo;
 import com.PartnersFunds.Repo.ManageFundRolesRepo;
+import com.PartnersFunds.Repo.ManageFundTableAttributesRepo;
+import com.PartnersFunds.Repo.ManageFundTableRepo;
 import com.PartnersFunds.Repo.ManageRolesRepo;
 import com.PartnersFunds.service.FundPagesService;
 
@@ -36,7 +41,7 @@ import java.sql.Types;
 
 @Service
 public class FundPagesServiceImpl implements FundPagesService {
-
+    
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	
@@ -48,6 +53,15 @@ public class FundPagesServiceImpl implements FundPagesService {
 	
 	@Autowired
 	ManageFundRolesRepo manageFundRolesRepo;
+	
+	@Autowired
+	ManageFundPagesRepo manageFundPagesRepo;
+	
+	@Autowired
+	ManageFundTableRepo manageFundTableRepo;
+	
+	@Autowired
+	ManageFundTableAttributesRepo manageFundTableAttributesRepo;
 
 	@Override
 	public List<Map<String, Object>> getFundDetails() {
@@ -111,18 +125,12 @@ public class FundPagesServiceImpl implements FundPagesService {
 	    } else {
 	        response.put("p_fund", new HashMap<>()); // Empty or default value if not successful
 	    }
-	    
-//		Map<String, Object> result = new HashMap<>();
-//		result.put("p_fund_id", outParams.get("p_fund_id"));
-//		result.put("o_status", outParams.get("o_status"));
-//		result.put("o_message", outParams.get("o_message"));
-//		return result;
-	    
+  
 	    return ResponseEntity.ok(response);
 	}
 
 	@Override
-	public ResponseEntity<Map<String, Object>> saveManageRoles(ManageRolesDTO mrData) {
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManageRoles(ManageRolesDTO mrData) {
 		System.out.println("mrDatea ======> "+mrData.toString());
 		SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withSchemaName("APPS")
 				.withCatalogName("xxpf_partner_fund_utils_pkg").withProcedureName("manage_roles").declareParameters(
@@ -148,7 +156,7 @@ public class FundPagesServiceImpl implements FundPagesService {
 		    response.put("o_status", outParams.get("o_status"));
 		    response.put("o_message", outParams.get("o_message"));
 		    
-		 if ("S".equals(outParams.get("o_status"))) { // Assuming "S" indicates success
+		 if ("S".equals(outParams.get("o_status"))) { 
 		    	Optional<ManageRolesEntity> manageRoles = manageRolesRepo.findById(Integer.parseInt(String.valueOf(outParams.get("p_role_id"))));
 		        if (manageRoles.isPresent()) {
 		            response.put("p_roles", manageRoles.get());
@@ -158,30 +166,19 @@ public class FundPagesServiceImpl implements FundPagesService {
 		    } else {
 		        response.put("p_roles", new HashMap<>()); // Empty or default value if not successful
 		    }
-		 
-//		Map<String, Object> result = new HashMap<>();
-//		result.put("p_role_id", inParams.get("p_role_id"));
-//		result.put("o_status", outParams.get("o_status"));
-//		result.put("o_message", outParams.get("o_message"));
-//		return result;
-		
+
 		return ResponseEntity.ok(response);
 	}
 
 	@Override
-	public ResponseEntity<Map<String, Object>> manageFundRoles(ManageFundRolesDTO mfrData) {
-//		System.out.println("mfrDatea ======> "+mfrData.toString());
-		   // Assuming ManageFundRolesDTO contains 'fundName' and 'roleName' fields
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFundRoles(ManageFundRolesDTO mfrData) {
 	    String fundName = mfrData.getFundname();
 	    String roleName = mfrData.getRolename();
 
-	    // Query to get the fund_id from xxpf_funds table based on fundName
 	    String fundSql = "SELECT fund_id FROM xxpf_funds WHERE name = ?";
 	    List<Map<String, Object>> fundQueryResult = jdbcTemplate.queryForList(fundSql, fundName);
 	    
 	    mfrData.setFundId(Integer.parseInt(String.valueOf(fundQueryResult.get(0).get("fund_id"))));
-
-	    // Query to get the role_id from xxpf_rolemaster table based on roleName
 	    String roleSql = "SELECT role_id FROM xxpf_role_master WHERE name = ?";
 	    List<Map<String, Object>> roleQueryResult = jdbcTemplate.queryForList(roleSql, roleName);
 	    
@@ -222,23 +219,20 @@ public class FundPagesServiceImpl implements FundPagesService {
 	        response.put("p_fund_roles", new HashMap<>()); // Empty or default value if not successful
 	    }
 	 
-//		Map<String, Object> result = new HashMap<>();
-//		result.put("p_fund_role_id", inParams.get("p_fund_role_id"));
-//		result.put("o_status", outParams.get("o_status"));
-//		result.put("o_message", outParams.get("o_message"));
-//		return result;
-	 
 	 return ResponseEntity.ok(response);
 	}
 
 	@Override
-	public Map<String, Object> manageFundPages(ManageFundPagesDTO mfpData) {
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFundPages(ManageFundPagesDTO mfpData) {
 		SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withSchemaName("APPS")
 				.withCatalogName("xxpf_partner_fund_utils_pkg") // Package name
 				.withProcedureName("manage_fund_pages") // Procedure name
 				.declareParameters(new SqlParameter("p_fund_page_id", Types.NUMERIC),
-						new SqlParameter("p_fund_id", Types.NUMERIC), new SqlParameter("p_page_id", Types.NUMERIC),
-						new SqlParameter("p_active_flag", Types.VARCHAR), new SqlParameter("p_user_id", Types.NUMERIC),
+						new SqlParameter("p_fund_id", Types.NUMERIC),
+						new SqlParameter("p_page_id", Types.NUMERIC),
+						new SqlParameter("p_active_flag", Types.VARCHAR),
+						new SqlParameter("p_user_id", Types.NUMERIC),
+						new SqlOutParameter("p_fund_page_id", Types.NUMERIC),
 						new SqlOutParameter("o_status", Types.VARCHAR),
 						new SqlOutParameter("o_message", Types.VARCHAR));
 
@@ -251,15 +245,25 @@ public class FundPagesServiceImpl implements FundPagesService {
 
 		Map<String, Object> outParams = jdbcCall.execute(inParams);
 
-		Map<String, Object> result = new HashMap<>();
-		result.put("p_fund_page_id", inParams.get("p_fund_page_id"));
-		result.put("o_status", outParams.get("o_status"));
-		result.put("o_message", outParams.get("o_message"));
-		return result;
+		Map<String, Object> response = new HashMap<>();
+	    response.put("o_status", outParams.get("o_status"));
+	    response.put("o_message", outParams.get("o_message"));
+	    if ("S".equals(outParams.get("o_status"))) { // Assuming "S" indicates success
+	    	Optional<ManageFundPagesEntity> manageFundRoles = manageFundPagesRepo.findById(Integer.parseInt(String.valueOf(outParams.get("p_fund_page_id"))));
+	        if (manageFundRoles.isPresent()) {
+	            response.put("p_fund_pages", manageFundRoles.get());
+	        } else {
+	            response.put("p_fund_pages", new HashMap<>()); // or handle the case where fund is not found
+	        }
+	    } else {
+	        response.put("p_fund_pages", new HashMap<>()); // Empty or default value if not successful
+	    }
+	 
+	 return ResponseEntity.ok(response);
 	}
 
 	@Override
-	public Map<String, Object> manageFundtables(ManageFundTablesDTO mftData) {
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFundTables(ManageFundTablesDTO mftData) {
 		SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withSchemaName("APPS")
 				.withCatalogName("xxpf_partner_fund_utils_pkg").withProcedureName("manage_fund_tables")
 				.declareParameters(new SqlParameter("p_table_id", Types.NUMERIC),
@@ -279,15 +283,25 @@ public class FundPagesServiceImpl implements FundPagesService {
 
 		Map<String, Object> outParams = jdbcCall.execute(inParams);
 
-		Map<String, Object> result = new HashMap<>();
-		result.put("p_table_id", inParams.get("p_table_id"));
-		result.put("o_status", outParams.get("o_status"));
-		result.put("o_message", outParams.get("o_message"));
-		return result;
+		Map<String, Object> response = new HashMap<>();
+	    response.put("o_status", outParams.get("o_status"));
+	    response.put("o_message", outParams.get("o_message"));
+	 if ("S".equals(outParams.get("o_status"))) { // Assuming "S" indicates success
+	    	Optional<ManageFundTablesEntity> manageFundTable = manageFundTableRepo.findById(Integer.parseInt(String.valueOf(outParams.get("p_table_id"))));
+	        if (manageFundTable.isPresent()) {
+	            response.put("p_fund_table", manageFundTable.get());
+	        } else {
+	            response.put("p_fund_table", new HashMap<>()); // or handle the case where fund is not found
+	        }
+	    } else {
+	        response.put("p_fund_table", new HashMap<>()); // Empty or default value if not successful
+	    }
+	 
+	 return ResponseEntity.ok(response);
 	}
 
 	@Override
-	public Map<String, Object> manageFundtablesAttr(ManageFundTablesAttrDTO mftaData) {
+	public ResponseEntity<Map<String, Object>>  saveOrUpdateManageFundTablesAttr(ManageFundTablesAttrDTO mftaData) {
 		SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withSchemaName("APPS")
 				.withCatalogName("xxpf_partner_fund_utils_pkg").withProcedureName("manage_fund_table_attributes")
 				.declareParameters(new SqlParameter("p_attribute_id", Types.NUMERIC),
@@ -307,18 +321,22 @@ public class FundPagesServiceImpl implements FundPagesService {
 
 		Map<String, Object> outParams = jdbcCall.execute(inParams);
 
-		Map<String, Object> result = new HashMap<>();
-		result.put("p_attribute_id", inParams.get("p_attribute_id"));
-		result.put("o_status", outParams.get("o_status"));
-		result.put("o_message", outParams.get("o_message"));
-		return result;
+		Map<String, Object> response = new HashMap<>();
+	    response.put("o_status", outParams.get("o_status"));
+	    response.put("o_message", outParams.get("o_message"));
+	 if ("S".equals(outParams.get("o_status"))) { // Assuming "S" indicates success
+	    	Optional<ManageFundTableAttributesEntity> manageFundTableAttribute = manageFundTableAttributesRepo.findById(Integer.parseInt(String.valueOf(outParams.get("p_attribute_id"))));
+	        if (manageFundTableAttribute.isPresent()) {
+	            response.put("p_fund_table_attributes", manageFundTableAttribute.get());
+	        } else {
+	            response.put("p_fund_table_attributes", new HashMap<>()); // or handle the case where fund is not found
+	        }
+	    } else {
+	        response.put("p_fund_table_attributes", new HashMap<>()); // Empty or default value if not successful
+	    }
+	 
+	 return ResponseEntity.ok(response);
 	}
 	
-    public SimpleJdbcCall buildSimpleJdbcCall(DataSource dataSource, final String schemaName, String packageName,
-            String procedureName) {
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(dataSource).withSchemaName(schemaName)
-                .withCatalogName(packageName).withProcedureName(procedureName).withoutProcedureColumnMetaDataAccess();
-        return simpleJdbcCall;
-    }
 
 }

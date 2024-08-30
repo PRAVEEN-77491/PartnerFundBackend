@@ -38,7 +38,7 @@ public class PageFundsController {
 		return ser.getRoleDetails();
 	}
 
-	@GetMapping("/getFundroleDetails")
+	@GetMapping("/getFundRoleDetails")
 	public List<Map<String, Object>> getFundroleDetails() {
 		return ser.getFundroleDetails();
 	}
@@ -50,26 +50,26 @@ public class PageFundsController {
 
 	@PostMapping("/saveOrUpdateManageRoles")
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManageRoles(@RequestBody ManageRolesDTO mrData) {
-		return ser.saveManageRoles(mrData);
+		return ser.saveOrUpdateManageRoles(mrData);
 	}
 
 	@PostMapping("/saveOrUpdateManageFundRoles")
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFundRoles(@RequestBody ManageFundRolesDTO mrData) {
-		return ser.manageFundRoles(mrData);
+		return ser.saveOrUpdateManageFundRoles(mrData);
 	}
 
 	@PostMapping("/manageFundPages")
-	public Map<String, Object> manageFundPages(@RequestBody ManageFundPagesDTO mfpData) {
-		return ser.manageFundPages(mfpData);
+	public ResponseEntity<Map<String, Object>> manageFundPages(@RequestBody ManageFundPagesDTO mfpData) {
+		return ser.saveOrUpdateManageFundPages(mfpData);
 	}
 
 	@PostMapping("/manageFundTables")
-	public Map<String, Object> manageFundTables(@RequestBody ManageFundTablesDTO mftData) {
-		return ser.manageFundtables(mftData);
+	public ResponseEntity<Map<String, Object>> manageFundTables(@RequestBody ManageFundTablesDTO mftData) {
+		return ser.saveOrUpdateManageFundTables(mftData);
 	}
 
 	@PostMapping("/manageFundTablesAttr")
-	public Map<String, Object> manageFundTablesAttr(@RequestBody ManageFundTablesAttrDTO mftaData) {
-		return ser.manageFundtablesAttr(mftaData);
+	public ResponseEntity<Map<String, Object>> manageFundTablesAttr(@RequestBody ManageFundTablesAttrDTO mftaData) {
+		return ser.saveOrUpdateManageFundTablesAttr(mftaData);
 	}
 }
