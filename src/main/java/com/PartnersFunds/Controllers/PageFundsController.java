@@ -17,6 +17,7 @@ import com.PartnersFunds.DTO.ManageFundPagesDTO;
 import com.PartnersFunds.DTO.ManageFundRolesDTO;
 import com.PartnersFunds.DTO.ManageFundTablesAttrDTO;
 import com.PartnersFunds.DTO.ManageFundTablesDTO;
+import com.PartnersFunds.DTO.ManagePageFeaturesDTO;
 import com.PartnersFunds.DTO.ManageRolesDTO;
 import com.PartnersFunds.service.FundPagesService;
 
@@ -71,5 +72,10 @@ public class PageFundsController {
 	@PostMapping("/manageFundTablesAttr")
 	public ResponseEntity<Map<String, Object>> manageFundTablesAttr(@RequestBody ManageFundTablesAttrDTO mftaData) {
 		return ser.saveOrUpdateManageFundTablesAttr(mftaData);
+	}
+	
+	@PostMapping("/managePagesFeature")
+	public ResponseEntity<Map<String, Object>> managePagesFeature(@RequestBody ManagePageFeaturesDTO mpfData) {
+		return ser.saveOrUpdateManagePageFeatures(mpfData);
 	}
 }

@@ -20,13 +20,13 @@ public class ManageFundDTO {
     private String createdBy;
 
     @JsonProperty("creationDate")
-    private String creationDate; // Format: dd/MM/yyyy HH:mm:ss
+    private String creationDate; 
 
     @JsonProperty("lastUpdatedBy")
     private String lastUpdatedBy;
 
     @JsonProperty("lastUpdateDate")
-    private String lastUpdateDate; // Format: dd/MM/yyyy HH:mm:ss
+    private String lastUpdateDate; 
     
 	@JsonProperty("userId")
 	private Integer userId;

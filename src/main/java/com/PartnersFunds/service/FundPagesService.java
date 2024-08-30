@@ -1,6 +1,7 @@
 package com.PartnersFunds.service;
 
 import java.util.List;
+
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import com.PartnersFunds.DTO.ManageRolesDTO;
 import com.PartnersFunds.DTO.ManageFundRolesDTO;
 import com.PartnersFunds.DTO.ManageFundTablesAttrDTO;
 import com.PartnersFunds.DTO.ManageFundTablesDTO;
+import com.PartnersFunds.DTO.ManagePageFeaturesDTO;
 
 public interface FundPagesService {
 
@@ -32,4 +34,5 @@ public interface FundPagesService {
 
 	public List<Map<String, Object>> getFundroleDetails();
 
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePageFeatures(ManagePageFeaturesDTO mpfData);
 }

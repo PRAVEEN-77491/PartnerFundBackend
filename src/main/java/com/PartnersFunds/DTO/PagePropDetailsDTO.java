@@ -1,9 +1,5 @@
 package com.PartnersFunds.DTO;
 
-import java.util.List;
-import java.util.Map;
-
-import com.PartnersFunds.Entities.PageAttrPropertiesEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 public class PagePropDetailsDTO {
 
