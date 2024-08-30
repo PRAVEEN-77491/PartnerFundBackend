@@ -58,19 +58,20 @@ public class PageFundsController {
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFundRoles(@RequestBody ManageFundRolesDTO mrData) {
 		return ser.saveOrUpdateManageFundRoles(mrData);
 	}
-
-	@PostMapping("/manageFundPages")
-	public ResponseEntity<Map<String, Object>> manageFundPages(@RequestBody ManageFundPagesDTO mfpData) {
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@PostMapping("/saveOrUpdateManageFundPages")
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFundPages(@RequestBody ManageFundPagesDTO mfpData) {
 		return ser.saveOrUpdateManageFundPages(mfpData);
 	}
 
-	@PostMapping("/manageFundTables")
-	public ResponseEntity<Map<String, Object>> manageFundTables(@RequestBody ManageFundTablesDTO mftData) {
+	@PostMapping("/saveOrUpdateManageFundTables")
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFundTables(@RequestBody ManageFundTablesDTO mftData) {
 		return ser.saveOrUpdateManageFundTables(mftData);
 	}
 
-	@PostMapping("/manageFundTablesAttr")
-	public ResponseEntity<Map<String, Object>> manageFundTablesAttr(@RequestBody ManageFundTablesAttrDTO mftaData) {
+	@PostMapping("/saveOrUpdateManageFundTablesAttr")
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFundTablesAttr(@RequestBody ManageFundTablesAttrDTO mftaData) {
 		return ser.saveOrUpdateManageFundTablesAttr(mftaData);
 	}
 	

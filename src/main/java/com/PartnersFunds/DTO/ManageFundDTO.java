@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ManageFundDTO {
 
-    @JsonProperty("fund_id")
+    @JsonProperty("fundId")
     private Integer fundId;
 
     @JsonProperty("fundname")

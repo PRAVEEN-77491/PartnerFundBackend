@@ -13,6 +13,7 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "xxpf_fund_roles")
@@ -37,15 +38,24 @@ public class ManageFundRolesEntity {
 		private String createdBy;
 
 		@Column(name = "creation_date")
-		@Temporal(TemporalType.TIMESTAMP)
+		@Temporal(TemporalType.DATE)
 		private Date creationDate;
 
 		@Column(name = "last_updated_by")
 		private String lastUpdatedBy;
 
 		@Column(name = "last_update_date")
-		@Temporal(TemporalType.TIMESTAMP)
+		@Temporal(TemporalType.DATE)
 		private Date lastUpdateDate;
+		
+		//fields not included in the database
+		@Transient
+		@JsonProperty("rolename")
+		private String rolename;
+
+		@Transient
+		@JsonProperty("fundname")
+		private String fundname;
 
 		@Override
 		public String toString() {
@@ -118,6 +128,21 @@ public class ManageFundRolesEntity {
 			this.lastUpdateDate = lastUpdateDate;
 		}
 
-		
+		public String getRolename() {
+			return rolename;
+		}
+
+		public void setRolename(String rolename) {
+			this.rolename = rolename;
+		}
+
+		public String getFundname() {
+			return fundname;
+		}
+
+		public void setFundname(String fundname) {
+			this.fundname = fundname;
+		}
+
 		
 }

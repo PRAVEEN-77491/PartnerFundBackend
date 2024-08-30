@@ -205,15 +205,18 @@ public class FundPagesServiceImpl implements FundPagesService {
 
 	@Override
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFundRoles(ManageFundRolesDTO mfrData) {
+		System.out.println("mfrData ======> "+mfrData.toString());
 	    String fundName = mfrData.getFundname();
 	    String roleName = mfrData.getRolename();
 
 	    String fundSql = "SELECT fund_id FROM xxpf_funds WHERE name = ?";
 	    List<Map<String, Object>> fundQueryResult = jdbcTemplate.queryForList(fundSql, fundName);
+	    System.out.println("fundQueryResult : " + fundQueryResult.toString());
 	    
 	    mfrData.setFundId(Integer.parseInt(String.valueOf(fundQueryResult.get(0).get("fund_id"))));
 	    String roleSql = "SELECT role_id FROM xxpf_role_master WHERE name = ?";
 	    List<Map<String, Object>> roleQueryResult = jdbcTemplate.queryForList(roleSql, roleName);
+	    System.out.println("roleQueryResult : " + fundQueryResult.toString());
 	    
 	    mfrData.setRoleId(Integer.parseInt(String.valueOf(roleQueryResult.get(0).get("role_id"))));
 		System.out.println("mfrDatea ======> "+mfrData.toString());
@@ -241,6 +244,8 @@ public class FundPagesServiceImpl implements FundPagesService {
 	    response.put("o_message", outParams.get("o_message"));
 	 if ("S".equals(outParams.get("o_status"))) { // Assuming "S" indicates success
 	    	Optional<ManageFundRolesEntity> manageFundRoles = manageFundRolesRepo.findById(Integer.parseInt(String.valueOf(outParams.get("p_fund_role_id"))));
+	    	manageFundRoles.get().setFundname(mfrData.getFundname());
+	    	manageFundRoles.get().setRolename(mfrData.getRolename());
 	        if (manageFundRoles.isPresent()) {
 	            response.put("p_fund_roles", manageFundRoles.get());
 	        } else {

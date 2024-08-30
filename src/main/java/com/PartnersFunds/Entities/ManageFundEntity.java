@@ -26,14 +26,14 @@ public class ManageFundEntity {
 	private String createdBy;
 
 	@Column(name = "creation_date")
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date creationDate;
 
 	@Column(name = "last_updated_by")
 	private String lastUpdatedBy;
 
 	@Column(name = "last_update_date")
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date lastUpdateDate;
 
 	// Getters and Setters
