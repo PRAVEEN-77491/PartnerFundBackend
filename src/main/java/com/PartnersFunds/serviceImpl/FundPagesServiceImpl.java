@@ -7,8 +7,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.SqlInOutParameter;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import java.util.Map;
-import java.util.Optional;
-
 import javax.sql.DataSource;
 
 import java.util.List;
@@ -17,39 +15,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.PartnersFunds.DTO.ManageActivitiesDTO;
+import com.PartnersFunds.DTO.ManageFundBpaRbacRolesDTO;
 import com.PartnersFunds.DTO.ManageFundDTO;
 import com.PartnersFunds.DTO.ManageFundPagesDTO;
 import com.PartnersFunds.DTO.ManageRolesDTO;
-import com.PartnersFunds.Entities.ManageFundEntity;
-import com.PartnersFunds.Entities.ManageFundPagesEntity;
-import com.PartnersFunds.Entities.ManageFundRolesEntity;
-import com.PartnersFunds.Entities.ManageFundTableAttributesEntity;
-import com.PartnersFunds.Entities.ManageFundTablesEntity;
-import com.PartnersFunds.Entities.ManageRolesEntity;
-import com.PartnersFunds.Entities.PagesFeatureEntity;
 import com.PartnersFunds.DTO.ManageFundRolesDTO;
 import com.PartnersFunds.DTO.ManageFundTablesAttrDTO;
 import com.PartnersFunds.DTO.ManageFundTablesDTO;
+import com.PartnersFunds.DTO.ManageFundTimelinesDTO;
+import com.PartnersFunds.DTO.ManagePageFeatureRbacDTO;
 import com.PartnersFunds.DTO.ManagePageFeaturesDTO;
-import com.PartnersFunds.Repo.ActivitiesRepo;
-import com.PartnersFunds.Repo.FundBpaRbacRolesRepo;
-import com.PartnersFunds.Repo.FundTimelinesRepo;
-import com.PartnersFunds.Repo.ManageFundPagesRepo;
-import com.PartnersFunds.Repo.ManageFundRepo;
-import com.PartnersFunds.Repo.ManageFundRolesRepo;
-import com.PartnersFunds.Repo.ManageFundTableAttributesRepo;
-import com.PartnersFunds.Repo.ManageFundTableRepo;
-import com.PartnersFunds.Repo.ManageRolesRepo;
-import com.PartnersFunds.Repo.PagesFeatureRepo;
-import com.PartnersFunds.Repo.PagesFeaturesRbacRepo;
-import com.PartnersFunds.Repo.PlansRepo;
+import com.PartnersFunds.DTO.ManagePlansDTO;
 import com.PartnersFunds.service.FundPagesService;
 import com.PartnersFunds.utils.JdbcCallBuilder;
-
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-
 import java.sql.Types;
 
 @Service
@@ -57,42 +38,6 @@ public class FundPagesServiceImpl implements FundPagesService {
     
 	@Autowired
 	JdbcTemplate jdbcTemplate;
-	
-	@Autowired
-	ManageFundRepo manageFundRepo;
-
-	@Autowired
-	ManageRolesRepo manageRolesRepo;
-	
-	@Autowired
-	ManageFundRolesRepo manageFundRolesRepo;
-	
-	@Autowired
-	ManageFundPagesRepo manageFundPagesRepo;
-	
-	@Autowired
-	ManageFundTableRepo manageFundTableRepo;
-	
-	@Autowired
-	ManageFundTableAttributesRepo manageFundTableAttributesRepo;
-	
-	@Autowired
-	PagesFeatureRepo pagesFeatureRepo;
-	
-	@Autowired
-	PagesFeaturesRbacRepo pagesFeaturesRbacRepo;
-	
-	@Autowired
-	PlansRepo plansRepo;
-	
-	@Autowired
-	ActivitiesRepo activitiesRepo;
-	
-	@Autowired
-	FundTimelinesRepo fundTimelinesRepo;
-	
-	@Autowired
-	FundBpaRbacRolesRepo fundBpaRbacRolesRepo;
 	
 	@Autowired
 	JdbcCallBuilder jdbcCallBuilder;
@@ -127,6 +72,8 @@ public class FundPagesServiceImpl implements FundPagesService {
 	   System.out.println("queryResult : " + queryResult);
 		return queryResult;
 	}
+	
+	
 	///////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public List<Map<String, Object>> getManageFundPagesDetails() {
@@ -161,6 +108,46 @@ public class FundPagesServiceImpl implements FundPagesService {
 	}
 	
 	@Override
+	public List<Map<String, Object>> getManagePageFeatureRbacDetails() {
+		String sql = "select * from xxpf_fund_bpa_page_feature_rbac";
+		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
+		System.out.println("queryResult : " + queryResult);
+		return queryResult;
+	}
+
+	@Override
+	public List<Map<String, Object>> getManageFundBpaRbacRolesDetails() {
+		String sql = "select * from xxpf_fund_bpa_rbac_roles";
+		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
+		System.out.println("queryResult : " + queryResult);
+		return queryResult;
+	}
+
+	@Override
+	public List<Map<String, Object>> getManageFundTimelinesDetails() {
+		String sql = "select * from xxpf_fund_timelines";
+		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
+		System.out.println("queryResult : " + queryResult);
+		return queryResult;
+	}
+
+	@Override
+	public List<Map<String, Object>> getManagePlansDetails() {
+		String sql = "select * from xxpf_plans";
+		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
+		System.out.println("queryResult : " + queryResult);
+		return queryResult;
+	}
+
+	@Override
+	public List<Map<String, Object>> getManageActivitiesDetails() {
+		String sql = "select * from xxpf_activities";
+		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
+		System.out.println("queryResult : " + queryResult);
+		return queryResult;
+	}
+	
+	@Override
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFund(ManageFundDTO mfData) {
 		System.out.println("mfDatea ======> "+mfData.toString());
 		SimpleJdbcCall jdbcCall = jdbcCallBuilder.buildSimpleJdbcCall(dataSource, "APPS", "xxpf_partner_fund_utils_pkg", "manage_fund").declareParameters(
@@ -186,15 +173,12 @@ public class FundPagesServiceImpl implements FundPagesService {
 	    response.put("o_status", outParams.get("o_status"));
 	    response.put("o_message", outParams.get("o_message"));
 	    
-	    if ("S".equals(outParams.get("o_status"))) { // Assuming "S" indicates success
-	    	Optional<ManageFundEntity> manageFund = manageFundRepo.findById(Integer.parseInt(String.valueOf(outParams.get("p_fund_id"))));
-	        if (manageFund.isPresent()) {
-	            response.put("p_fund", manageFund.get());
-	        } else {
-	            response.put("p_fund", new HashMap<>()); // or handle the case where fund is not found
-	        }
+	    if ("S".equals(outParams.get("o_status"))) {
+	        String query = "SELECT * FROM xxpf_funds WHERE fund_id = ?";
+	        Map<String, Object> manageFund = jdbcTemplate.queryForMap(query, outParams.get("p_fund_id"));
+	        response.put("fund", manageFund);
 	    } else {
-	        response.put("p_fund", new HashMap<>()); // Empty or default value if not successful
+	        response.put("fund", new HashMap<>());
 	    }
   
 	    return ResponseEntity.ok(response);
@@ -225,15 +209,12 @@ public class FundPagesServiceImpl implements FundPagesService {
 		    response.put("o_status", outParams.get("o_status"));
 		    response.put("o_message", outParams.get("o_message"));
 		    
-		 if ("S".equals(outParams.get("o_status"))) { 
-		    	Optional<ManageRolesEntity> manageRoles = manageRolesRepo.findById(Integer.parseInt(String.valueOf(outParams.get("p_role_id"))));
-		        if (manageRoles.isPresent()) {
-		            response.put("p_roles", manageRoles.get());
-		        } else {
-		            response.put("p_roles", new HashMap<>()); // or handle the case where fund is not found
-		        }
+		    if ("S".equals(outParams.get("o_status"))) {
+		        String query = "SELECT * FROM xxpf_role_master WHERE role_id = ?";
+		        Map<String, Object> manageRoles = jdbcTemplate.queryForMap(query, outParams.get("p_role_id"));
+		        response.put("role", manageRoles);
 		    } else {
-		        response.put("p_roles", new HashMap<>()); // Empty or default value if not successful
+		        response.put("role", new HashMap<>());
 		    }
 
 		return ResponseEntity.ok(response);
@@ -278,24 +259,20 @@ public class FundPagesServiceImpl implements FundPagesService {
 		Map<String, Object> response = new HashMap<>();
 	    response.put("o_status", outParams.get("o_status"));
 	    response.put("o_message", outParams.get("o_message"));
-	 if ("S".equals(outParams.get("o_status"))) { // Assuming "S" indicates success
-	    	Optional<ManageFundRolesEntity> manageFundRoles = manageFundRolesRepo.findById(Integer.parseInt(String.valueOf(outParams.get("p_fund_role_id"))));
-	    	manageFundRoles.get().setFundname(mfrData.getFundname());
-	    	manageFundRoles.get().setRolename(mfrData.getRolename());
-	        if (manageFundRoles.isPresent()) {
-	            response.put("p_fund_roles", manageFundRoles.get());
-	        } else {
-	            response.put("p_fund_roles", new HashMap<>()); // or handle the case where fund is not found
-	        }
+
+	    if ("S".equals(outParams.get("o_status"))) {
+	        String query = "SELECT * FROM xxpf_fund_roles WHERE fund_role_id = ?";
+	        Map<String, Object> manageFundRoles = jdbcTemplate.queryForMap(query, outParams.get("p_fund_role_id"));
+	        response.put("fund_role", manageFundRoles);
 	    } else {
-	        response.put("p_fund_roles", new HashMap<>()); // Empty or default value if not successful
+	        response.put("fund_role", new HashMap<>());
 	    }
 	 
 	 return ResponseEntity.ok(response);
 	}
-
 	@Override
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFundPages(ManageFundPagesDTO mfpData) {
+		System.out.println("mfrData ======> "+mfpData.toString());
 		SimpleJdbcCall jdbcCall = jdbcCallBuilder.buildSimpleJdbcCall(dataSource, "APPS", "xxpf_partner_fund_utils_pkg", "manage_fund_pages")
 				.declareParameters(new SqlInOutParameter("p_fund_page_id", Types.NUMERIC),
 						new SqlParameter("p_fund_id", Types.NUMERIC),
@@ -306,26 +283,24 @@ public class FundPagesServiceImpl implements FundPagesService {
 						new SqlOutParameter("o_message", Types.VARCHAR));
 
 		Map<String, Object> inParams = new HashMap<>();
-		inParams.put("p_fund_page_id", mfpData.getP_fund_page_id());
-		inParams.put("p_fund_id", mfpData.getP_fund_id());
-		inParams.put("p_page_id", mfpData.getP_page_id());
-		inParams.put("p_active_flag", mfpData.getP_active_flag());
-		inParams.put("p_user_id", mfpData.getP_user_id());
+		inParams.put("p_fund_page_id", mfpData.getFundPageId());
+		inParams.put("p_fund_id", mfpData.getFundId());
+		inParams.put("p_page_id", mfpData.getPageId());
+		inParams.put("p_active_flag", mfpData.getActiveFlag());
+		inParams.put("p_user_id", mfpData.getUserId());
 
 		Map<String, Object> outParams = jdbcCall.execute(inParams);
 
 		Map<String, Object> response = new HashMap<>();
 	    response.put("o_status", outParams.get("o_status"));
 	    response.put("o_message", outParams.get("o_message"));
-	    if ("S".equals(outParams.get("o_status"))) { // Assuming "S" indicates success
-	    	Optional<ManageFundPagesEntity> manageFundRoles = manageFundPagesRepo.findById(Integer.parseInt(String.valueOf(outParams.get("p_fund_page_id"))));
-	        if (manageFundRoles.isPresent()) {
-	            response.put("p_fund_pages", manageFundRoles.get());
-	        } else {
-	            response.put("p_fund_pages", new HashMap<>()); // or handle the case where fund is not found
-	        }
+
+	    if ("S".equals(outParams.get("o_status"))) {
+	        String query = "SELECT * FROM xxpf_fund_pages WHERE fund_page_id = ?";
+	        Map<String, Object> manageFundPage = jdbcTemplate.queryForMap(query, outParams.get("p_fund_page_id"));
+	        response.put("fund_page", manageFundPage);
 	    } else {
-	        response.put("p_fund_pages", new HashMap<>()); // Empty or default value if not successful
+	        response.put("fund_page", new HashMap<>());
 	    }
 	 
 	 return ResponseEntity.ok(response);
@@ -333,6 +308,7 @@ public class FundPagesServiceImpl implements FundPagesService {
 
 	@Override
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFundTables(ManageFundTablesDTO mftData) {
+		System.out.println("mfrData ======> "+mftData.toString());
 		SimpleJdbcCall jdbcCall = jdbcCallBuilder.buildSimpleJdbcCall(dataSource, "APPS", "xxpf_partner_fund_utils_pkg", "manage_fund_tables")
 				.declareParameters(new SqlInOutParameter("p_table_id", Types.NUMERIC),
 						new SqlParameter("p_fund_id", Types.NUMERIC), new SqlParameter("p_table_name", Types.VARCHAR),
@@ -342,27 +318,25 @@ public class FundPagesServiceImpl implements FundPagesService {
 						new SqlOutParameter("o_message", Types.VARCHAR));
 
 		Map<String, Object> inParams = new HashMap<>();
-		inParams.put("p_table_id", mftData.getP_table_id());
-		inParams.put("p_fund_id", mftData.getP_fund_id());
-		inParams.put("p_table_name", mftData.getP_table_name());
-		inParams.put("p_display_name", mftData.getP_display_name());
-		inParams.put("p_usage_level", mftData.getP_usage_level());
-		inParams.put("p_user_id", mftData.getP_user_id());
+		inParams.put("p_table_id", mftData.getTableId());
+		inParams.put("p_fund_id", mftData.getFundId());
+		inParams.put("p_table_name", mftData.getTablename());
+		inParams.put("p_display_name", mftData.getDisplayName());
+		inParams.put("p_usage_level", mftData.getUsagelevel());
+		inParams.put("p_user_id", mftData.getUserId());
 
 		Map<String, Object> outParams = jdbcCall.execute(inParams);
 
 		Map<String, Object> response = new HashMap<>();
 	    response.put("o_status", outParams.get("o_status"));
 	    response.put("o_message", outParams.get("o_message"));
-	 if ("S".equals(outParams.get("o_status"))) { // Assuming "S" indicates success
-	    	Optional<ManageFundTablesEntity> manageFundTable = manageFundTableRepo.findById(Integer.parseInt(String.valueOf(outParams.get("p_table_id"))));
-	        if (manageFundTable.isPresent()) {
-	            response.put("p_fund_table", manageFundTable.get());
-	        } else {
-	            response.put("p_fund_table", new HashMap<>()); // or handle the case where fund is not found
-	        }
+	 
+	    if ("S".equals(outParams.get("o_status"))) {
+	        String query = "SELECT * FROM xxpf_fund_tables WHERE table_id = ?";
+	        Map<String, Object> manageFundTable = jdbcTemplate.queryForMap(query, outParams.get("p_table_id"));
+	        response.put("fund_table", manageFundTable);
 	    } else {
-	        response.put("p_fund_table", new HashMap<>()); // Empty or default value if not successful
+	        response.put("fund_table", new HashMap<>());
 	    }
 	 
 	 return ResponseEntity.ok(response);
@@ -370,6 +344,7 @@ public class FundPagesServiceImpl implements FundPagesService {
 
 	@Override
 	public ResponseEntity<Map<String, Object>>  saveOrUpdateManageFundTablesAttr(ManageFundTablesAttrDTO mftaData) {
+		System.out.println("mfrData ======> "+mftaData.toString());
 		SimpleJdbcCall jdbcCall = jdbcCallBuilder.buildSimpleJdbcCall(dataSource, "APPS", "xxpf_partner_fund_utils_pkg", "manage_fund_table_attributes")
 				.declareParameters(new SqlInOutParameter("p_attribute_id", Types.NUMERIC),
 						new SqlParameter("p_table_id", Types.NUMERIC), new SqlParameter("p_column_name", Types.VARCHAR),
@@ -379,27 +354,25 @@ public class FundPagesServiceImpl implements FundPagesService {
 						new SqlOutParameter("o_message", Types.VARCHAR));
 
 		Map<String, Object> inParams = new HashMap<>();
-		inParams.put("p_attribute_id", mftaData.getP_attribute_id());
-		inParams.put("p_table_id", mftaData.getP_table_id());
-		inParams.put("p_column_name", mftaData.getP_column_name());
-		inParams.put("p_display_name", mftaData.getP_display_name());
-		inParams.put("p_active_flag", mftaData.getP_active_flag());
-		inParams.put("p_user_id", mftaData.getP_user_id());
+		inParams.put("p_attribute_id", mftaData.getAttrId());
+		inParams.put("p_table_id", mftaData.getTableId());
+		inParams.put("p_column_name", mftaData.getColumnName());
+		inParams.put("p_display_name", mftaData.getDisplayName());
+		inParams.put("p_active_flag", mftaData.getActiveFlag());
+		inParams.put("p_user_id", mftaData.getUserId());
 
 		Map<String, Object> outParams = jdbcCall.execute(inParams);
 
 		Map<String, Object> response = new HashMap<>();
 	    response.put("o_status", outParams.get("o_status"));
 	    response.put("o_message", outParams.get("o_message"));
-	 if ("S".equals(outParams.get("o_status"))) { // Assuming "S" indicates success
-	    	Optional<ManageFundTableAttributesEntity> manageFundTableAttribute = manageFundTableAttributesRepo.findById(Integer.parseInt(String.valueOf(outParams.get("p_attribute_id"))));
-	        if (manageFundTableAttribute.isPresent()) {
-	            response.put("p_fund_table_attributes", manageFundTableAttribute.get());
-	        } else {
-	            response.put("p_fund_table_attributes", new HashMap<>()); // or handle the case where fund is not found
-	        }
+	 
+	    if ("S".equals(outParams.get("o_status"))) {
+	        String query = "SELECT * FROM xxpf_fund_table_attributes WHERE attribute_id = ?";
+	        Map<String, Object> manageFundTableAttribute = jdbcTemplate.queryForMap(query, outParams.get("p_attribute_id"));
+	        response.put("fund_table_attr", manageFundTableAttribute);
 	    } else {
-	        response.put("p_fund_table_attributes", new HashMap<>()); // Empty or default value if not successful
+	        response.put("fund_table_attr", new HashMap<>());
 	    }
 	 
 	 return ResponseEntity.ok(response);
@@ -407,22 +380,23 @@ public class FundPagesServiceImpl implements FundPagesService {
 	
 	@Override
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePageFeatures(ManagePageFeaturesDTO mpfData) {
+		System.out.println("mfrData ======> "+mpfData.toString());
 	    SimpleJdbcCall jdbcCall = jdbcCallBuilder.buildSimpleJdbcCall(dataSource, "APPS", "xxpf_partner_fund_utils_pkg", "manage_page_features")
 	            .declareParameters(
 	                    new SqlInOutParameter("p_feature_id", Types.NUMERIC),
 	                    new SqlParameter("p_page_id", Types.NUMERIC),
-	                    new SqlParameter("p_feature_name", Types.NUMERIC),
+	                    new SqlParameter("p_feature_name", Types.VARCHAR),
 	                    new SqlParameter("p_user_id", Types.NUMERIC),
 	                    new SqlOutParameter("o_status", Types.VARCHAR),
 	                    new SqlOutParameter("o_message", Types.VARCHAR)
 	            );
 
 	    // Map input parameters
-	    MapSqlParameterSource inParams = new MapSqlParameterSource();
-	    inParams.addValue("p_feature_id", mpfData.getP_feature_id());
-	    inParams.addValue("p_page_id", mpfData.getP_page_id());
-	    inParams.addValue("p_feature_name", mpfData.getP_feature_name());
-	    inParams.addValue("p_user_id", mpfData.getP_user_id());
+		Map<String, Object> inParams = new HashMap<>();
+	    inParams.put("p_feature_id", mpfData.getFeatureId());
+	    inParams.put("p_page_id", mpfData.getPageId());
+	    inParams.put("p_feature_name", mpfData.getFeatureName());
+	    inParams.put("p_user_id", mpfData.getUserId());
 
 	    Map<String, Object> outParams = jdbcCall.execute(inParams);
 
@@ -430,61 +404,301 @@ public class FundPagesServiceImpl implements FundPagesService {
 	    response.put("o_status", outParams.get("o_status"));
 	    response.put("o_message", outParams.get("o_message"));
 
-	    if ("S".equals(outParams.get("o_status"))) { 
-	    	Optional<PagesFeatureEntity> pageFeature = pagesFeatureRepo.findById(Integer.parseInt(String.valueOf(outParams.get("p_feature_id"))));
-	        if (pageFeature.isPresent()) {
-	            response.put("p_feature", pageFeature.get());
-	        } else {
-	            response.put("p_feature", new HashMap<>()); 
-	        }
+	    if ("S".equals(outParams.get("o_status"))) {
+	        String query = "SELECT * FROM xxpf_page_features WHERE feature_id = ?";
+	        Map<String, Object> pageFeature = jdbcTemplate.queryForMap(query, outParams.get("p_feature_id"));
+	        response.put("page_feature", pageFeature);
 	    } else {
-	        response.put("p_feature", new HashMap<>()); 
+	        response.put("page_feature", new HashMap<>());
 	    }
 
 	    return ResponseEntity.ok(response);
 	}
 
-//	@Override
-//	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePageFeatureRbac(ManagePageFeatureRbacDTO mpfrData) {
-//	    SimpleJdbcCall jdbcCall = jdbcCallBuilder.buildSimpleJdbcCall(dataSource, "APPS", "xxpf_partner_fund_utils_pkg", "manage_page_features")
-//	            .declareParameters(
-//	                    new SqlInOutParameter("p_rbac_feature_id", Types.NUMERIC),
-//	                    new SqlParameter("p_fund_bpa_id", Types.NUMERIC),
-//	                    new SqlParameter("p_page_id", Types.NUMERIC),
-//	                    new SqlParameter("p_feature_id", Types.NUMERIC),
-//	                    new SqlParameter("p_read_flag", Types.NUMERIC),
-//	                    new SqlParameter("p_page_id", Types.NUMERIC),
-//	                    new SqlParameter("p_feature_name", Types.NUMERIC),
-//	                    new SqlParameter("p_user_id", Types.NUMERIC),
-//	                    new SqlParameter("p_user_id", Types.NUMERIC),
-//	                    new SqlOutParameter("o_status", Types.VARCHAR),
-//	                    new SqlOutParameter("o_message", Types.VARCHAR)
-//	            );
-//
-//	    // Map input parameters
-//	    MapSqlParameterSource inParams = new MapSqlParameterSource();
-//	    inParams.addValue("p_feature_id", mpfData.getP_feature_id());
-//	    inParams.addValue("p_page_id", mpfData.getP_page_id());
-//	    inParams.addValue("p_feature_name", mpfData.getP_feature_name());
-//	    inParams.addValue("p_user_id", mpfData.getP_user_id());
-//
-//	    Map<String, Object> outParams = jdbcCall.execute(inParams);
-//
-//	    Map<String, Object> response = new HashMap<>();
-//	    response.put("o_status", outParams.get("o_status"));
-//	    response.put("o_message", outParams.get("o_message"));
-//
-//	    if ("S".equals(outParams.get("o_status"))) { 
-//	    	Optional<PagesFeatureEntity> pageFeature = pagesFeatureRepo.findById(Integer.parseInt(String.valueOf(outParams.get("p_feature_id"))));
-//	        if (pageFeature.isPresent()) {
-//	            response.put("p_feature", pageFeature.get());
-//	        } else {
-//	            response.put("p_feature", new HashMap<>()); 
-//	        }
-//	    } else {
-//	        response.put("p_feature", new HashMap<>()); 
-//	    }
-//
-//	    return ResponseEntity.ok(response);
-//	}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	@Override
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePageFeatureRbac(ManagePageFeatureRbacDTO mpfrData) {
+		System.out.println("mfrData ======> "+mpfrData.toString());
+	    SimpleJdbcCall jdbcCall = jdbcCallBuilder.buildSimpleJdbcCall(dataSource, "APPS", "xxpf_partner_fund_utils_pkg", "manage_page_feature_rbac")
+	            .declareParameters(
+	                    new SqlInOutParameter("p_rbac_feature_id", Types.NUMERIC),
+	                    new SqlParameter("p_fund_bpa_id", Types.NUMERIC),
+	                    new SqlParameter("p_page_id", Types.NUMERIC),
+	                    new SqlParameter("p_feature_id", Types.NUMERIC),
+	                    new SqlParameter("p_read_flag", Types.VARCHAR),
+	                    new SqlParameter("p_write_flag", Types.VARCHAR),
+	                    new SqlParameter("p_user_id", Types.NUMERIC),
+	                    new SqlOutParameter("o_status", Types.VARCHAR),
+	                    new SqlOutParameter("o_message", Types.VARCHAR)
+	            );
+
+	    Map<String, Object> inParams = new HashMap<>();
+	    inParams.put("p_rbac_feature_id", mpfrData.getRbacFeatureId());
+	    inParams.put("p_fund_bpa_id", mpfrData.getFundBpaId());
+	    inParams.put("p_page_id", mpfrData.getPageId());
+	    inParams.put("p_feature_id", mpfrData.getFeatureId());
+	    inParams.put("p_read_flag", mpfrData.getReadFlag());
+	    inParams.put("p_write_flag", mpfrData.getWriteFlag());
+	    inParams.put("p_user_id", mpfrData.getUserId());
+
+	    Map<String, Object> outParams = jdbcCall.execute(inParams);
+
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("o_status", outParams.get("o_status"));
+	    response.put("o_message", outParams.get("o_message"));
+
+	    if ("S".equals(outParams.get("o_status"))) {
+	        String query = "SELECT * FROM xxpf_fund_bpa_page_feature_rbac WHERE rbac_feature_id = ?";
+	        Map<String, Object> featureData = jdbcTemplate.queryForMap(query, outParams.get("p_rbac_feature_id"));
+	        response.put("page_feature_rbac", featureData);
+	    } else {
+	        response.put("page_feature_rbac", new HashMap<>());
+	    }
+
+	    return ResponseEntity.ok(response);
+	}	
+	
+	@Override
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFundBpaRbacRoles(ManageFundBpaRbacRolesDTO mfbrrData) {
+		System.out.println("mfrData ======> "+mfbrrData.toString());
+	    SimpleJdbcCall jdbcCall = jdbcCallBuilder.buildSimpleJdbcCall(dataSource, "APPS", "xxpf_partner_fund_utils_pkg", "manage_fund_bpa_rbac_roles")
+	            .declareParameters(
+	                    new SqlInOutParameter("p_rbac_role_id", Types.NUMERIC),
+	                    new SqlParameter("p_fund_bpa_id", Types.NUMERIC),
+	                    new SqlParameter("p_role_id", Types.NUMERIC),
+	                    new SqlParameter("p_user_id", Types.NUMERIC),
+	                    new SqlOutParameter("o_status", Types.VARCHAR),
+	                    new SqlOutParameter("o_message", Types.VARCHAR)
+	            );
+
+	    Map<String, Object> inParams = new HashMap<>();
+	    inParams.put("p_rbac_role_id", mfbrrData.getRbacRoleId());
+	    inParams.put("p_fund_bpa_id", mfbrrData.getFundBpaId());
+	    inParams.put("p_role_id", mfbrrData.getRoleId());
+	    inParams.put("p_user_id", mfbrrData.getUserId());
+
+	    Map<String, Object> outParams = jdbcCall.execute(inParams);
+
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("o_status", outParams.get("o_status"));
+	    response.put("o_message", outParams.get("o_message"));
+
+	    if ("S".equals(outParams.get("o_status"))) {
+	        String query = "SELECT * FROM xxpf_fund_bpa_rbac_roles WHERE rbac_role_id = ?";
+	        Map<String, Object> roleData = jdbcTemplate.queryForMap(query, outParams.get("p_rbac_role_id"));
+	        response.put("fund_bpa_rbac_role", roleData);
+	    } else {
+	        response.put("fund_bpa_rbac_role", new HashMap<>());
+	    }
+
+	    return ResponseEntity.ok(response);
+	}
+
+	@Override
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFundTimelines(ManageFundTimelinesDTO mftData) {
+		System.out.println("mfrData ======> "+mftData.toString());
+	    SimpleJdbcCall jdbcCall = jdbcCallBuilder.buildSimpleJdbcCall(dataSource, "APPS", "xxpf_partner_fund_utils_pkg", "manage_fund_timelines")
+	            .declareParameters(
+	                    new SqlInOutParameter("p_timeline_id", Types.NUMERIC),
+	                    new SqlParameter("p_fund_id", Types.NUMERIC),
+	                    new SqlParameter("p_timeline_category", Types.VARCHAR),
+	                    new SqlParameter("p_fiscal_year", Types.NUMERIC),
+	                    new SqlParameter("p_stage_name", Types.VARCHAR),
+	                    new SqlParameter("p_interval_value", Types.VARCHAR),
+	                    new SqlParameter("p_start_date", Types.DATE),
+	                    new SqlParameter("p_end_date", Types.DATE),
+	                    new SqlParameter("p_user_id", Types.NUMERIC),
+	                    new SqlOutParameter("o_status", Types.VARCHAR),
+	                    new SqlOutParameter("o_message", Types.VARCHAR)
+	            );
+
+	    Map<String, Object> inParams = new HashMap<>();
+	    inParams.put("p_timeline_id", mftData.getTimelineId());
+	    inParams.put("p_fund_id", mftData.getFundId());
+	    inParams.put("p_timeline_category", mftData.getTimelineCategory());
+	    inParams.put("p_fiscal_year", mftData.getFiscalYear());
+	    inParams.put("p_stage_name", mftData.getStageName());
+	    inParams.put("p_interval_value", mftData.getIntervalValue());
+	    inParams.put("p_start_date", mftData.getStartDate());
+	    inParams.put("p_end_date", mftData.getEndDate());
+	    inParams.put("p_user_id", mftData.getUserId());
+
+	    Map<String, Object> outParams = jdbcCall.execute(inParams);
+
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("o_status", outParams.get("o_status"));
+	    response.put("o_message", outParams.get("o_message"));
+
+	    if ("S".equals(outParams.get("o_status"))) {
+	        String query = "SELECT * FROM xxpf_fund_timelines WHERE timeline_id = ?";
+	        Map<String, Object> timelineData = jdbcTemplate.queryForMap(query, outParams.get("p_timeline_id"));
+	        response.put("fund_timeline", timelineData);
+	    } else {
+	        response.put("fund_timeline", new HashMap<>());
+	    }
+
+	    return ResponseEntity.ok(response);
+	}
+
+
+	@Override
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePlans(ManagePlansDTO mpData) {
+	    System.out.println("mpData ======> " + mpData.toString());
+	    SimpleJdbcCall jdbcCall = jdbcCallBuilder.buildSimpleJdbcCall(dataSource, "APPS", "xxpf_partner_fund_utils_pkg", "manage_plans")
+	            .declareParameters(
+	                    new SqlInOutParameter("p_Plan_ID", Types.NUMERIC),
+	                    new SqlParameter("p_Plan_Name", Types.VARCHAR),
+	                    new SqlParameter("p_Fund_id", Types.NUMERIC),
+	                    new SqlParameter("p_partnership_id", Types.NUMERIC),
+	                    new SqlParameter("p_Region", Types.VARCHAR),
+	                    new SqlParameter("p_Theater", Types.VARCHAR),
+	                    new SqlParameter("p_Fiscal_Year", Types.NUMERIC),
+	                    new SqlParameter("p_Distributor_ID_Plan", Types.VARCHAR),
+	                    new SqlParameter("p_Plan_Stage", Types.VARCHAR),
+	                    new SqlParameter("p_Plan_Distributor_Payee_Country", Types.VARCHAR),
+	                    new SqlParameter("p_Distributor_Payee_Country", Types.VARCHAR),
+	                    new SqlParameter("p_WS_Plan_Token", Types.VARCHAR),
+	                    new SqlParameter("p_user_id", Types.NUMERIC),
+	                    new SqlOutParameter("o_status", Types.VARCHAR),
+	                    new SqlOutParameter("o_message", Types.VARCHAR)
+	            );
+
+	    // Map input parameters
+	    Map<String, Object> inParams = new HashMap<>();
+	    inParams.put("p_Plan_ID", mpData.getPlanId());
+	    inParams.put("p_Plan_Name", mpData.getPlanName());
+	    inParams.put("p_Fund_id", mpData.getFundId());
+	    inParams.put("p_partnership_id", mpData.getPartnershipId());
+	    inParams.put("p_Region", mpData.getRegion());
+	    inParams.put("p_Theater", mpData.getTheater());
+	    inParams.put("p_Fiscal_Year", mpData.getFiscalYear());
+	    inParams.put("p_Distributor_ID_Plan", mpData.getDistributorIdPlan());
+	    inParams.put("p_Plan_Stage", mpData.getPlanStage());
+	    inParams.put("p_Plan_Distributor_Payee_Country", mpData.getPlanDistributorPayeeCountry());
+	    inParams.put("p_Distributor_Payee_Country", mpData.getDistributorPayeeCountry());
+	    inParams.put("p_WS_Plan_Token", mpData.getWsPlanToken());
+	    inParams.put("p_user_id", mpData.getUserId());
+
+	    Map<String, Object> outParams = jdbcCall.execute(inParams);
+
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("o_status", outParams.get("o_status"));
+	    response.put("o_message", outParams.get("o_message"));
+
+	    if ("S".equals(outParams.get("o_status"))) {
+	        String query = "SELECT * FROM xxpf_plans WHERE plan_id = ?";
+	        Map<String, Object> planDetails = jdbcTemplate.queryForMap(query, outParams.get("p_Plan_ID"));
+	        response.put("plan", planDetails);
+	    } else {
+	        response.put("plan", new HashMap<>());
+	    }
+
+	    return ResponseEntity.ok(response);
+	}
+
+
+	@Override
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManageActivities(ManageActivitiesDTO maData) {
+	    System.out.println("maData ======> " + maData.toString());
+	    SimpleJdbcCall jdbcCall = jdbcCallBuilder.buildSimpleJdbcCall(dataSource, "APPS", "xxpf_partner_fund_utils_pkg", "manage_activities")
+	            .declareParameters(
+	                    new SqlInOutParameter("p_Activity_Id", Types.NUMERIC),
+	                    new SqlParameter("p_Activity_Name", Types.VARCHAR),
+	                    new SqlParameter("p_Plan_Id", Types.NUMERIC),
+	                    new SqlParameter("p_Stage", Types.VARCHAR),
+	                    new SqlParameter("p_Activity_Group", Types.VARCHAR),
+	                    new SqlParameter("p_Activity_Description", Types.VARCHAR),
+	                    new SqlParameter("p_Sub_Track", Types.VARCHAR),
+	                    new SqlParameter("p_Track", Types.VARCHAR),
+	                    new SqlParameter("p_Activity_Start_Date", Types.DATE),
+	                    new SqlParameter("p_Activity_End_Date", Types.DATE),
+	                    new SqlParameter("p_Activity_Expiration_Date", Types.DATE),
+	                    new SqlParameter("p_Activity_Requested_Amount", Types.NUMERIC),
+	                    new SqlParameter("p_Activity_Requested_Amount_Currency", Types.VARCHAR),
+	                    new SqlParameter("p_Activity_Metrics", Types.VARCHAR),
+	                    new SqlParameter("p_Activity_Target", Types.NUMERIC),
+	                    new SqlParameter("p_Activity_Results_Submitted", Types.NUMERIC),
+	                    new SqlParameter("p_Funding_Quarter", Types.VARCHAR),
+	                    new SqlParameter("p_Cisco_Funding_Quarter", Types.VARCHAR),
+	                    new SqlParameter("p_Activity_Start_Fiscal_Quarter", Types.VARCHAR),
+	                    new SqlParameter("p_Activity_Type", Types.VARCHAR),
+	                    new SqlParameter("p_Distributor_Unique_Id", Types.VARCHAR),
+	                    new SqlParameter("p_Initiative", Types.VARCHAR),
+	                    new SqlParameter("p_Fund_Shell", Types.VARCHAR),
+	                    new SqlParameter("p_Milestone_Name", Types.VARCHAR),
+	                    new SqlParameter("p_Achievement", Types.VARCHAR),
+	                    new SqlParameter("p_Currency", Types.VARCHAR),
+	                    new SqlParameter("p_Achievement_Percent", Types.NUMERIC),
+	                    new SqlParameter("p_Sliding_Scale_Percent", Types.NUMERIC),
+	                    new SqlParameter("p_Claim_Submission_Deadline", Types.DATE),
+	                    new SqlParameter("p_Activity_Submission_Deadline", Types.DATE),
+	                    new SqlParameter("p_Activity_Execution_Deadline", Types.DATE),
+	                    new SqlParameter("p_Claim_Submit_Date", Types.DATE),
+	                    new SqlParameter("p_Activity_Submit_Date", Types.DATE),
+	                    new SqlParameter("p_Activity_Execution_Date", Types.DATE),
+	                    new SqlParameter("p_Tc_Accepted", Types.VARCHAR),
+	                    new SqlParameter("p_Ws_Activity_Id", Types.VARCHAR),
+	                    new SqlParameter("p_user_id", Types.NUMERIC),
+	                    new SqlOutParameter("o_status", Types.VARCHAR),
+	                    new SqlOutParameter("o_message", Types.VARCHAR)
+	            );
+
+	    // Map input parameters
+	    Map<String, Object> inParams = new HashMap<>();
+	    inParams.put("p_Activity_Id", maData.getActivityId());
+	    inParams.put("p_Activity_Name", maData.getActivityName());
+	    inParams.put("p_Plan_Id", maData.getPlanId());
+	    inParams.put("p_Stage", maData.getStage());
+	    inParams.put("p_Activity_Group", maData.getActivityGroup());
+	    inParams.put("p_Activity_Description", maData.getActivityDescription());
+	    inParams.put("p_Sub_Track", maData.getSubTrack());
+	    inParams.put("p_Track", maData.getTrack());
+	    inParams.put("p_Activity_Start_Date", maData.getActivityStartDate());
+	    inParams.put("p_Activity_End_Date", maData.getActivityEndDate());
+	    inParams.put("p_Activity_Expiration_Date", maData.getActivityExpirationDate());
+	    inParams.put("p_Activity_Requested_Amount", maData.getActivityRequestedAmount());
+	    inParams.put("p_Activity_Requested_Amount_Currency", maData.getActivityRequestedAmountCurrency());
+	    inParams.put("p_Activity_Metrics", maData.getActivityMetrics());
+	    inParams.put("p_Activity_Target", maData.getActivityTarget());
+	    inParams.put("p_Activity_Results_Submitted", maData.getActivityResultsSubmitted());
+	    inParams.put("p_Funding_Quarter", maData.getFundingQuarter());
+	    inParams.put("p_Cisco_Funding_Quarter", maData.getCiscoFundingQuarter());
+	    inParams.put("p_Activity_Start_Fiscal_Quarter", maData.getActivityStartFiscalQuarter());
+	    inParams.put("p_Activity_Type", maData.getActivityType());
+	    inParams.put("p_Distributor_Unique_Id", maData.getDistributorUniqueId());
+	    inParams.put("p_Initiative", maData.getInitiative());
+	    inParams.put("p_Fund_Shell", maData.getFundShell());
+	    inParams.put("p_Milestone_Name", maData.getMilestoneName());
+	    inParams.put("p_Achievement", maData.getAchievement());
+	    inParams.put("p_Currency", maData.getCurrency());
+	    inParams.put("p_Achievement_Percent", maData.getAchievementPercent());
+	    inParams.put("p_Sliding_Scale_Percent", maData.getSlidingScalePercent());
+	    inParams.put("p_Claim_Submission_Deadline", maData.getClaimSubmissionDeadline());
+	    inParams.put("p_Activity_Submission_Deadline", maData.getActivitySubmissionDeadline());
+	    inParams.put("p_Activity_Execution_Deadline", maData.getActivityExecutionDeadline());
+	    inParams.put("p_Claim_Submit_Date", maData.getClaimSubmitDate());
+	    inParams.put("p_Activity_Submit_Date", maData.getActivitySubmitDate());
+	    inParams.put("p_Activity_Execution_Date", maData.getActivityExecutionDate());
+	    inParams.put("p_Tc_Accepted", maData.getTcAccepted());
+	    inParams.put("p_Ws_Activity_Id", maData.getWsActivityId());
+	    inParams.put("p_user_id", maData.getUserId());
+
+	    Map<String, Object> outParams = jdbcCall.execute(inParams);
+
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("o_status", outParams.get("o_status"));
+	    response.put("o_message", outParams.get("o_message"));
+
+	    if ("S".equals(outParams.get("o_status"))) {
+	        String query = "SELECT * FROM xxpf_activities WHERE activity_id = ?";
+	        Map<String, Object> activityDetails = jdbcTemplate.queryForMap(query, outParams.get("p_Activity_Id"));
+	        System.out.println(activityDetails);
+            response.put("p_activity", activityDetails);
+	    } else {
+	        response.put("p_activity", new HashMap<>());
+	    }
+
+	    return ResponseEntity.ok(response);
+	}
+
 }

@@ -5,60 +5,58 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ManageFundPagesDTO {
 
 	@JsonProperty("fundPageId")
-	private Integer p_fund_page_id;
+	private Integer fundPageId;
 	
 	@JsonProperty("fundId")
-	private Integer p_fund_id;
+	private Integer fundId;
 	
 	@JsonProperty("pageId")
-	private Integer p_page_id;
+	private Integer pageId;
 	
 	@JsonProperty("activeFlag")
-	private String p_active_flag;
+	private String activeFlag;
 	
 	@JsonProperty("userId")
-	private Integer p_user_id;
+	private Integer userId;
 
-	public Integer getP_fund_page_id() {
-		return p_fund_page_id;
+	public Integer getFundPageId() {
+		return fundPageId;
 	}
 
-	public void setP_fund_page_id(Integer p_fund_page_id) {
-		this.p_fund_page_id = p_fund_page_id;
+	public void setFundPageId(Integer fundPageId) {
+		this.fundPageId = fundPageId;
 	}
 
-	public Integer getP_fund_id() {
-		return p_fund_id;
+	public Integer getFundId() {
+		return fundId;
 	}
 
-	public void setP_fund_id(Integer p_fund_id) {
-		this.p_fund_id = p_fund_id;
+	public void setFundId(Integer fundId) {
+		this.fundId = fundId;
 	}
 
-	public Integer getP_page_id() {
-		return p_page_id;
+	public Integer getPageId() {
+		return pageId;
 	}
 
-	public void setP_page_id(Integer p_page_id) {
-		this.p_page_id = p_page_id;
+	public void setPageId(Integer pageId) {
+		this.pageId = pageId;
 	}
 
-	public String getP_active_flag() {
-		return p_active_flag;
+	public String getActiveFlag() {
+		return activeFlag;
 	}
 
-	public void setP_active_flag(String p_active_flag) {
-		this.p_active_flag = p_active_flag;
+	public void setActiveFlag(String activeFlag) {
+		this.activeFlag = activeFlag;
 	}
 
-	public Integer getP_user_id() {
-		return p_user_id;
+	public Integer getUserId() {
+		return userId;
 	}
 
-	public void setP_user_id(Integer p_user_id) {
-		this.p_user_id = p_user_id;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
-
-	
 }

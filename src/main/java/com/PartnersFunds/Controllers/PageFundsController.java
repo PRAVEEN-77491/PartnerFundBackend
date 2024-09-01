@@ -12,12 +12,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.PartnersFunds.DTO.ManageActivitiesDTO;
+import com.PartnersFunds.DTO.ManageFundBpaRbacRolesDTO;
 import com.PartnersFunds.DTO.ManageFundDTO;
 import com.PartnersFunds.DTO.ManageFundPagesDTO;
 import com.PartnersFunds.DTO.ManageFundRolesDTO;
 import com.PartnersFunds.DTO.ManageFundTablesAttrDTO;
 import com.PartnersFunds.DTO.ManageFundTablesDTO;
+import com.PartnersFunds.DTO.ManageFundTimelinesDTO;
+import com.PartnersFunds.DTO.ManagePageFeatureRbacDTO;
 import com.PartnersFunds.DTO.ManagePageFeaturesDTO;
+import com.PartnersFunds.DTO.ManagePlansDTO;
 import com.PartnersFunds.DTO.ManageRolesDTO;
 import com.PartnersFunds.service.FundPagesService;
 
@@ -43,7 +48,7 @@ public class PageFundsController {
 	public List<Map<String, Object>> getFundroleDetails() {
 		return ser.getFundroleDetails();
 	}
-	////////////////////////////////////////////////////////////////////////////////////
+
 	@GetMapping("/getManageFundPagesDetails")
 	public List<Map<String, Object>> getManageFundPagesDetails() {
 		return ser.getManageFundPagesDetails();
@@ -63,6 +68,31 @@ public class PageFundsController {
 	public List<Map<String, Object>> getManagePageFeaturesDetails() {
 		return ser.getManagePageFeaturesDetails();
 	}
+	
+	@GetMapping("/getManagePageFeatureRbacDetails")
+	public List<Map<String, Object>> getManagePageFeatureRbacDetails() {
+	    return ser.getManagePageFeatureRbacDetails();
+	}
+
+	@GetMapping("/getManageFundBpaRbacRolesDetails")
+	public List<Map<String, Object>> getManageFundBpaRbacRolesDetails() {
+	    return ser.getManageFundBpaRbacRolesDetails();
+	}
+
+	@GetMapping("/getManageFundTimelinesDetails")
+	public List<Map<String, Object>> getManageFundTimelinesDetails() {
+	    return ser.getManageFundTimelinesDetails();
+	}
+
+	@GetMapping("/getManagePlansDetails")
+	public List<Map<String, Object>> getManagePlansDetails() {
+	    return ser.getManagePlansDetails();
+	}
+
+	@GetMapping("/getManageActivitiesDetails")
+	public List<Map<String, Object>> getManageActivitiesDetails() {
+	    return ser.getManageActivitiesDetails();
+	}
 
 	@PostMapping("/saveOrUpdateManageFund")
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFund(@RequestBody ManageFundDTO mfData) {
@@ -75,10 +105,9 @@ public class PageFundsController {
 	}
 
 	@PostMapping("/saveOrUpdateManageFundRoles")
-	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFundRoles(@RequestBody ManageFundRolesDTO mrData) {
-		return ser.saveOrUpdateManageFundRoles(mrData);
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFundRoles(@RequestBody ManageFundRolesDTO mfrData) {
+		return ser.saveOrUpdateManageFundRoles(mfrData);
 	}
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	@PostMapping("/saveOrUpdateManageFundPages")
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFundPages(@RequestBody ManageFundPagesDTO mfpData) {
@@ -94,9 +123,34 @@ public class PageFundsController {
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFundTablesAttr(@RequestBody ManageFundTablesAttrDTO mftaData) {
 		return ser.saveOrUpdateManageFundTablesAttr(mftaData);
 	}
-	
-	@PostMapping("/managePagesFeature")
-	public ResponseEntity<Map<String, Object>> managePagesFeature(@RequestBody ManagePageFeaturesDTO mpfData) {
+	@PostMapping("/saveOrUpdateManagePageFeatures")
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePageFeatures(@RequestBody ManagePageFeaturesDTO mpfData) {
 		return ser.saveOrUpdateManagePageFeatures(mpfData);
+	}
+	
+//////////////////////////////////////////////////////////////////////////////////////
+	@PostMapping("/saveOrUpdateManagePageFeatureRbac")
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePageFeatureRbac(@RequestBody ManagePageFeatureRbacDTO mpfrData) {
+		return ser.saveOrUpdateManagePageFeatureRbac(mpfrData);
+	}
+	
+	@PostMapping("/saveOrUpdateManageFundBpaRbacRoles")
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFundBpaRbacRoles(@RequestBody ManageFundBpaRbacRolesDTO mfbrrData) {
+		return ser.saveOrUpdateManageFundBpaRbacRoles(mfbrrData);
+	}
+	
+	@PostMapping("/saveOrUpdateManageFundTimelines")
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFundTimelines(@RequestBody ManageFundTimelinesDTO mftData) {
+		return ser.saveOrUpdateManageFundTimelines(mftData);
+	}
+	
+	@PostMapping("/saveOrUpdateManagePlans")
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePlans(@RequestBody ManagePlansDTO mpData) {
+		return ser.saveOrUpdateManagePlans(mpData);
+	}
+	
+	@PostMapping("/saveOrUpdateManageActivities")
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManageActivities(@RequestBody ManageActivitiesDTO maData) {
+		return ser.saveOrUpdateManageActivities(maData);
 	}
 }

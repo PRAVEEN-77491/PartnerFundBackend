@@ -5,70 +5,69 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ManageFundTablesDTO {
 
 	@JsonProperty("tableId")
-	private Integer p_table_id;
+	private Integer tableId;
 	
 	@JsonProperty("fundId")
-	private Integer p_fund_id;
+	private Integer fundId;
 		
 	@JsonProperty("tablename")
-	private String p_table_name;
+	private String tablename;
 	
 	@JsonProperty("displayName")
-	private String p_display_name;
+	private String displayName;
 	
 	@JsonProperty("usagelevel")
-	private String p_usage_level;
+	private String usagelevel;
 	
 	@JsonProperty("userId")
-	private Integer p_user_id;
+	private Integer userId;
 
-	public Integer getP_table_id() {
-		return p_table_id;
+	public Integer getTableId() {
+		return tableId;
 	}
 
-	public void setP_table_id(Integer p_table_id) {
-		this.p_table_id = p_table_id;
+	public void setTableId(Integer tableId) {
+		this.tableId = tableId;
 	}
 
-	public Integer getP_fund_id() {
-		return p_fund_id;
+	public Integer getFundId() {
+		return fundId;
 	}
 
-	public void setP_fund_id(Integer p_fund_id) {
-		this.p_fund_id = p_fund_id;
+	public void setFundId(Integer fundId) {
+		this.fundId = fundId;
 	}
 
-	public String getP_display_name() {
-		return p_display_name;
+	public String getTablename() {
+		return tablename;
 	}
 
-	public void setP_display_name(String p_display_name) {
-		this.p_display_name = p_display_name;
+	public void setTablename(String tablename) {
+		this.tablename = tablename;
 	}
 
-	public String getP_table_name() {
-		return p_table_name;
+	public String getDisplayName() {
+		return displayName;
 	}
 
-	public void setP_table_name(String p_table_name) {
-		this.p_table_name = p_table_name;
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
 	}
 
-	public String getP_usage_level() {
-		return p_usage_level;
+	public String getUsagelevel() {
+		return usagelevel;
 	}
 
-	public void setP_usage_level(String p_usage_level) {
-		this.p_usage_level = p_usage_level;
+	public void setUsagelevel(String usagelevel) {
+		this.usagelevel = usagelevel;
 	}
 
-	public Integer getP_user_id() {
-		return p_user_id;
+	public Integer getUserId() {
+		return userId;
 	}
 
-	public void setP_user_id(Integer p_user_id) {
-		this.p_user_id = p_user_id;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
-	
 	
 }
