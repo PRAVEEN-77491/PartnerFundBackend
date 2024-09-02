@@ -7,10 +7,12 @@ import java.util.Map;
 import org.springframework.http.ResponseEntity;
 
 import com.PartnersFunds.DTO.ManageActivitiesDTO;
+import com.PartnersFunds.DTO.ManageBpaWorkflowActivitiesDTO;
 import com.PartnersFunds.DTO.ManageFundBpaRbacRolesDTO;
 import com.PartnersFunds.DTO.ManageFundDTO;
 import com.PartnersFunds.DTO.ManageFundPagesDTO;
 import com.PartnersFunds.DTO.ManageRolesDTO;
+import com.PartnersFunds.DTO.ManageWorkflowTransitionsDTO;
 import com.PartnersFunds.DTO.ManageFundRolesDTO;
 import com.PartnersFunds.DTO.ManageFundTablesAttrDTO;
 import com.PartnersFunds.DTO.ManageFundTablesDTO;
@@ -46,8 +48,6 @@ public interface FundPagesService {
 
 	public List<Map<String, Object>> getManageFundTablesAttrDetails();
 
-	public List<Map<String, Object>> getManagePageFeaturesDetails();
-
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePageFeatures(ManagePageFeaturesDTO mpfData);
 
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePageFeatureRbac(ManagePageFeatureRbacDTO mpfrData);
@@ -59,6 +59,8 @@ public interface FundPagesService {
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePlans(ManagePlansDTO mpData);
 
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManageActivities(ManageActivitiesDTO maData);
+	
+	public List<Map<String, Object>> getManagePageFeaturesDetails();
 
 	public List<Map<String, Object>> getManagePageFeatureRbacDetails();
 
@@ -69,4 +71,15 @@ public interface FundPagesService {
 	public List<Map<String, Object>> getManagePlansDetails();
 
 	public List<Map<String, Object>> getManageActivitiesDetails();
+	
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManageBpaWorkflowActivities(ManageBpaWorkflowActivitiesDTO mbwaData);
+	
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManageWorkflowTransitions(ManageWorkflowTransitionsDTO mwtData);
+	
+	public List<Map<String, Object>> getManageWorkflowTransitionsDetails();
+	
+	public List<Map<String, Object>> getManageBpaWorkflowActivitiesDetails();
+	
+	
+	
 }

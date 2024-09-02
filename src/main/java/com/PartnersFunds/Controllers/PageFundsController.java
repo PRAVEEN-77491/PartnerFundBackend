@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.PartnersFunds.DTO.ManageActivitiesDTO;
+import com.PartnersFunds.DTO.ManageBpaWorkflowActivitiesDTO;
 import com.PartnersFunds.DTO.ManageFundBpaRbacRolesDTO;
 import com.PartnersFunds.DTO.ManageFundDTO;
 import com.PartnersFunds.DTO.ManageFundPagesDTO;
@@ -25,6 +26,7 @@ import com.PartnersFunds.DTO.ManagePageFeatureRbacDTO;
 import com.PartnersFunds.DTO.ManagePageFeaturesDTO;
 import com.PartnersFunds.DTO.ManagePlansDTO;
 import com.PartnersFunds.DTO.ManageRolesDTO;
+import com.PartnersFunds.DTO.ManageWorkflowTransitionsDTO;
 import com.PartnersFunds.service.FundPagesService;
 
 @RestController
@@ -106,8 +108,21 @@ public class PageFundsController {
 	public List<Map<String, Object>> getManageActivitiesDetails() {
 	    return ser.getManageActivitiesDetails();
 	}
+	
+	@GetMapping("/getManageBpaWorkflowActivitiesDetails")
+	public List<Map<String, Object>> getManageBpaWorkflowActivitiesDetails() {
+	    return ser.getManageBpaWorkflowActivitiesDetails();
+	}
 
+<<<<<<< Updated upstream
 	//@Secured("ROLE_ADMIN")
+=======
+	@GetMapping("/getManageWorkflowTransitionsDetails")
+	public List<Map<String, Object>> getManageWorkflowTransitionsDetails() {
+	    return ser.getManageWorkflowTransitionsDetails();
+	}
+//////////////////////////////////////////////////////////////////////////////////////
+>>>>>>> Stashed changes
 	@PostMapping("/saveOrUpdateManageFund")
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFund(@RequestBody ManageFundDTO mfData) {
 		return ser.saveOrUpdateManageFund(mfData);
@@ -148,8 +163,12 @@ public class PageFundsController {
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePageFeatures(@RequestBody ManagePageFeaturesDTO mpfData) {
 		return ser.saveOrUpdateManagePageFeatures(mpfData);
 	}
+<<<<<<< Updated upstream
 	
 	//@Secured("ROLE_ADMIN")
+=======
+
+>>>>>>> Stashed changes
 	@PostMapping("/saveOrUpdateManagePageFeatureRbac")
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePageFeatureRbac(@RequestBody ManagePageFeatureRbacDTO mpfrData) {
 		return ser.saveOrUpdateManagePageFeatureRbac(mpfrData);
@@ -177,5 +196,15 @@ public class PageFundsController {
 	@PostMapping("/saveOrUpdateManageActivities")
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManageActivities(@RequestBody ManageActivitiesDTO maData) {
 		return ser.saveOrUpdateManageActivities(maData);
+	}
+	
+	@PostMapping("/saveOrUpdateManageBpaWorkflowActivities")
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManageBpaWorkflowActivities(@RequestBody ManageBpaWorkflowActivitiesDTO mbwa) {
+		return ser.saveOrUpdateManageBpaWorkflowActivities(mbwa);
+	}
+	
+	@PostMapping("/saveOrUpdateManageWorkflowTransitions")
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManageWorkflowTransitions(@RequestBody ManageWorkflowTransitionsDTO mwtData) {
+		return ser.saveOrUpdateManageWorkflowTransitions(mwtData);
 	}
 }

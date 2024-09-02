@@ -16,10 +16,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.PartnersFunds.DTO.ManageActivitiesDTO;
+import com.PartnersFunds.DTO.ManageBpaWorkflowActivitiesDTO;
 import com.PartnersFunds.DTO.ManageFundBpaRbacRolesDTO;
 import com.PartnersFunds.DTO.ManageFundDTO;
 import com.PartnersFunds.DTO.ManageFundPagesDTO;
 import com.PartnersFunds.DTO.ManageRolesDTO;
+import com.PartnersFunds.DTO.ManageWorkflowTransitionsDTO;
 import com.PartnersFunds.DTO.ManageFundRolesDTO;
 import com.PartnersFunds.DTO.ManageFundTablesAttrDTO;
 import com.PartnersFunds.DTO.ManageFundTablesDTO;
@@ -73,8 +75,7 @@ public class FundPagesServiceImpl implements FundPagesService {
 		return queryResult;
 	}
 	
-	
-	///////////////////////////////////////////////////////////////////////////////////////
+
 	@Override
 	public List<Map<String, Object>> getManageFundPagesDetails() {
 		String sql = "select * from xxpf_fund_pages";
@@ -147,6 +148,23 @@ public class FundPagesServiceImpl implements FundPagesService {
 		return queryResult;
 	}
 	
+	@Override
+	public List<Map<String, Object>> getManageBpaWorkflowActivitiesDetails() {
+		String sql = "select * from xxpf_bpa_workflow_activities";
+		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
+		System.out.println("queryResult : " + queryResult);
+		return queryResult;
+	}
+	
+	@Override
+	public List<Map<String, Object>> getManageWorkflowTransitionsDetails() {
+		String sql = "select * from xxpf_bpa_workflow_transition";
+		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
+		System.out.println("queryResult : " + queryResult);
+		return queryResult;
+	}
+	
+//////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFund(ManageFundDTO mfData) {
 		System.out.println("mfDatea ======> "+mfData.toString());
@@ -421,7 +439,6 @@ public class FundPagesServiceImpl implements FundPagesService {
 	    return ResponseEntity.ok(response);
 	}
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	@Override
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePageFeatureRbac(ManagePageFeatureRbacDTO mpfrData) {
 		System.out.println("mfrData ======> "+mpfrData.toString());
@@ -706,5 +723,96 @@ public class FundPagesServiceImpl implements FundPagesService {
 
 	    return ResponseEntity.ok(response);
 	}
+	
+	@Override
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManageBpaWorkflowActivities(ManageBpaWorkflowActivitiesDTO mbwaData) {
+	    System.out.println("mbwaData ======> " + mbwaData.toString());
+	    SimpleJdbcCall jdbcCall = jdbcCallBuilder.buildSimpleJdbcCall(dataSource, "APPS", "xxpf_partner_fund_utils_pkg", "manage_bpa_workflow_activities")
+	            .declareParameters(
+	                    new SqlInOutParameter("p_activity_id", Types.NUMERIC),
+	                    new SqlParameter("p_sequence", Types.NUMERIC),
+	                    new SqlParameter("p_fund_bpa_id", Types.NUMERIC),
+	                    new SqlParameter("p_activity_label", Types.VARCHAR),
+	                    new SqlParameter("p_activity_type", Types.VARCHAR),
+	                    new SqlParameter("p_process_func", Types.VARCHAR),
+	                    new SqlParameter("p_notif_subject", Types.VARCHAR),
+	                    new SqlParameter("p_notif_body", Types.VARCHAR),
+	                    new SqlParameter("p_approval_level", Types.VARCHAR),
+	                    new SqlParameter("p_approvers", Types.VARCHAR),
+	                    new SqlParameter("p_user_id", Types.NUMERIC),
+	                    new SqlOutParameter("o_status", Types.VARCHAR),
+	                    new SqlOutParameter("o_message", Types.VARCHAR)
+	            );
+
+	    // Map input parameters
+	    Map<String, Object> inParams = new HashMap<>();
+	    inParams.put("p_activity_id", mbwaData.getP_activity_id());
+	    inParams.put("p_sequence", mbwaData.getP_sequence());
+	    inParams.put("p_fund_bpa_id", mbwaData.getP_fund_bpa_id());
+	    inParams.put("p_activity_label", mbwaData.getP_activity_label());
+	    inParams.put("p_activity_type", mbwaData.getP_activity_type());
+	    inParams.put("p_process_func", mbwaData.getP_process_func());
+	    inParams.put("p_notif_subject", mbwaData.getP_notif_subject());
+	    inParams.put("p_notif_body", mbwaData.getP_notif_body());
+	    inParams.put("p_approval_level", mbwaData.getP_approval_level());
+	    inParams.put("p_approvers", mbwaData.getP_approvers());
+	    inParams.put("p_user_id", mbwaData.getP_user_id());
+
+	    Map<String, Object> outParams = jdbcCall.execute(inParams);
+
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("o_status", outParams.get("o_status"));
+	    response.put("o_message", outParams.get("o_message"));
+
+	    if ("S".equals(outParams.get("o_status"))) {
+	        String query = "select * from xxpf_bpa_workflow_activities WHERE activity_id = ?";
+	        Map<String, Object> planDetails = jdbcTemplate.queryForMap(query, outParams.get("p_activity_id"));
+	        response.put("plan", planDetails);
+	    } else {
+	        response.put("plan", new HashMap<>());
+	    }
+
+	    return ResponseEntity.ok(response);
+	}
+	
+	@Override
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManageWorkflowTransitions(ManageWorkflowTransitionsDTO mwtData) {
+	    System.out.println("mwtData ======> " + mwtData.toString());
+	    SimpleJdbcCall jdbcCall = jdbcCallBuilder.buildSimpleJdbcCall(dataSource, "APPS", "xxpf_partner_fund_utils_pkg", "manage_workflow_transition")
+	            .declareParameters(
+	                    new SqlInOutParameter("p_transition_id", Types.NUMERIC),
+	                    new SqlParameter("p_activity_id", Types.NUMERIC),
+	                    new SqlParameter("p_transition_activity_id", Types.NUMERIC),
+	                    new SqlParameter("p_outcome_value", Types.VARCHAR),
+	                    new SqlParameter("p_user_id", Types.NUMERIC),
+	                    new SqlOutParameter("o_status", Types.VARCHAR),
+	                    new SqlOutParameter("o_message", Types.VARCHAR)
+	            );
+
+	    // Map input parameters
+	    Map<String, Object> inParams = new HashMap<>();
+	    inParams.put("p_transition_id", mwtData.getP_transition_id());
+	    inParams.put("p_activity_id", mwtData.getP_activity_id());
+	    inParams.put("p_transition_activity_id", mwtData.getP_transition_activity_id());
+	    inParams.put("p_outcome_value", mwtData.getP_outcome_value());
+	    inParams.put("p_user_id", mwtData.getP_user_id());
+
+	    Map<String, Object> outParams = jdbcCall.execute(inParams);
+
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("o_status", outParams.get("o_status"));
+	    response.put("o_message", outParams.get("o_message"));
+
+	    if ("S".equals(outParams.get("o_status"))) {
+	        String query = "select * from xxpf_bpa_workflow_transition WHERE transition_id = ?";
+	        Map<String, Object> planDetails = jdbcTemplate.queryForMap(query, outParams.get("p_transition_id"));
+	        response.put("plan", planDetails);
+	    } else {
+	        response.put("plan", new HashMap<>());
+	    }
+
+	    return ResponseEntity.ok(response);
+	}
+	
 
 }
