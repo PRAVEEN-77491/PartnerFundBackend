@@ -386,6 +386,9 @@ public class FundPagesServiceImpl implements FundPagesService {
 	                    new SqlInOutParameter("p_feature_id", Types.NUMERIC),
 	                    new SqlParameter("p_page_id", Types.NUMERIC),
 	                    new SqlParameter("p_feature_name", Types.VARCHAR),
+	                    new SqlParameter("p_feature_type", Types.VARCHAR),
+	                    new SqlParameter("p_display_name", Types.VARCHAR),
+	                    new SqlParameter("p_property_tag", Types.VARCHAR),
 	                    new SqlParameter("p_user_id", Types.NUMERIC),
 	                    new SqlOutParameter("o_status", Types.VARCHAR),
 	                    new SqlOutParameter("o_message", Types.VARCHAR)
@@ -396,6 +399,9 @@ public class FundPagesServiceImpl implements FundPagesService {
 	    inParams.put("p_feature_id", mpfData.getFeatureId());
 	    inParams.put("p_page_id", mpfData.getPageId());
 	    inParams.put("p_feature_name", mpfData.getFeatureName());
+	    inParams.put("p_feature_type", mpfData.getFeatureType());
+	    inParams.put("p_display_name", mpfData.getDisplayName());
+	    inParams.put("p_property_tag", mpfData.getPropertyTag());
 	    inParams.put("p_user_id", mpfData.getUserId());
 
 	    Map<String, Object> outParams = jdbcCall.execute(inParams);
