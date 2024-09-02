@@ -114,15 +114,13 @@ public class PageFundsController {
 	    return ser.getManageBpaWorkflowActivitiesDetails();
 	}
 
-<<<<<<< Updated upstream
 	//@Secured("ROLE_ADMIN")
-=======
 	@GetMapping("/getManageWorkflowTransitionsDetails")
 	public List<Map<String, Object>> getManageWorkflowTransitionsDetails() {
 	    return ser.getManageWorkflowTransitionsDetails();
 	}
-//////////////////////////////////////////////////////////////////////////////////////
->>>>>>> Stashed changes
+
+	//@Secured("ROLE_ADMIN")
 	@PostMapping("/saveOrUpdateManageFund")
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFund(@RequestBody ManageFundDTO mfData) {
 		return ser.saveOrUpdateManageFund(mfData);
@@ -163,12 +161,8 @@ public class PageFundsController {
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePageFeatures(@RequestBody ManagePageFeaturesDTO mpfData) {
 		return ser.saveOrUpdateManagePageFeatures(mpfData);
 	}
-<<<<<<< Updated upstream
 	
 	//@Secured("ROLE_ADMIN")
-=======
-
->>>>>>> Stashed changes
 	@PostMapping("/saveOrUpdateManagePageFeatureRbac")
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePageFeatureRbac(@RequestBody ManagePageFeatureRbacDTO mpfrData) {
 		return ser.saveOrUpdateManagePageFeatureRbac(mpfrData);
@@ -198,11 +192,13 @@ public class PageFundsController {
 		return ser.saveOrUpdateManageActivities(maData);
 	}
 	
+	//@Secured("ROLE_ADMIN")
 	@PostMapping("/saveOrUpdateManageBpaWorkflowActivities")
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManageBpaWorkflowActivities(@RequestBody ManageBpaWorkflowActivitiesDTO mbwa) {
 		return ser.saveOrUpdateManageBpaWorkflowActivities(mbwa);
 	}
 	
+	//@Secured("ROLE_ADMIN")
 	@PostMapping("/saveOrUpdateManageWorkflowTransitions")
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManageWorkflowTransitions(@RequestBody ManageWorkflowTransitionsDTO mwtData) {
 		return ser.saveOrUpdateManageWorkflowTransitions(mwtData);
