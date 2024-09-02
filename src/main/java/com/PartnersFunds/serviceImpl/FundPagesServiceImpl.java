@@ -279,7 +279,11 @@ public class FundPagesServiceImpl implements FundPagesService {
 	    response.put("o_message", outParams.get("o_message"));
 
 	    if ("S".equals(outParams.get("o_status"))) {
-	        String query = "SELECT * FROM xxpf_fund_roles WHERE fund_role_id = ?";
+	        String query = "SELECT fr.*, f.name AS fundName, rm.name AS roleName " +
+	                 "FROM xxpf_fund_roles fr " +
+	                 "JOIN xxpf_funds f ON fr.fund_id = f.fund_id " +
+	                 "JOIN xxpf_role_master rm ON fr.role_id = rm.role_id " +
+	                 "WHERE fr.fund_role_id = :fundroleId";
 	        Map<String, Object> manageFundRoles = jdbcTemplate.queryForMap(query, outParams.get("p_fund_role_id"));
 	        response.put("fund_role", manageFundRoles);
 	    } else {
