@@ -6,6 +6,8 @@ import java.util.HashMap;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.SqlInOutParameter;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+import org.springframework.security.core.Authentication;
+
 import java.util.Map;
 import javax.sql.DataSource;
 
@@ -26,13 +28,20 @@ import com.PartnersFunds.DTO.ManageFundRolesDTO;
 import com.PartnersFunds.DTO.ManageFundTablesAttrDTO;
 import com.PartnersFunds.DTO.ManageFundTablesDTO;
 import com.PartnersFunds.DTO.ManageFundTimelinesDTO;
+import com.PartnersFunds.DTO.ManageLookupCodesDTO;
+import com.PartnersFunds.DTO.ManageLookupTypesDTO;
 import com.PartnersFunds.DTO.ManagePageFeatureRbacDTO;
 import com.PartnersFunds.DTO.ManagePageFeaturesDTO;
+import com.PartnersFunds.DTO.ManagePageRuleCriteriaDTO;
+import com.PartnersFunds.DTO.ManagePageRuleSetAttrDTO;
+import com.PartnersFunds.DTO.ManagePageRulesDTO;
 import com.PartnersFunds.DTO.ManagePlansDTO;
 import com.PartnersFunds.service.FundPagesService;
 import com.PartnersFunds.utils.JdbcCallBuilder;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
+
+import java.security.Principal;
 import java.sql.Types;
 
 @Service
@@ -166,7 +175,7 @@ public class FundPagesServiceImpl implements FundPagesService {
 	
 //////////////////////////////////////////////////////////////////////////////////////
 	@Override
-	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFund(ManageFundDTO mfData) {
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFund(ManageFundDTO mfData){//, Authentication pr) {
 		System.out.println("mfDatea ======> "+mfData.toString());
 		SimpleJdbcCall jdbcCall = jdbcCallBuilder.buildSimpleJdbcCall(dataSource, "APPS", "xxpf_partner_fund_utils_pkg", "manage_fund").declareParameters(
 						new SqlInOutParameter("p_fund_id", Types.NUMERIC), 
@@ -817,6 +826,212 @@ public class FundPagesServiceImpl implements FundPagesService {
 
 	    return ResponseEntity.ok(response);
 	}
-	
+
+	@Override
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePageRules(ManagePageRulesDTO pageRulesData) {
+	    SimpleJdbcCall jdbcCall = jdbcCallBuilder.buildSimpleJdbcCall(dataSource, "APPS", "xxpf_partner_fund_utils_pkg", "manage_page_rules")
+	            .declareParameters(
+	                    new SqlInOutParameter("p_Page_rule_id", Types.NUMERIC),
+	                    new SqlParameter("p_page_id", Types.NUMERIC),
+	                    new SqlParameter("p_FEATURE_ID", Types.NUMERIC),
+	                    new SqlParameter("p_action_type", Types.VARCHAR),
+	                    new SqlParameter("p_user_message", Types.VARCHAR),
+	                    new SqlParameter("p_user_id", Types.NUMERIC),
+	                    new SqlOutParameter("o_status", Types.VARCHAR),
+	                    new SqlOutParameter("o_message", Types.VARCHAR)
+	            );
+
+	    // Map input parameters
+	    Map<String, Object> inParams = new HashMap<>();
+	    inParams.put("p_Page_rule_id", pageRulesData.getPageRuleId());
+	    inParams.put("p_page_id", pageRulesData.getPageId());
+	    inParams.put("p_FEATURE_ID", pageRulesData.getFeatureId());
+	    inParams.put("p_action_type", pageRulesData.getActionType());
+	    inParams.put("p_user_message", pageRulesData.getUserMessage());
+	    inParams.put("p_user_id", pageRulesData.getUserId());
+
+	    Map<String, Object> outParams = jdbcCall.execute(inParams);
+
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("o_status", outParams.get("o_status"));
+	    response.put("o_message", outParams.get("o_message"));
+
+	    if ("S".equals(outParams.get("o_status"))) {
+	        String query = "SELECT * FROM xxpf_page_rules WHERE page_rule_id = ?";
+	        Map<String, Object> ruleDetails = jdbcTemplate.queryForMap(query, outParams.get("p_Page_rule_id"));
+	        response.put("rule", ruleDetails);
+	    } else {
+	        response.put("rule", new HashMap<>());
+	    }
+
+	    return ResponseEntity.ok(response);
+	}
+
+
+	@Override
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePageRuleCriteria(ManagePageRuleCriteriaDTO pageRuleCriteriaData) {
+	    SimpleJdbcCall jdbcCall = jdbcCallBuilder.buildSimpleJdbcCall(dataSource, "APPS", "xxpf_partner_fund_utils_pkg", "manage_page_rule_criteria")
+	            .declareParameters(
+	                    new SqlInOutParameter("p_criteria_id", Types.NUMERIC),
+	                    new SqlParameter("p_Page_rule_id", Types.NUMERIC),
+	                    new SqlParameter("p_sequence", Types.NUMERIC),
+	                    new SqlParameter("p_group_logical_operator", Types.VARCHAR),
+	                    new SqlParameter("p_group_seperator_open", Types.VARCHAR),
+	                    new SqlParameter("p_FEATURE_ID", Types.NUMERIC),
+	                    new SqlParameter("p_operator", Types.VARCHAR),
+	                    new SqlParameter("p_condition_value", Types.VARCHAR),
+	                    new SqlParameter("p_group_seperator_close", Types.VARCHAR),
+	                    new SqlParameter("p_condition_logical_operator", Types.VARCHAR),
+	                    new SqlParameter("p_user_id", Types.NUMERIC),
+	                    new SqlOutParameter("o_status", Types.VARCHAR),
+	                    new SqlOutParameter("o_message", Types.VARCHAR)
+	            );
+
+	    // Map input parameters
+	    Map<String, Object> inParams = new HashMap<>();
+	    inParams.put("p_criteria_id", pageRuleCriteriaData.getCriteriaId());
+	    inParams.put("p_Page_rule_id", pageRuleCriteriaData.getPageRuleId());
+	    inParams.put("p_sequence", pageRuleCriteriaData.getSequence());
+	    inParams.put("p_group_logical_operator", pageRuleCriteriaData.getGroupLogicalOperator());
+	    inParams.put("p_group_seperator_open", pageRuleCriteriaData.getGroupSeperatorOpen());
+	    inParams.put("p_FEATURE_ID", pageRuleCriteriaData.getFeatureId());
+	    inParams.put("p_operator", pageRuleCriteriaData.getOperator());
+	    inParams.put("p_condition_value", pageRuleCriteriaData.getConditionValue());
+	    inParams.put("p_group_seperator_close", pageRuleCriteriaData.getGroupSeperatorClose());
+	    inParams.put("p_condition_logical_operator", pageRuleCriteriaData.getConditionLogicalOperator());
+	    inParams.put("p_user_id", pageRuleCriteriaData.getUserId());
+
+	    Map<String, Object> outParams = jdbcCall.execute(inParams);
+
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("o_status", outParams.get("o_status"));
+	    response.put("o_message", outParams.get("o_message"));
+
+	    if ("S".equals(outParams.get("o_status"))) {
+	        String query = "SELECT * FROM xxpf_page_rule_criteria WHERE criteria_id = ?";
+	        Map<String, Object> criteriaDetails = jdbcTemplate.queryForMap(query, outParams.get("p_criteria_id"));
+	        response.put("criteria", criteriaDetails);
+	    } else {
+	        response.put("criteria", new HashMap<>());
+	    }
+
+	    return ResponseEntity.ok(response);
+	}
+
+	@Override
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePageRuleSetAttr(ManagePageRuleSetAttrDTO pageRuleSetAttributesData) {
+	    SimpleJdbcCall jdbcCall = jdbcCallBuilder.buildSimpleJdbcCall(dataSource, "APPS", "xxpf_partner_fund_utils_pkg", "manage_page_rule_set_attributes")
+	            .declareParameters(
+	                    new SqlInOutParameter("p_set_attribute_id", Types.NUMERIC),
+	                    new SqlParameter("p_feature_id", Types.NUMERIC),
+	                    new SqlParameter("p_feature_value", Types.VARCHAR),
+	                    new SqlParameter("p_user_id", Types.NUMERIC),
+	                    new SqlOutParameter("o_status", Types.VARCHAR),
+	                    new SqlOutParameter("o_message", Types.VARCHAR)
+	            );
+
+	    // Map input parameters
+	    Map<String, Object> inParams = new HashMap<>();
+	    inParams.put("p_set_attribute_id", pageRuleSetAttributesData.getSetAttributeId());
+	    inParams.put("p_feature_id", pageRuleSetAttributesData.getFeatureId());
+	    inParams.put("p_feature_value", pageRuleSetAttributesData.getFeatureValue());
+	    inParams.put("p_user_id", pageRuleSetAttributesData.getUserId());
+
+	    Map<String, Object> outParams = jdbcCall.execute(inParams);
+
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("o_status", outParams.get("o_status"));
+	    response.put("o_message", outParams.get("o_message"));
+
+	    if ("S".equals(outParams.get("o_status"))) {
+	        String query = "SELECT * FROM xxpf_page_rule_set_attributes WHERE set_attribute_id = ?";
+	        Map<String, Object> attributeDetails = jdbcTemplate.queryForMap(query, outParams.get("p_set_attribute_id"));
+	        response.put("attribute", attributeDetails);
+	    } else {
+	        response.put("attribute", new HashMap<>());
+	    }
+
+	    return ResponseEntity.ok(response);
+	}
+
+
+	@Override
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManageLookupTypes(ManageLookupTypesDTO lookupTypesDTO) {
+	    System.out.println("lookupTypesDTO ======> " + lookupTypesDTO.toString());
+	    SimpleJdbcCall jdbcCall = jdbcCallBuilder.buildSimpleJdbcCall(dataSource, "APPS", "xxpf_partner_fund_utils_pkg", "manage_lookup_types")
+	            .declareParameters(
+	                    new SqlInOutParameter("p_Lookup_type", Types.VARCHAR),
+	                    new SqlParameter("p_description", Types.VARCHAR),
+	                    new SqlParameter("p_user_id", Types.NUMERIC),
+	                    new SqlOutParameter("o_status", Types.VARCHAR),
+	                    new SqlOutParameter("o_message", Types.VARCHAR)
+	            );
+
+	    // Map input parameters
+	    Map<String, Object> inParams = new HashMap<>();
+	    inParams.put("p_Lookup_type", lookupTypesDTO.getLookupType());
+	    inParams.put("p_description", lookupTypesDTO.getDescription());
+	    inParams.put("p_user_id", lookupTypesDTO.getUserId());
+
+	    Map<String, Object> outParams = jdbcCall.execute(inParams);
+
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("o_status", outParams.get("o_status"));
+	    response.put("o_message", outParams.get("o_message"));
+
+	    // Conditional logic based on o_status
+	    if ("S".equals(outParams.get("o_status"))) {
+	        String query = "select * from xxpf_page_rule_set_attributes WHERE lookup_type = ?";
+	        Map<String, Object> details = jdbcTemplate.queryForMap(query, outParams.get("p_Lookup_type"));
+	        response.put("details", details);
+	    } else {
+	        response.put("details", new HashMap<>());
+	    }
+
+	    return ResponseEntity.ok(response);
+	}
+
+
+	@Override
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManageLookupCodes(ManageLookupCodesDTO lookupCodesDTO) {
+	    System.out.println("lookupCodesDTO ======> " + lookupCodesDTO.toString());
+	    SimpleJdbcCall jdbcCall = jdbcCallBuilder.buildSimpleJdbcCall(dataSource, "APPS", "xxpf_partner_fund_utils_pkg", "manage_lookup_codes")
+	            .declareParameters(
+	            		new SqlParameter("p_Lookup_type", Types.VARCHAR),
+	                    new SqlInOutParameter("p_Lookup_code", Types.VARCHAR),
+	                    new SqlParameter("p_meaning", Types.VARCHAR),
+	                    new SqlParameter("p_description", Types.VARCHAR),
+	                    new SqlParameter("p_active_flag", Types.VARCHAR),
+	                    new SqlParameter("p_user_id", Types.NUMERIC),
+	                    new SqlOutParameter("o_status", Types.VARCHAR),
+	                    new SqlOutParameter("o_message", Types.VARCHAR)
+	            );
+
+	    // Map input parameters
+	    Map<String, Object> inParams = new HashMap<>();
+	    inParams.put("p_Lookup_code", lookupCodesDTO.getLookupCode());
+	    inParams.put("p_Lookup_type", lookupCodesDTO.getLookupType());
+	    inParams.put("p_meaning", lookupCodesDTO.getMeaning());
+	    inParams.put("p_description", lookupCodesDTO.getDescription());
+	    inParams.put("p_active_flag", lookupCodesDTO.getActiveFlag());
+	    inParams.put("p_user_id", lookupCodesDTO.getUserId());
+
+	    Map<String, Object> outParams = jdbcCall.execute(inParams);
+
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("o_status", outParams.get("o_status"));
+	    response.put("o_message", outParams.get("o_message"));
+
+	    // Conditional logic based on o_status
+	    if ("S".equals(outParams.get("o_status"))) {
+	        String query = "select * from xxpf_lookup_codes WHERE lookup_code = ?";
+	        Map<String, Object> details = jdbcTemplate.queryForMap(query, outParams.get("p_Lookup_code"));
+	        response.put("details", details);
+	    } else {
+	        response.put("details", new HashMap<>());
+	    }
+
+	    return ResponseEntity.ok(response);
+	}
 
 }

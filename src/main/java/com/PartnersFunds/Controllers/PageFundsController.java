@@ -1,11 +1,13 @@
 package com.PartnersFunds.Controllers;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,8 +24,13 @@ import com.PartnersFunds.DTO.ManageFundRolesDTO;
 import com.PartnersFunds.DTO.ManageFundTablesAttrDTO;
 import com.PartnersFunds.DTO.ManageFundTablesDTO;
 import com.PartnersFunds.DTO.ManageFundTimelinesDTO;
+import com.PartnersFunds.DTO.ManageLookupCodesDTO;
+import com.PartnersFunds.DTO.ManageLookupTypesDTO;
 import com.PartnersFunds.DTO.ManagePageFeatureRbacDTO;
 import com.PartnersFunds.DTO.ManagePageFeaturesDTO;
+import com.PartnersFunds.DTO.ManagePageRuleCriteriaDTO;
+import com.PartnersFunds.DTO.ManagePageRuleSetAttrDTO;
+import com.PartnersFunds.DTO.ManagePageRulesDTO;
 import com.PartnersFunds.DTO.ManagePlansDTO;
 import com.PartnersFunds.DTO.ManageRolesDTO;
 import com.PartnersFunds.DTO.ManageWorkflowTransitionsDTO;
@@ -109,6 +116,7 @@ public class PageFundsController {
 	    return ser.getManageActivitiesDetails();
 	}
 	
+	//@Secured("ROLE_ADMIN")
 	@GetMapping("/getManageBpaWorkflowActivitiesDetails")
 	public List<Map<String, Object>> getManageBpaWorkflowActivitiesDetails() {
 	    return ser.getManageBpaWorkflowActivitiesDetails();
@@ -122,7 +130,8 @@ public class PageFundsController {
 
 	//@Secured("ROLE_ADMIN")
 	@PostMapping("/saveOrUpdateManageFund")
-	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFund(@RequestBody ManageFundDTO mfData) {
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFund(@RequestBody ManageFundDTO mfData){//, Authentication pr) {
+//		System.out.println("Principal ==>" + pr.getName());
 		return ser.saveOrUpdateManageFund(mfData);
 	}
 
@@ -202,5 +211,35 @@ public class PageFundsController {
 	@PostMapping("/saveOrUpdateManageWorkflowTransitions")
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManageWorkflowTransitions(@RequestBody ManageWorkflowTransitionsDTO mwtData) {
 		return ser.saveOrUpdateManageWorkflowTransitions(mwtData);
+	}
+	
+	//@Secured("ROLE_ADMIN")
+	@PostMapping("/saveOrUpdateManagePageRules")
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePageRules(@RequestBody ManagePageRulesDTO mprData) {
+		return ser.saveOrUpdateManagePageRules(mprData);
+	}
+	
+	//@Secured("ROLE_ADMIN")
+	@PostMapping("/saveOrUpdateManagePageRuleCriteria")
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePageRuleCriteria(@RequestBody ManagePageRuleCriteriaDTO mprcData) {
+		return ser.saveOrUpdateManagePageRuleCriteria(mprcData);
+	}
+	
+	//@Secured("ROLE_ADMIN")
+	@PostMapping("/saveOrUpdateManagePageRuleSetAttr")
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePageRuleSetAttr(@RequestBody ManagePageRuleSetAttrDTO mprsaData) {
+		return ser.saveOrUpdateManagePageRuleSetAttr(mprsaData);
+	}
+
+	//@Secured("ROLE_ADMIN")
+	@PostMapping("/saveOrUpdateManageLookupTypes")
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManageLookupTypes(@RequestBody ManageLookupTypesDTO mltData) {
+		return ser.saveOrUpdateManageLookupTypes(mltData);
+	}
+
+	//@Secured("ROLE_ADMIN")
+	@PostMapping("/saveOrUpdateManageLookupCodes")
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManageLookupCodes(@RequestBody ManageLookupCodesDTO mlcData) {
+		return ser.saveOrUpdateManageLookupCodes(mlcData);
 	}
 }
