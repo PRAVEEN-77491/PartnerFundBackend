@@ -99,7 +99,10 @@ public class FundPagesServiceImpl implements FundPagesService {
 	
 	@Override
 	public List<Map<String, Object>> getManageFundTablesDetails() {
-		String sql = "select * from xxpf_fund_tables";
+//		String sql = "select * from xxpf_fund_tables";
+	    String sql = "SELECT fr.*, f.name AS fundNname  " +
+                "FROM xxpf_fund_tables fr " +
+                "JOIN xxpf_funds f ON fr.fund_id = f.fund_id";
 		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
 		System.out.println("queryResult : " + queryResult);
 		return queryResult;
