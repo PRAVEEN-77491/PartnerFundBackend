@@ -262,13 +262,13 @@ public class FundPagesServiceImpl implements FundPagesService {
 		return queryResult;
 	}
 	
-	@Override
-	public List<Map<String, Object>> getRoleBasedFundBpaDetails() {
-		String sql = "select * from xxpf_fund_bpa where bpa_type = 'Role Based'";
-		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
-		System.out.println("queryResult : " + queryResult);
-		return queryResult;
-	}
+//	@Override
+//	public List<Map<String, Object>> getRoleBasedFundBpaDetails() {
+//		String sql = "select * from xxpf_fund_bpa where bpa_type = 'Role Based'";
+//		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
+//		System.out.println("queryResult : " + queryResult);
+//		return queryResult;
+//	}
 	
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -348,20 +348,20 @@ public class FundPagesServiceImpl implements FundPagesService {
 	@Override
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFundRoles(ManageFundRolesDTO mfrData) {
 		System.out.println("mfrData ======> "+mfrData.toString());
-	    String fundName = mfrData.getFundname();
-	    String roleName = mfrData.getRolename();
+//	    String fundName = mfrData.getFundname();
+//	    String roleName = mfrData.getRolename();
 
-	    String fundSql = "SELECT fund_id FROM xxpf_funds WHERE name = ?";
-	    List<Map<String, Object>> fundQueryResult = jdbcTemplate.queryForList(fundSql, fundName);
-	    System.out.println("fundQueryResult : " + fundQueryResult.toString());
-	    
-	    mfrData.setFundId(Integer.parseInt(String.valueOf(fundQueryResult.get(0).get("fund_id"))));
-	    String roleSql = "SELECT role_id FROM xxpf_role_master WHERE name = ?";
-	    List<Map<String, Object>> roleQueryResult = jdbcTemplate.queryForList(roleSql, roleName);
-	    System.out.println("roleQueryResult : " + fundQueryResult.toString());
-	    
-	    mfrData.setRoleId(Integer.parseInt(String.valueOf(roleQueryResult.get(0).get("role_id"))));
-		System.out.println("mfrDatea ======> "+mfrData.toString());
+//	    String fundSql = "SELECT fund_id FROM xxpf_funds WHERE name = ?";
+//	    List<Map<String, Object>> fundQueryResult = jdbcTemplate.queryForList(fundSql, fundName);
+//	    System.out.println("fundQueryResult : " + fundQueryResult.toString());
+//	    
+//	    mfrData.setFundId(Integer.parseInt(String.valueOf(fundQueryResult.get(0).get("fund_id"))));
+//	    String roleSql = "SELECT role_id FROM xxpf_role_master WHERE name = ?";
+//	    List<Map<String, Object>> roleQueryResult = jdbcTemplate.queryForList(roleSql, roleName);
+//	    System.out.println("roleQueryResult : " + fundQueryResult.toString());
+//	    
+//	    mfrData.setRoleId(Integer.parseInt(String.valueOf(roleQueryResult.get(0).get("role_id"))));
+//		System.out.println("mfrDatea ======> "+mfrData.toString());
 
 		SimpleJdbcCall jdbcCall = jdbcCallBuilder.buildSimpleJdbcCall(dataSource, "APPS", "xxpf_partner_fund_utils_pkg", "manage_fund_roles")
 				.declareParameters(new SqlInOutParameter("p_fund_role_id", Types.NUMERIC),
