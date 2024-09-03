@@ -1,12 +1,12 @@
 package com.PartnersFunds.Entities;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.Arrays;
 
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "xxpf_users") // Replace with your actual table name
+@Table(name = "xxpf_users") // Ensure this matches your actual table name
 public class UserEntity {
 
     @Id
@@ -27,9 +27,11 @@ public class UserEntity {
     @Column(name = "LAST_NAME")
     private String lastName;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "START_DATE")
     private Date startDate;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "END_DATE")
     private Date endDate;
 
@@ -39,9 +41,11 @@ public class UserEntity {
     @Column(name = "PASSWORD")
     private String password;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "LAST_LOGIN_DATE")
     private Date lastLoginDate;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "PASSWORD_CHANGED_DATE")
     private Date passwordChangedDate;
 
@@ -56,170 +60,172 @@ public class UserEntity {
     private String activeFlag;
 
     @Column(name = "CREATED_BY")
-    private String createdBy;
+    private Integer createdBy; // Changed to Integer
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CREATION_DATE")
     private Date creationDate;
 
     @Column(name = "LAST_UPDATED_BY")
-    private String lastUpdatedBy;
+    private Integer lastUpdatedBy; // Changed to Integer
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "LAST_UPDATE_DATE")
     private Date lastUpdateDate;
 
-	public Integer getUserId() {
-		return userId;
-	}
+    // Getters and Setters
+    public Integer getUserId() {
+        return userId;
+    }
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 
-	public String getUserName() {
-		return userName;
-	}
+    public String getUserName() {
+        return userName;
+    }
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-	public String getFirstName() {
-		return firstName;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	public String getMiddleName() {
-		return middleName;
-	}
+    public String getMiddleName() {
+        return middleName;
+    }
 
-	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
-	}
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	public Date getStartDate() {
-		return startDate;
-	}
+    public Date getStartDate() {
+        return startDate;
+    }
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
 
-	public Date getEndDate() {
-		return endDate;
-	}
+    public Date getEndDate() {
+        return endDate;
+    }
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
 
-	public String getEmailAddress() {
-		return emailAddress;
-	}
+    public String getEmailAddress() {
+        return emailAddress;
+    }
 
-	public void setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
-	}
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public Date getLastLoginDate() {
-		return lastLoginDate;
-	}
+    public Date getLastLoginDate() {
+        return lastLoginDate;
+    }
 
-	public void setLastLoginDate(Date lastLoginDate) {
-		this.lastLoginDate = lastLoginDate;
-	}
+    public void setLastLoginDate(Date lastLoginDate) {
+        this.lastLoginDate = lastLoginDate;
+    }
 
-	public Date getPasswordChangedDate() {
-		return passwordChangedDate;
-	}
+    public Date getPasswordChangedDate() {
+        return passwordChangedDate;
+    }
 
-	public void setPasswordChangedDate(Date passwordChangedDate) {
-		this.passwordChangedDate = passwordChangedDate;
-	}
+    public void setPasswordChangedDate(Date passwordChangedDate) {
+        this.passwordChangedDate = passwordChangedDate;
+    }
 
-	public String getCiscoCecId() {
-		return ciscoCecId;
-	}
+    public String getCiscoCecId() {
+        return ciscoCecId;
+    }
 
-	public void setCiscoCecId(String ciscoCecId) {
-		this.ciscoCecId = ciscoCecId;
-	}
+    public void setCiscoCecId(String ciscoCecId) {
+        this.ciscoCecId = ciscoCecId;
+    }
 
-	public byte[] getProfileImage() {
-		return profileImage;
-	}
+    public byte[] getProfileImage() {
+        return profileImage;
+    }
 
-	public void setProfileImage(byte[] profileImage) {
-		this.profileImage = profileImage;
-	}
+    public void setProfileImage(byte[] profileImage) {
+        this.profileImage = profileImage;
+    }
 
-	public String getActiveFlag() {
-		return activeFlag;
-	}
+    public String getActiveFlag() {
+        return activeFlag;
+    }
 
-	public void setActiveFlag(String activeFlag) {
-		this.activeFlag = activeFlag;
-	}
+    public void setActiveFlag(String activeFlag) {
+        this.activeFlag = activeFlag;
+    }
 
-	public String getCreatedBy() {
-		return createdBy;
-	}
+    public Integer getCreatedBy() {
+        return createdBy;
+    }
 
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
+    }
 
-	public Date getCreationDate() {
-		return creationDate;
-	}
+    public Date getCreationDate() {
+        return creationDate;
+    }
 
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
-	}
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
 
-	public String getLastUpdatedBy() {
-		return lastUpdatedBy;
-	}
+    public Integer getLastUpdatedBy() {
+        return lastUpdatedBy;
+    }
 
-	public void setLastUpdatedBy(String lastUpdatedBy) {
-		this.lastUpdatedBy = lastUpdatedBy;
-	}
+    public void setLastUpdatedBy(Integer lastUpdatedBy) {
+        this.lastUpdatedBy = lastUpdatedBy;
+    }
 
-	public Date getLastUpdateDate() {
-		return lastUpdateDate;
-	}
+    public Date getLastUpdateDate() {
+        return lastUpdateDate;
+    }
 
-	public void setLastUpdateDate(Date lastUpdateDate) {
-		this.lastUpdateDate = lastUpdateDate;
-	}
+    public void setLastUpdateDate(Date lastUpdateDate) {
+        this.lastUpdateDate = lastUpdateDate;
+    }
 
-	@Override
-	public String toString() {
-		return "UserEntity [userId=" + userId + ", userName=" + userName + ", firstName=" + firstName + ", middleName="
-				+ middleName + ", lastName=" + lastName + ", startDate=" + startDate + ", endDate=" + endDate
-				+ ", emailAddress=" + emailAddress + ", password=" + password + ", lastLoginDate=" + lastLoginDate
-				+ ", passwordChangedDate=" + passwordChangedDate + ", ciscoCecId=" + ciscoCecId + ", profileImage="
-				+ Arrays.toString(profileImage) + ", activeFlag=" + activeFlag + ", createdBy=" + createdBy
-				+ ", creationDate=" + creationDate + ", lastUpdatedBy=" + lastUpdatedBy + ", lastUpdateDate="
-				+ lastUpdateDate + "]";
-	}
-    
+    @Override
+    public String toString() {
+        return "UserEntity [userId=" + userId + ", userName=" + userName + ", firstName=" + firstName + ", middleName="
+                + middleName + ", lastName=" + lastName + ", startDate=" + startDate + ", endDate=" + endDate
+                + ", emailAddress=" + emailAddress + ", password=" + password + ", lastLoginDate=" + lastLoginDate
+                + ", passwordChangedDate=" + passwordChangedDate + ", ciscoCecId=" + ciscoCecId + ", profileImage="
+                + Arrays.toString(profileImage) + ", activeFlag=" + activeFlag + ", createdBy=" + createdBy
+                + ", creationDate=" + creationDate + ", lastUpdatedBy=" + lastUpdatedBy + ", lastUpdateDate="
+                + lastUpdateDate + "]";
+    }
 }
