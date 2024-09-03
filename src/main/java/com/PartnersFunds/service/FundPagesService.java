@@ -134,7 +134,7 @@ public interface FundPagesService {
 
 	List<Map<String, Object>> getFundBpaDetails();
 
-	List<Map<String, Object>> getRoleBasedFundBpaDetails();
+//	List<Map<String, Object>> getRoleBasedFundBpaDetails();
 	
 	
 	

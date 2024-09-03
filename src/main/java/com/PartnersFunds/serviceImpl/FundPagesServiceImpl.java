@@ -78,10 +78,7 @@ public class FundPagesServiceImpl implements FundPagesService {
 
 	@Override
 	public List<Map<String, Object>> getFundroleDetails() {
-	    String sql = "SELECT fr.*, f.name AS fundNname, rm.name AS roleName " +
-                "FROM xxpf_fund_roles fr " +
-                "JOIN xxpf_funds f ON fr.fund_id = f.fund_id " +
-                "JOIN xxpf_role_master rm ON fr.role_id = rm.role_id";
+	    String sql = "SELECT * FROM xxpf_fund_roles";
 
 	   List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
 	   System.out.println("queryResult : " + queryResult);
@@ -99,10 +96,7 @@ public class FundPagesServiceImpl implements FundPagesService {
 	
 	@Override
 	public List<Map<String, Object>> getManageFundTablesDetails() {
-//		String sql = "select * from xxpf_fund_tables";
-	    String sql = "SELECT fr.*, f.name AS fundNname  " +
-                "FROM xxpf_fund_tables fr " +
-                "JOIN xxpf_funds f ON fr.fund_id = f.fund_id";
+		String sql = "select * from xxpf_fund_tables";
 		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
 		System.out.println("queryResult : " + queryResult);
 		return queryResult;

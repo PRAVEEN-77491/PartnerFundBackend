@@ -199,11 +199,11 @@ public class PageFundsController {
 	    return ser.getFundBpaDetails();
 	}
 	
-	//@Secured("ROLE_ADMIN")
-	@GetMapping("/getRoleBasedFundBpaDetails")
-	public List<Map<String, Object>> getRoleBasedFundBpaDetails() {
-	    return ser.getRoleBasedFundBpaDetails();
-	}
+//	//@Secured("ROLE_ADMIN")
+//	@PostMapping("/getRoleBasedFundBpaDetails")
+//	public List<Map<String, Object>> getRoleBasedFundBpaDetails() {
+//	    return ser.getRoleBasedFundBpaDetails();
+//	}
 	
 	//@Secured("ROLE_ADMIN")
 	@PostMapping("/saveOrUpdateManageFund")
