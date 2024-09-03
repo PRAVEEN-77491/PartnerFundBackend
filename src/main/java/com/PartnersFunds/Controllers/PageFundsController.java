@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.PartnersFunds.DTO.ManageActivitiesDTO;
@@ -83,6 +84,12 @@ public class PageFundsController {
 	@GetMapping("/getManageFundTablesAttrDetails")
 	public List<Map<String, Object>> getManageFundTablesAttrDetails() {
 		return ser.getManageFundTablesAttrDetails();
+	}
+	
+	//@Secured("ROLE_ADMIN")
+	@GetMapping("/getManageFundTablesAttrDetailsId")
+	public List<Map<String, Object>> getManageFundTablesAttrDetailsId(@RequestParam("table_id") int id) {
+		return ser.getManageFundTablesAttrDetailsId(id);
 	}
 
 	//@Secured("ROLE_ADMIN")

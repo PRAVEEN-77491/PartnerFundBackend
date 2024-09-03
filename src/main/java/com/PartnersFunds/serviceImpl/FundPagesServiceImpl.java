@@ -259,6 +259,27 @@ public class FundPagesServiceImpl implements FundPagesService {
 		System.out.println("queryResult : " + queryResult);
 		return queryResult;
 	}
+	
+
+	@Override
+	public List<Map<String, Object>> getManageFundTablesAttrDetailsId(int id) {
+		String sql;
+		List<Map<String, Object>> queryResult;
+		if(id == 0)
+		{
+			sql = "select * from xxpf_fund_table_attributes";
+			queryResult = jdbcTemplate.queryForList(sql);
+			System.out.println("queryResult : " + queryResult);
+
+		}
+		else
+		{
+			sql = "select * from xxpf_fund_table_attributes  where table_id=?";
+			queryResult = jdbcTemplate.queryForList(sql,id);
+			System.out.println("queryResult : " + queryResult);
+		}
+		return queryResult;
+	}
 
 //	@Override
 //	public List<Map<String, Object>> getRoleBasedFundBpaDetails() {
@@ -1304,5 +1325,6 @@ public class FundPagesServiceImpl implements FundPagesService {
 
 		return ResponseEntity.ok(response);
 	}
+
 
 }

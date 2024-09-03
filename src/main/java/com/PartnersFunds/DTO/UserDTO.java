@@ -46,6 +46,8 @@ public class UserDTO {
 
     @JsonProperty("ACTIVE_FLAG")
     private String activeFlag;
+    
+    
 
     @JsonProperty("CREATED_BY")
     private String createdBy;
