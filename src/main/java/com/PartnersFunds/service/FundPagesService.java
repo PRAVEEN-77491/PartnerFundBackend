@@ -58,7 +58,7 @@ public interface FundPagesService {
 
 	public List<Map<String, Object>> getManageFundTablesDetails();
 
-	public List<Map<String, Object>> getManageFundTablesAttrDetails();
+	public List<Map<String, Object>> getManageFundTablesAttrDetailsId(int id);
 
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePageFeatures(ManagePageFeaturesDTO mpfData);
 
@@ -133,8 +133,6 @@ public interface FundPagesService {
 	List<Map<String, Object>> getManagePartnershipAssociationsDetails();
 
 	List<Map<String, Object>> getFundBpaDetails();
-
-	public List<Map<String, Object>> getManageFundTablesAttrDetailsId(int id);
 
 //	List<Map<String, Object>> getRoleBasedFundBpaDetails();
 	

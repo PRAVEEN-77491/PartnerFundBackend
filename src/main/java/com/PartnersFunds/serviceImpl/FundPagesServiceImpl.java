@@ -101,14 +101,6 @@ public class FundPagesServiceImpl implements FundPagesService {
 	}
 
 	@Override
-	public List<Map<String, Object>> getManageFundTablesAttrDetails() {
-		String sql = "select * from xxpf_fund_table_attributes";
-		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
-		System.out.println("queryResult : " + queryResult);
-		return queryResult;
-	}
-
-	@Override
 	public List<Map<String, Object>> getManagePageFeaturesDetails() {
 		String sql = "select * from xxpf_page_features";
 		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);

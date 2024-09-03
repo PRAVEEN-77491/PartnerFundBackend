@@ -79,12 +79,6 @@ public class PageFundsController {
 	public List<Map<String, Object>> getManageFundTablesDetails() {
 		return ser.getManageFundTablesDetails();
 	}
-
-	//@Secured("ROLE_ADMIN")
-	@GetMapping("/getManageFundTablesAttrDetails")
-	public List<Map<String, Object>> getManageFundTablesAttrDetails() {
-		return ser.getManageFundTablesAttrDetails();
-	}
 	
 	//@Secured("ROLE_ADMIN")
 	@GetMapping("/getManageFundTablesAttrDetailsId")
