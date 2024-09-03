@@ -1,7 +1,6 @@
 package com.PartnersFunds.utils;
 
 import javax.sql.DataSource;
-
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Component;
 

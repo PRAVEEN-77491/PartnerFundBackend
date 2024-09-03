@@ -131,6 +131,10 @@ public interface FundPagesService {
 	List<Map<String, Object>> getManagePartnershipContactsDetails();
 
 	List<Map<String, Object>> getManagePartnershipAssociationsDetails();
+
+	List<Map<String, Object>> getFundBpaDetails();
+
+	List<Map<String, Object>> getRoleBasedFundBpaDetails();
 	
 	
 	

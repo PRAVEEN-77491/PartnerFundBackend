@@ -193,7 +193,18 @@ public class PageFundsController {
 	    return ser.getManagePartnershipAssociationsDetails();
 	}
 		
-
+	//@Secured("ROLE_ADMIN")
+	@GetMapping("/getFundBpaDetails")
+	public List<Map<String, Object>> getFundBpaDetails() {
+	    return ser.getFundBpaDetails();
+	}
+	
+	//@Secured("ROLE_ADMIN")
+	@GetMapping("/getRoleBasedFundBpaDetails")
+	public List<Map<String, Object>> getRoleBasedFundBpaDetails() {
+	    return ser.getRoleBasedFundBpaDetails();
+	}
+	
 	//@Secured("ROLE_ADMIN")
 	@PostMapping("/saveOrUpdateManageFund")
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFund(@RequestBody ManageFundDTO mfData){//, Authentication pr) {

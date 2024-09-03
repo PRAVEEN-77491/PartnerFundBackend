@@ -260,8 +260,24 @@ public class FundPagesServiceImpl implements FundPagesService {
 		return queryResult;
 	}
 	
+	@Override
+	public List<Map<String, Object>> getFundBpaDetails() {
+		String sql = "select * from xxpf_fund_bpa";
+		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
+		System.out.println("queryResult : " + queryResult);
+		return queryResult;
+	}
 	
-//////////////////////////////////////////////////////////////////////////////////////
+	@Override
+	public List<Map<String, Object>> getRoleBasedFundBpaDetails() {
+		String sql = "select * from xxpf_fund_bpa where bpa_type = 'Role Based'";
+		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
+		System.out.println("queryResult : " + queryResult);
+		return queryResult;
+	}
+	
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
 	@Override
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFund(ManageFundDTO mfData){//, Authentication pr) {
 		System.out.println("mfDatea ======> "+mfData.toString());
