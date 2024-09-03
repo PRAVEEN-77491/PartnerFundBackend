@@ -31,6 +31,11 @@ import com.PartnersFunds.DTO.ManagePageFeaturesDTO;
 import com.PartnersFunds.DTO.ManagePageRuleCriteriaDTO;
 import com.PartnersFunds.DTO.ManagePageRuleSetAttrDTO;
 import com.PartnersFunds.DTO.ManagePageRulesDTO;
+import com.PartnersFunds.DTO.ManagePartnershipAssociationsDTO;
+import com.PartnersFunds.DTO.ManagePartnershipContactsDTO;
+import com.PartnersFunds.DTO.ManagePartnershipGeographyDTO;
+import com.PartnersFunds.DTO.ManagePartnershipReferencesDTO;
+import com.PartnersFunds.DTO.ManagePartnershipsDTO;
 import com.PartnersFunds.DTO.ManagePlansDTO;
 import com.PartnersFunds.DTO.ManageRolesDTO;
 import com.PartnersFunds.DTO.ManageWorkflowTransitionsDTO;
@@ -127,6 +132,67 @@ public class PageFundsController {
 	public List<Map<String, Object>> getManageWorkflowTransitionsDetails() {
 	    return ser.getManageWorkflowTransitionsDetails();
 	}
+	
+	//@Secured("ROLE_ADMIN")
+	@GetMapping("/getManageLookupTypesDetails")
+	public List<Map<String, Object>> getManageLookupTypesDetails() {
+	    return ser.getManageLookupTypesDetails();
+	}
+	
+	//@Secured("ROLE_ADMIN")
+	@GetMapping("/getManageLookupCodesDetails")
+	public List<Map<String, Object>> getManageLookupCodesDetails() {
+	    return ser.getManageLookupCodesDetails();
+	}
+	
+	//@Secured("ROLE_ADMIN")
+	@GetMapping("/getManagePageRulesDetails")
+	public List<Map<String, Object>> getManagePageRulesDetails() {
+	    return ser.getManagePageRulesDetails();
+	}
+	
+	//@Secured("ROLE_ADMIN")
+	@GetMapping("/getManagePageRuleCriteriaDetails")
+	public List<Map<String, Object>> getManagePageRuleCriteriaDetails() {
+	    return ser.getManagePageRuleCriteriaDetails();
+	}
+	
+	//@Secured("ROLE_ADMIN")
+	@GetMapping("/getManagePageRuleSetAttrDetails")
+	public List<Map<String, Object>> getManagePageRuleSetAttrDetails() {
+	    return ser.getManagePageRuleSetAttrDetails();
+	}
+	
+	//@Secured("ROLE_ADMIN")
+	@GetMapping("/getManagePartnershipsDetails")
+	public List<Map<String, Object>> getManagePartnershipsDetails() {
+	    return ser.getManagePartnershipsDetails();
+	}
+	
+	//@Secured("ROLE_ADMIN")
+	@GetMapping("/getManagePartnershipGeographyDetails")
+	public List<Map<String, Object>> getManagePartnershipGeographyDetails() {
+	    return ser.getManagePartnershipGeographyDetails();
+	}
+	
+	//@Secured("ROLE_ADMIN")
+	@GetMapping("/getPartnershipReferencesDetails")
+	public List<Map<String, Object>> getPartnershipReferencesDetails() {
+	    return ser.getPartnershipReferencesDetails();
+	}
+	
+	//@Secured("ROLE_ADMIN")
+	@GetMapping("/getManagePartnershipContactsDetails")
+	public List<Map<String, Object>> getManagePartnershipContactsDetails() {
+	    return ser.getManagePartnershipContactsDetails();
+	}
+	
+	//@Secured("ROLE_ADMIN")
+	@GetMapping("/getManagePartnershipAssociationsDetails")
+	public List<Map<String, Object>> getManagePartnershipAssociationsDetails() {
+	    return ser.getManagePartnershipAssociationsDetails();
+	}
+		
 
 	//@Secured("ROLE_ADMIN")
 	@PostMapping("/saveOrUpdateManageFund")
@@ -241,5 +307,35 @@ public class PageFundsController {
 	@PostMapping("/saveOrUpdateManageLookupCodes")
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManageLookupCodes(@RequestBody ManageLookupCodesDTO mlcData) {
 		return ser.saveOrUpdateManageLookupCodes(mlcData);
+	}
+	
+	//@Secured("ROLE_ADMIN")
+	@PostMapping("/saveOrUpdateManagePartnerships")
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePartnerships(@RequestBody ManagePartnershipsDTO mpData) {
+		return ser.saveOrUpdateManagePartnerships(mpData);
+	}
+	
+	//@Secured("ROLE_ADMIN")
+	@PostMapping("/saveOrUpdateManagePartnershipGeography")
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePartnershipGeography(@RequestBody ManagePartnershipGeographyDTO mpgData) {
+		return ser.saveOrUpdateManagePartnershipGeography(mpgData);
+	}
+	
+	//@Secured("ROLE_ADMIN")
+	@PostMapping("/saveOrUpdateManagePartnershipsReferences")
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePartnershipsReferences(@RequestBody ManagePartnershipReferencesDTO pfData) {
+		return ser.saveOrUpdatePartnershipReferences(pfData);
+	}
+	
+	//@Secured("ROLE_ADMIN")
+	@PostMapping("/saveOrUpdateManagePartnershipsContacts")
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePartnershipsContacts(@RequestBody ManagePartnershipContactsDTO mpcData) {
+		return ser.saveOrUpdateManagePartnershipContacts(mpcData);
+	}
+	
+	//@Secured("ROLE_ADMIN")
+	@PostMapping("/saveOrUpdateManagePartnershipAssociations")
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePartnershipAssociations(@RequestBody ManagePartnershipAssociationsDTO mpaData) {
+		return ser.saveOrUpdateManagePartnershipAssociations(mpaData);
 	}
 }

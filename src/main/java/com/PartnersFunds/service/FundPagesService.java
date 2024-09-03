@@ -26,6 +26,11 @@ import com.PartnersFunds.DTO.ManagePageFeaturesDTO;
 import com.PartnersFunds.DTO.ManagePageRuleCriteriaDTO;
 import com.PartnersFunds.DTO.ManagePageRuleSetAttrDTO;
 import com.PartnersFunds.DTO.ManagePageRulesDTO;
+import com.PartnersFunds.DTO.ManagePartnershipAssociationsDTO;
+import com.PartnersFunds.DTO.ManagePartnershipContactsDTO;
+import com.PartnersFunds.DTO.ManagePartnershipGeographyDTO;
+import com.PartnersFunds.DTO.ManagePartnershipReferencesDTO;
+import com.PartnersFunds.DTO.ManagePartnershipsDTO;
 import com.PartnersFunds.DTO.ManagePlansDTO;
 
 public interface FundPagesService {
@@ -96,6 +101,36 @@ public interface FundPagesService {
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePageRuleCriteria(ManagePageRuleCriteriaDTO mprcData);
 
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePageRuleSetAttr(ManagePageRuleSetAttrDTO mprsaData);
+
+	List<Map<String, Object>> getManageLookupTypesDetails();
+
+	List<Map<String, Object>> getManageLookupCodesDetails();
+
+	List<Map<String, Object>> getManagePageRulesDetails();
+
+	List<Map<String, Object>> getManagePageRuleCriteriaDetails();
+
+	List<Map<String, Object>> getManagePageRuleSetAttrDetails();
+
+	ResponseEntity<Map<String, Object>> saveOrUpdateManagePartnerships(ManagePartnershipsDTO mpData);
+
+	ResponseEntity<Map<String, Object>> saveOrUpdateManagePartnershipGeography(ManagePartnershipGeographyDTO mpgData);
+
+	ResponseEntity<Map<String, Object>> saveOrUpdatePartnershipReferences(ManagePartnershipReferencesDTO mprData);
+
+	ResponseEntity<Map<String, Object>> saveOrUpdateManagePartnershipContacts(ManagePartnershipContactsDTO mpcData);
+
+	ResponseEntity<Map<String, Object>> saveOrUpdateManagePartnershipAssociations(ManagePartnershipAssociationsDTO mpaData);
+
+	List<Map<String, Object>> getManagePartnershipsDetails();
+
+	List<Map<String, Object>> getManagePartnershipGeographyDetails();
+
+	List<Map<String, Object>> getPartnershipReferencesDetails();
+
+	List<Map<String, Object>> getManagePartnershipContactsDetails();
+
+	List<Map<String, Object>> getManagePartnershipAssociationsDetails();
 	
 	
 	

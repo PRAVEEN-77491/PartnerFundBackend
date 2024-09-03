@@ -6,7 +6,6 @@ import java.util.HashMap;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.SqlInOutParameter;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
-import org.springframework.security.core.Authentication;
 
 import java.util.Map;
 import javax.sql.DataSource;
@@ -35,6 +34,11 @@ import com.PartnersFunds.DTO.ManagePageFeaturesDTO;
 import com.PartnersFunds.DTO.ManagePageRuleCriteriaDTO;
 import com.PartnersFunds.DTO.ManagePageRuleSetAttrDTO;
 import com.PartnersFunds.DTO.ManagePageRulesDTO;
+import com.PartnersFunds.DTO.ManagePartnershipAssociationsDTO;
+import com.PartnersFunds.DTO.ManagePartnershipContactsDTO;
+import com.PartnersFunds.DTO.ManagePartnershipGeographyDTO;
+import com.PartnersFunds.DTO.ManagePartnershipReferencesDTO;
+import com.PartnersFunds.DTO.ManagePartnershipsDTO;
 import com.PartnersFunds.DTO.ManagePlansDTO;
 import com.PartnersFunds.service.FundPagesService;
 import com.PartnersFunds.utils.JdbcCallBuilder;
@@ -172,6 +176,87 @@ public class FundPagesServiceImpl implements FundPagesService {
 		System.out.println("queryResult : " + queryResult);
 		return queryResult;
 	}
+	
+	@Override
+	public List<Map<String, Object>> getManageLookupTypesDetails() {
+		String sql = "select * from xxpf_lookup_types";
+		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
+		System.out.println("queryResult : " + queryResult);
+		return queryResult;
+	}
+	
+	@Override
+	public List<Map<String, Object>> getManageLookupCodesDetails() {
+		String sql = "select * from xxpf_lookup_codes";
+		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
+		System.out.println("queryResult : " + queryResult);
+		return queryResult;
+	}
+	
+	@Override
+	public List<Map<String, Object>> getManagePageRulesDetails() {
+		String sql = "select * from xxpf_page_rules;";
+		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
+		System.out.println("queryResult : " + queryResult);
+		return queryResult;
+	}
+	
+	@Override
+	public List<Map<String, Object>> getManagePageRuleCriteriaDetails() {
+		String sql = "select * from xxpf_page_rule_criteria";
+		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
+		System.out.println("queryResult : " + queryResult);
+		return queryResult;
+	}
+	
+	@Override
+	public List<Map<String, Object>> getManagePageRuleSetAttrDetails() {
+		String sql = "select * from xxpf_page_rule_set_attributes";
+		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
+		System.out.println("queryResult : " + queryResult);
+		return queryResult;
+	}
+	
+	@Override
+	public List<Map<String, Object>> getManagePartnershipsDetails() {
+		String sql = "select * from xxpf_partnerships";
+		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
+		System.out.println("queryResult : " + queryResult);
+		return queryResult;
+	}
+	
+	@Override
+	public List<Map<String, Object>> getManagePartnershipGeographyDetails() {
+		String sql = "select * from xxpf_partnership_geography";
+		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
+		System.out.println("queryResult : " + queryResult);
+		return queryResult;
+	}
+	
+	@Override
+	public List<Map<String, Object>> getPartnershipReferencesDetails() {
+		String sql = "select * from xxpf_partnership_references";
+		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
+		System.out.println("queryResult : " + queryResult);
+		return queryResult;
+	}
+	
+	@Override
+	public List<Map<String, Object>> getManagePartnershipContactsDetails() {
+		String sql = "select * from xxpf_partnership_contacts";
+		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
+		System.out.println("queryResult : " + queryResult);
+		return queryResult;
+	}
+	
+	@Override
+	public List<Map<String, Object>> getManagePartnershipAssociationsDetails() {
+		String sql = "select * from xxpf_partnership_associations";
+		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
+		System.out.println("queryResult : " + queryResult);
+		return queryResult;
+	}
+	
 	
 //////////////////////////////////////////////////////////////////////////////////////
 	@Override
@@ -1033,5 +1118,200 @@ public class FundPagesServiceImpl implements FundPagesService {
 
 	    return ResponseEntity.ok(response);
 	}
+
+	@Override
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePartnerships(ManagePartnershipsDTO mpData) {
+	    System.out.println("mpData ======> " + mpData.toString());
+	    SimpleJdbcCall jdbcCall = jdbcCallBuilder.buildSimpleJdbcCall(dataSource, "APPS", "xxpf_partner_fund_utils_pkg", "manage_partnerships")
+	            .declareParameters(
+	                    new SqlInOutParameter("p_partnership_id", Types.NUMERIC),
+	                    new SqlParameter("p_partnership_name", Types.VARCHAR),
+	                    new SqlParameter("p_user_id", Types.NUMERIC),
+	                    new SqlOutParameter("o_status", Types.VARCHAR),
+	                    new SqlOutParameter("o_message", Types.VARCHAR)
+	            );
+
+	    Map<String, Object> inParams = new HashMap<>();
+	    inParams.put("p_partnership_id", mpData.getPartnershipId());
+	    inParams.put("p_partnership_name", mpData.getPartnershipName());
+	    inParams.put("p_user_id", mpData.getUserId());
+
+	    Map<String, Object> outParams = jdbcCall.execute(inParams);
+
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("o_status", outParams.get("o_status"));
+	    response.put("o_message", outParams.get("o_message"));
+
+	    if ("S".equals(outParams.get("o_status"))) {
+	        String query = "SELECT * FROM xxpf_partnerships WHERE partnership_id = ?";
+	        Map<String, Object> managePartnership = jdbcTemplate.queryForMap(query, outParams.get("p_partnership_id"));
+	        response.put("partnership", managePartnership);
+	    } else {
+	        response.put("partnership", new HashMap<>());
+	    }
+
+	    return ResponseEntity.ok(response);
+	}
+	
+	@Override
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePartnershipGeography(ManagePartnershipGeographyDTO mpgData) {
+	    System.out.println("mpgData ======> " + mpgData.toString());
+
+	    SimpleJdbcCall jdbcCall = jdbcCallBuilder.buildSimpleJdbcCall(dataSource, "APPS", "xxpf_partner_fund_utils_pkg", "manage_partnership_geography")
+	            .declareParameters(new SqlInOutParameter("p_geography_id", Types.NUMERIC),
+	                    new SqlParameter("p_partnership_id", Types.NUMERIC), 
+	                    new SqlParameter("p_local_name", Types.VARCHAR),
+	                    new SqlParameter("p_territory", Types.VARCHAR),
+	                    new SqlParameter("p_country", Types.VARCHAR), 
+	                    new SqlParameter("p_geo_name", Types.VARCHAR),
+	                    new SqlParameter("p_theater", Types.VARCHAR), 
+	                    new SqlParameter("p_user_id", Types.NUMERIC),
+	                    new SqlOutParameter("o_status", Types.VARCHAR), 
+	                    new SqlOutParameter("o_message", Types.VARCHAR));
+
+	    Map<String, Object> inParams = new HashMap<>();
+	    inParams.put("p_geography_id", mpgData.getGeographyId());
+	    inParams.put("p_partnership_id", mpgData.getPartnershipId());
+	    inParams.put("p_local_name", mpgData.getLocalName());
+	    inParams.put("p_territory", mpgData.getTerritory());
+	    inParams.put("p_country", mpgData.getCountry());
+	    inParams.put("p_geo_name", mpgData.getGeoName());
+	    inParams.put("p_theater", mpgData.getTheater());
+	    inParams.put("p_user_id", mpgData.getUserId());
+
+	    Map<String, Object> outParams = jdbcCall.execute(inParams);
+
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("o_status", outParams.get("o_status"));
+	    response.put("o_message", outParams.get("o_message"));
+
+	    if ("S".equals(outParams.get("o_status"))) {
+	        String query = "SELECT * FROM xxpf_partnership_geography WHERE geography_id = ?";
+	        Map<String, Object> manageGeographyTable = jdbcTemplate.queryForMap(query, outParams.get("p_geography_id"));
+	        response.put("geography_table", manageGeographyTable);
+	    } else {
+	        response.put("geography_table", new HashMap<>());
+	    }
+
+	    return ResponseEntity.ok(response);
+	}
+
+	@Override
+	public ResponseEntity<Map<String, Object>> saveOrUpdatePartnershipReferences(ManagePartnershipReferencesDTO mprData) {
+        System.out.println("mprData ======> " + mprData.toString());
+
+        SimpleJdbcCall jdbcCall = jdbcCallBuilder.buildSimpleJdbcCall(dataSource, "APPS", "xxpf_partner_fund_utils_pkg", "manage_partnership_references")
+                .declareParameters(
+                        new SqlInOutParameter("p_reference_id", Types.NUMERIC),
+                        new SqlParameter("p_partnership_id", Types.NUMERIC),
+                        new SqlParameter("p_reference_type", Types.VARCHAR),
+                        new SqlParameter("p_reference_key", Types.VARCHAR),
+                        new SqlParameter("p_user_id", Types.NUMERIC),
+                        new SqlOutParameter("o_status", Types.VARCHAR),
+                        new SqlOutParameter("o_message", Types.VARCHAR)
+                );
+
+        Map<String, Object> inParams = new HashMap<>();
+        inParams.put("p_reference_id", mprData.getReferenceId());
+        inParams.put("p_partnership_id", mprData.getPartnershipId());
+        inParams.put("p_reference_type", mprData.getReferenceType());
+        inParams.put("p_reference_key", mprData.getReferenceKey());
+        inParams.put("p_user_id", mprData.getUserId());
+
+        Map<String, Object> outParams = jdbcCall.execute(inParams);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("o_status", outParams.get("o_status"));
+        response.put("o_message", outParams.get("o_message"));
+
+        if ("S".equals(outParams.get("o_status"))) {
+            String query = "SELECT * FROM xxpf_partnership_references WHERE reference_id = ?";
+            Map<String, Object> partnershipReference = jdbcTemplate.queryForMap(query, outParams.get("p_reference_id"));
+            response.put("partnership_reference", partnershipReference);
+        } else {
+            response.put("partnership_reference", new HashMap<>());
+        }
+
+        return ResponseEntity.ok(response);
+    }
+	
+	@Override
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePartnershipContacts(ManagePartnershipContactsDTO mpcData) {
+	    System.out.println("mpcData ======> " + mpcData.toString());
+	    
+	    SimpleJdbcCall jdbcCall = jdbcCallBuilder.buildSimpleJdbcCall(dataSource, "APPS", "xxpf_partner_fund_utils_pkg", "manage_partnership_contacts")
+	            .declareParameters(new SqlInOutParameter("p_contact_id", Types.NUMERIC),
+	                               new SqlParameter("p_partnership_id", Types.NUMERIC),
+	                               new SqlParameter("p_contact_type", Types.VARCHAR),
+	                               new SqlParameter("p_email", Types.VARCHAR),
+	                               new SqlParameter("p_payment_contact_flag", Types.VARCHAR),
+	                               new SqlParameter("p_user_id", Types.NUMERIC),
+	                               new SqlOutParameter("o_status", Types.VARCHAR),
+	                               new SqlOutParameter("o_message", Types.VARCHAR));
+
+	    Map<String, Object> inParams = new HashMap<>();
+	    inParams.put("p_contact_id", mpcData.getContactId());
+	    inParams.put("p_partnership_id", mpcData.getPartnershipId());
+	    inParams.put("p_contact_type", mpcData.getContactType());
+	    inParams.put("p_email", mpcData.getEmail());
+	    inParams.put("p_payment_contact_flag", mpcData.getPaymentContactFlag());
+	    inParams.put("p_user_id", mpcData.getUserId());
+
+	    Map<String, Object> outParams = jdbcCall.execute(inParams);
+
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("o_status", outParams.get("o_status"));
+	    response.put("o_message", outParams.get("o_message"));
+
+	    if ("S".equals(outParams.get("o_status"))) {
+	        String query = "SELECT * FROM xxpf_partnership_contacts WHERE contact_id = ?";
+	        Map<String, Object> managePartnershipContact = jdbcTemplate.queryForMap(query, outParams.get("p_contact_id"));
+	        response.put("partnership_contact", managePartnershipContact);
+	    } else {
+	        response.put("partnership_contact", new HashMap<>());
+	    }
+
+	    return ResponseEntity.ok(response);
+	}
+	
+	@Override
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePartnershipAssociations(ManagePartnershipAssociationsDTO mpaData) {
+	    System.out.println("mpaData ======> " + mpaData.toString());
+	    
+	    SimpleJdbcCall jdbcCall = jdbcCallBuilder.buildSimpleJdbcCall(dataSource, "APPS", "xxpf_partner_fund_utils_pkg", "manage_partnership_associations")
+	            .declareParameters(
+	                    new SqlInOutParameter("p_association_id", Types.NUMERIC),
+	                    new SqlParameter("p_partnership_id", Types.NUMERIC),
+	                    new SqlParameter("p_reference_type", Types.VARCHAR),
+	                    new SqlParameter("p_reference_key", Types.VARCHAR),
+	                    new SqlParameter("p_user_id", Types.NUMERIC),
+	                    new SqlOutParameter("o_status", Types.VARCHAR),
+	                    new SqlOutParameter("o_message", Types.VARCHAR)
+	            );
+
+	    Map<String, Object> inParams = new HashMap<>();
+	    inParams.put("p_association_id", mpaData.getAssociationId());
+	    inParams.put("p_partnership_id", mpaData.getPartnershipId());
+	    inParams.put("p_reference_type", mpaData.getReferenceType());
+	    inParams.put("p_reference_key", mpaData.getReferenceKey());
+	    inParams.put("p_user_id", mpaData.getUserId());
+
+	    Map<String, Object> outParams = jdbcCall.execute(inParams);
+
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("o_status", outParams.get("o_status"));
+	    response.put("o_message", outParams.get("o_message"));
+
+	    if ("S".equals(outParams.get("o_status"))) {
+	        String query = "SELECT * FROM xxpf_partnership_associations WHERE association_id = ?";
+	        Map<String, Object> partnershipAssociation = jdbcTemplate.queryForMap(query, outParams.get("p_association_id"));
+	        response.put("partnership_association", partnershipAssociation);
+	    } else {
+	        response.put("partnership_association", new HashMap<>());
+	    }
+
+	    return ResponseEntity.ok(response);
+	}
+
 
 }
