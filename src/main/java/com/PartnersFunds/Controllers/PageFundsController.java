@@ -21,6 +21,8 @@ import com.PartnersFunds.DTO.ManageBpaWorkflowActivitiesDTO;
 import com.PartnersFunds.DTO.ManageFundBpaRbacRolesDTO;
 import com.PartnersFunds.DTO.ManageFundDTO;
 import com.PartnersFunds.DTO.ManageFundPagesDTO;
+import com.PartnersFunds.DTO.ManageFundProgramAllocationsDTO;
+import com.PartnersFunds.DTO.ManageFundProgramsDTO;
 import com.PartnersFunds.DTO.ManageFundRolesDTO;
 import com.PartnersFunds.DTO.ManageFundTablesAttrDTO;
 import com.PartnersFunds.DTO.ManageFundTablesDTO;
@@ -39,6 +41,8 @@ import com.PartnersFunds.DTO.ManagePartnershipReferencesDTO;
 import com.PartnersFunds.DTO.ManagePartnershipsDTO;
 import com.PartnersFunds.DTO.ManagePlansDTO;
 import com.PartnersFunds.DTO.ManageRolesDTO;
+import com.PartnersFunds.DTO.ManageSubProgramAllocationsDTO;
+import com.PartnersFunds.DTO.ManageSubProgramsDTO;
 import com.PartnersFunds.DTO.ManageWorkflowTransitionsDTO;
 import com.PartnersFunds.service.FundPagesService;
 
@@ -200,6 +204,30 @@ public class PageFundsController {
 	    return ser.getFundBpaDetails();
 	}
 	
+	//@Secured("ROLE_ADMIN")
+	@GetMapping("/getFundProgramsDetails")
+	public List<Map<String, Object>> getFundProgramsDetails() {
+	    return ser.getFundProgramsDetails();
+	}
+
+	//@Secured("ROLE_ADMIN")
+	@GetMapping("/getFundProgramAllocationsDetails")
+	public List<Map<String, Object>> getFundProgramAllocationsDetails() {
+	    return ser.getFundProgramAllocationsDetails();
+	}
+
+	//@Secured("ROLE_ADMIN")
+	@GetMapping("/getSubProgramsDetails")
+	public List<Map<String, Object>> getSubProgramsDetails() {
+	    return ser.getSubProgramsDetails();
+	}
+
+	//@Secured("ROLE_ADMIN")
+	@GetMapping("/getSubProgramAllocationsDetails")
+	public List<Map<String, Object>> getSubProgramAllocationsDetails() {
+	    return ser.getSubProgramAllocationsDetails();
+	}
+
 //	//@Secured("ROLE_ADMIN")
 //	@PostMapping("/getRoleBasedFundBpaDetails")
 //	public List<Map<String, Object>> getRoleBasedFundBpaDetails() {
@@ -267,11 +295,11 @@ public class PageFundsController {
 		return ser.saveOrUpdateManageFundTimelines(mftData);
 	}
 	
-	//@Secured("ROLE_ADMIN")
-	@PostMapping("/saveOrUpdateManagePlans")
-	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePlans(@RequestBody ManagePlansDTO mpData) {
-		return ser.saveOrUpdateManagePlans(mpData);
-	}
+//	//@Secured("ROLE_ADMIN")
+//	@PostMapping("/saveOrUpdateManagePlans")
+//	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePlans(@RequestBody ManagePlansDTO mpData) {
+//		return ser.saveOrUpdateManagePlans(mpData);
+//	}
 	
 	//@Secured("ROLE_ADMIN")
 	@PostMapping("/saveOrUpdateManageActivities")
@@ -350,4 +378,28 @@ public class PageFundsController {
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePartnershipAssociations(@RequestBody ManagePartnershipAssociationsDTO mpaData) {
 		return ser.saveOrUpdateManagePartnershipAssociations(mpaData);
 	}
+	
+//    @Secured("ROLE_ADMIN")
+    @PostMapping("/saveOrUpdateFundPrograms")
+    public ResponseEntity<Map<String, Object>> saveOrUpdateFundPrograms(@RequestBody ManageFundProgramsDTO manageFundProgramsDTO) {
+        return ser.saveOrUpdateFundPrograms(manageFundProgramsDTO);
+    }
+
+//    @Secured("ROLE_ADMIN")
+    @PostMapping("/saveOrUpdateFundProgramAllocations")
+    public ResponseEntity<Map<String, Object>> saveOrUpdateFundProgramAllocations(@RequestBody ManageFundProgramAllocationsDTO manageFundProgramAllocationsDTO) {
+        return ser.saveOrUpdateFundProgramAllocations(manageFundProgramAllocationsDTO);
+    }
+
+//    @Secured("ROLE_ADMIN")
+    @PostMapping("/saveOrUpdateSubPrograms")
+    public ResponseEntity<Map<String, Object>> saveOrUpdateSubPrograms(@RequestBody ManageSubProgramsDTO manageSubProgramsDTO) {
+        return ser.saveOrUpdateSubPrograms(manageSubProgramsDTO);
+    }
+
+//    @Secured("ROLE_ADMIN")
+    @PostMapping("/saveOrUpdateSubProgramAllocations")
+    public ResponseEntity<Map<String, Object>> saveOrUpdateSubProgramAllocations(@RequestBody ManageSubProgramAllocationsDTO manageSubProgramAllocationsDTO) {
+        return ser.saveOrUpdateSubProgramAllocations(manageSubProgramAllocationsDTO);
+    }
 }

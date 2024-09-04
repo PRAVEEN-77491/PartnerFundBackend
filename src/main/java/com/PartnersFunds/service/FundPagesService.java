@@ -13,7 +13,11 @@ import com.PartnersFunds.DTO.ManageBpaWorkflowActivitiesDTO;
 import com.PartnersFunds.DTO.ManageFundBpaRbacRolesDTO;
 import com.PartnersFunds.DTO.ManageFundDTO;
 import com.PartnersFunds.DTO.ManageFundPagesDTO;
+import com.PartnersFunds.DTO.ManageFundProgramAllocationsDTO;
+import com.PartnersFunds.DTO.ManageFundProgramsDTO;
 import com.PartnersFunds.DTO.ManageRolesDTO;
+import com.PartnersFunds.DTO.ManageSubProgramAllocationsDTO;
+import com.PartnersFunds.DTO.ManageSubProgramsDTO;
 import com.PartnersFunds.DTO.ManageWorkflowTransitionsDTO;
 import com.PartnersFunds.DTO.ManageFundRolesDTO;
 import com.PartnersFunds.DTO.ManageFundTablesAttrDTO;
@@ -68,7 +72,7 @@ public interface FundPagesService {
 
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManageFundTimelines(ManageFundTimelinesDTO mftData);
 
-	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePlans(ManagePlansDTO mpData);
+//	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePlans(ManagePlansDTO mpData);
 
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManageActivities(ManageActivitiesDTO maData);
 	
@@ -133,6 +137,23 @@ public interface FundPagesService {
 	List<Map<String, Object>> getManagePartnershipAssociationsDetails();
 
 	List<Map<String, Object>> getFundBpaDetails();
+
+	public ResponseEntity<Map<String, Object>> saveOrUpdateFundPrograms(ManageFundProgramsDTO manageFundProgramsDTO);
+
+	public ResponseEntity<Map<String, Object>> saveOrUpdateFundProgramAllocations(
+			ManageFundProgramAllocationsDTO manageFundProgramAllocationsDTO);
+
+	public ResponseEntity<Map<String, Object>> saveOrUpdateSubPrograms(ManageSubProgramsDTO manageSubProgramsDTO);
+
+	public ResponseEntity<Map<String, Object>> saveOrUpdateSubProgramAllocations(ManageSubProgramAllocationsDTO manageSubProgramAllocationsDTO);
+
+	public List<Map<String, Object>> getFundProgramsDetails();
+
+	public List<Map<String, Object>> getFundProgramAllocationsDetails();
+
+	public List<Map<String, Object>> getSubProgramsDetails();
+
+	public List<Map<String, Object>> getSubProgramAllocationsDetails();
 
 //	List<Map<String, Object>> getRoleBasedFundBpaDetails();
 	
