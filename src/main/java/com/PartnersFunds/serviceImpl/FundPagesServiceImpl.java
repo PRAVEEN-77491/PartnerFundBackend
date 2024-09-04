@@ -136,13 +136,13 @@ public class FundPagesServiceImpl implements FundPagesService {
 		return queryResult;
 	}
 
-	@Override
-	public List<Map<String, Object>> getManagePlansDetails() {
-		String sql = "select * from xxpf_plans";
-		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
-		System.out.println("queryResult : " + queryResult);
-		return queryResult;
-	}
+//	@Override
+//	public List<Map<String, Object>> getManagePlansDetails() {
+//		String sql = "select * from xxpf_plans";
+//		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
+//		System.out.println("queryResult : " + queryResult);
+//		return queryResult;
+//	}
 
 	@Override
 	public List<Map<String, Object>> getManageActivitiesDetails() {
@@ -186,7 +186,7 @@ public class FundPagesServiceImpl implements FundPagesService {
 
 	@Override
 	public List<Map<String, Object>> getManagePageRulesDetails() {
-		String sql = "select * from xxpf_page_rules;";
+		String sql = "select * from xxpf_page_rules";
 		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
 		System.out.println("queryResult : " + queryResult);
 		return queryResult;

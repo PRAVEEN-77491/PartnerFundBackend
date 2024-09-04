@@ -84,7 +84,7 @@ public interface FundPagesService {
 
 	public List<Map<String, Object>> getManageFundTimelinesDetails();
 
-	public List<Map<String, Object>> getManagePlansDetails();
+//	public List<Map<String, Object>> getManagePlansDetails();
 
 	public List<Map<String, Object>> getManageActivitiesDetails();
 	

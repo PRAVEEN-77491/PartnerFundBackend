@@ -115,10 +115,10 @@ public class PageFundsController {
 	}
 
 	//@Secured("ROLE_ADMIN")
-	@GetMapping("/getManagePlansDetails")
-	public List<Map<String, Object>> getManagePlansDetails() {
-	    return ser.getManagePlansDetails();
-	}
+//	@GetMapping("/getManagePlansDetails")
+//	public List<Map<String, Object>> getManagePlansDetails() {
+//	    return ser.getManagePlansDetails();
+//	}
 
 	//@Secured("ROLE_ADMIN")
 	@GetMapping("/getManageActivitiesDetails")
