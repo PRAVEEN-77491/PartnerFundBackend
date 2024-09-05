@@ -20,7 +20,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	public UserDetails loadUserByUsername(String ciscoCecId) throws UsernameNotFoundException {
 		UserEntity user = userRepo.findByciscoCecId(ciscoCecId).get();//.orElseThrow(() -> new UsernameNotFoundException("User does not exist"));
 		
-		String[] rolesArray = {"ADMIN"};
+		String[] rolesArray = {"ADMIN","USER"};
 		
 		UserDetails userDetails = User.builder().username(user.getCiscoCecId()).password(user.getPassword())
 				.roles(rolesArray).build();

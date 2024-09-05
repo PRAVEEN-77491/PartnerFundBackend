@@ -1,5 +1,10 @@
 package com.PartnersFunds.Controllers;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +14,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -61,11 +68,37 @@ public class AuthenticationController {
                     .toArray(String[]::new);
             
 			String jwt = jwtUtil.generateToken(userDetails.getUsername(), roles);
-			System.out.println(jwt);
 			return new ResponseEntity<>(jwt, HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println("Login Failed");
 			return new ResponseEntity<>("Incorrect Username or Password", HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@PostMapping("/updateRole")
+	public ResponseEntity<?> updateRole(@RequestHeader("Authorization") String token, @RequestParam("role") String[] newRole) {
+	    
+		String tokenWithoutBearer = token.substring(7);
+	    	    
+	    String username = jwtUtil.extractUsername(tokenWithoutBearer);
+	    
+	    UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(username);
+	    
+	    Collection<? extends GrantedAuthority> currentRoles = userDetails.getAuthorities();
+	    
+	    Set<String> currentRoleNames = currentRoles.stream()
+	            .map(GrantedAuthority::getAuthority)
+	            .collect(Collectors.toSet());
+	    
+	    boolean roleExists = currentRoleNames.contains(newRole[0]);
+	    
+	    if (!roleExists) {
+	        return ResponseEntity.badRequest().body("The role does not exist in the user's current roles.");
+	    }
+
+	    String newToken = jwtUtil.generateToken(userDetails.getUsername(), newRole);
+
+	    return ResponseEntity.ok().body("New token generated with updated role: " + newToken);
+	}
+
 }

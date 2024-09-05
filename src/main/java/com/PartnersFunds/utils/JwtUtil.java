@@ -6,11 +6,15 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import javax.crypto.SecretKey;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Component
 public class JwtUtil {
 
 	private String SECRET_KEY = "TaK+HaV^uvCHEFsEVfypW#7g9^k*Z8$V";
+//	String SECRET_KEY = Jwts.SIG.HS256.key().build().toString();
 
 	private SecretKey getSigningKey() {
 		return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
@@ -36,6 +40,14 @@ public class JwtUtil {
 	public String generateToken(String ciscoCecId, String[] claims) {
 		return createToken(ciscoCecId, claims);
 	}
+	
+    public String generateTokenWithRoles(String[] roles, String token) {
+    	String username = extractUsername(token);
+    	System.out.println("username ==> " + username);
+    	
+        
+        return createToken(username, roles);
+    }
 
 	private String createToken(String subject, String[] claims) {
 		return Jwts.builder().claim("roles",claims).subject(subject).header().empty().add("typ", "JWT").and()
