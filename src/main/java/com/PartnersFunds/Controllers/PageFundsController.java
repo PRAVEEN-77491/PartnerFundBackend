@@ -35,6 +35,8 @@ import com.PartnersFunds.DTO.ManagePageFeaturesDTO;
 import com.PartnersFunds.DTO.ManagePageRuleCriteriaDTO;
 import com.PartnersFunds.DTO.ManagePageRuleSetAttrDTO;
 import com.PartnersFunds.DTO.ManagePageRulesDTO;
+import com.PartnersFunds.DTO.ManagePartnerPlansAllocationsDTO;
+import com.PartnersFunds.DTO.ManagePartnerPlansDTO;
 import com.PartnersFunds.DTO.ManagePartnershipAssociationsDTO;
 import com.PartnersFunds.DTO.ManagePartnershipContactsDTO;
 import com.PartnersFunds.DTO.ManagePartnershipGeographyDTO;
@@ -236,6 +238,18 @@ public class PageFundsController {
 	    return ser.getSubProgramAllocationsDetails();
 	}
 
+	//@Secured("ROLE_ADMIN")
+	@GetMapping("/getManagePartnerPlansDetails")
+	public List<Map<String, Object>> getManagePartnerPlansDetails() {
+	    return ser.getManagePartnerPlansDetails();
+	}
+	
+	//@Secured("ROLE_ADMIN")
+	@GetMapping("/getManagePartnerPlansAllocationsDetails")
+	public List<Map<String, Object>> getManagePartnerPlansAllocationsDetails() {
+	    return ser.getManagePartnerPlansAllocationsDetails();
+	}
+		
 //	//@Secured("ROLE_ADMIN")
 //	@PostMapping("/getRoleBasedFundBpaDetails")
 //	public List<Map<String, Object>> getRoleBasedFundBpaDetails() {
@@ -405,9 +419,23 @@ public class PageFundsController {
         return ser.saveOrUpdateSubPrograms(manageSubProgramsDTO);
     }
 
-//    @Secured("ROLE_ADMIN")
+//  @Secured("ROLE_ADMIN")
     @PostMapping("/saveOrUpdateSubProgramAllocations")
     public ResponseEntity<Map<String, Object>> saveOrUpdateSubProgramAllocations(@RequestBody ManageSubProgramAllocationsDTO manageSubProgramAllocationsDTO) {
         return ser.saveOrUpdateSubProgramAllocations(manageSubProgramAllocationsDTO);
     }
+    
+//  @Secured("ROLE_ADMIN")
+    @PostMapping("/saveOrUpdateManagePartnerPlans")
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePartnerPlans(@RequestBody ManagePartnerPlansDTO mppData) {
+	    return ser.saveOrUpdateManagePartnerPlans(mppData);
+	}
+  
+//	@Secured("ROLE_ADMIN")
+    @PostMapping("/saveOrUpdateManagePartnerPlanAllocations")
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePartnerPlanAllocations(@RequestBody ManagePartnerPlansAllocationsDTO mppaData) {
+    	return ser.saveOrUpdateManagePartnerPlanAllocations(mppaData);
+	}
+  
+  
 }

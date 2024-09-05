@@ -1,6 +1,7 @@
 package com.PartnersFunds.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,7 +32,6 @@ public class SpringSecurity {
 				.requestMatchers("/funds/**").authenticated()
 //				.requestMatchers("/admin/**").hasRole("ADMIN")
 				.anyRequest().permitAll();
-
 		
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().csrf().disable();
 		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

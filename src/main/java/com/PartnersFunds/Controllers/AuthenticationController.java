@@ -61,7 +61,7 @@ public class AuthenticationController {
 			
 			UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(userCredentials.getCiscoCecId());
 			
-			System.out.println("userDetails ====> " + userDetails);
+//			System.out.println("userDetails ====> " + userDetails);
             // Convert authorities to a String[]
             String[] roles = userDetails.getAuthorities().stream()
                     .map(GrantedAuthority::getAuthority)
@@ -70,7 +70,7 @@ public class AuthenticationController {
 			String jwt = jwtUtil.generateToken(userDetails.getUsername(), roles);
 			return new ResponseEntity<>(jwt, HttpStatus.OK);
 		} catch (Exception e) {
-			System.out.println("Login Failed");
+//			System.out.println("Login Failed");
 			return new ResponseEntity<>("Incorrect Username or Password", HttpStatus.BAD_REQUEST);
 		}
 	}

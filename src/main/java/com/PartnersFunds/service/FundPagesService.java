@@ -30,6 +30,8 @@ import com.PartnersFunds.DTO.ManagePageFeaturesDTO;
 import com.PartnersFunds.DTO.ManagePageRuleCriteriaDTO;
 import com.PartnersFunds.DTO.ManagePageRuleSetAttrDTO;
 import com.PartnersFunds.DTO.ManagePageRulesDTO;
+import com.PartnersFunds.DTO.ManagePartnerPlansAllocationsDTO;
+import com.PartnersFunds.DTO.ManagePartnerPlansDTO;
 import com.PartnersFunds.DTO.ManagePartnershipAssociationsDTO;
 import com.PartnersFunds.DTO.ManagePartnershipContactsDTO;
 import com.PartnersFunds.DTO.ManagePartnershipGeographyDTO;
@@ -155,8 +157,15 @@ public interface FundPagesService {
 
 	public List<Map<String, Object>> getSubProgramAllocationsDetails();
 
+	ResponseEntity<Map<String, Object>> saveOrUpdateManagePartnerPlans(ManagePartnerPlansDTO mppData);
+
+	ResponseEntity<Map<String, Object>> saveOrUpdateManagePartnerPlanAllocations(ManagePartnerPlansAllocationsDTO mppaData);
+
+	List<Map<String, Object>> getManagePartnerPlansDetails();
+
+	List<Map<String, Object>> getManagePartnerPlansAllocationsDetails();
+
 //	List<Map<String, Object>> getRoleBasedFundBpaDetails();
-	
 	
 	
 }

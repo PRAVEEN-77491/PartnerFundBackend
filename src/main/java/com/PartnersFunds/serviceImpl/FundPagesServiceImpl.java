@@ -37,6 +37,8 @@ import com.PartnersFunds.DTO.ManagePageFeaturesDTO;
 import com.PartnersFunds.DTO.ManagePageRuleCriteriaDTO;
 import com.PartnersFunds.DTO.ManagePageRuleSetAttrDTO;
 import com.PartnersFunds.DTO.ManagePageRulesDTO;
+import com.PartnersFunds.DTO.ManagePartnerPlansAllocationsDTO;
+import com.PartnersFunds.DTO.ManagePartnerPlansDTO;
 import com.PartnersFunds.DTO.ManagePartnershipAssociationsDTO;
 import com.PartnersFunds.DTO.ManagePartnershipContactsDTO;
 import com.PartnersFunds.DTO.ManagePartnershipGeographyDTO;
@@ -299,6 +301,18 @@ public class FundPagesServiceImpl implements FundPagesService {
 		}
 		return queryResult;
 	}
+	
+	@Override
+    public List<Map<String, Object>> getManagePartnerPlansDetails() {
+        String query = "SELECT * FROM xxpf_partner_plans";
+        return jdbcTemplate.queryForList(query);
+    }
+	  
+	@Override
+    public List<Map<String, Object>> getManagePartnerPlansAllocationsDetails() {
+        String query = "SELECT * FROM xxpf_partner_plan_allocations";
+        return jdbcTemplate.queryForList(query);
+    }
 
 //	@Override
 //	public List<Map<String, Object>> getRoleBasedFundBpaDetails() {
@@ -1538,5 +1552,92 @@ public class FundPagesServiceImpl implements FundPagesService {
         return ResponseEntity.ok(response);
     }
 
+    @Override
+    public ResponseEntity<Map<String, Object>> saveOrUpdateManagePartnerPlans(ManagePartnerPlansDTO mppData) {
+        SimpleJdbcCall jdbcCall = jdbcCallBuilder.buildSimpleJdbcCall(dataSource, "APPS", "xxpf_partner_fund_utils_pkg", "manage_partner_plans")
+                .declareParameters(
+                        new SqlInOutParameter("p_partner_plan_id", Types.NUMERIC),
+                        new SqlParameter("p_reference_type", Types.VARCHAR),
+                        new SqlParameter("p_reference_key", Types.NUMERIC),
+                        new SqlParameter("p_plan_name", Types.VARCHAR),
+                        new SqlParameter("p_track", Types.VARCHAR),
+                        new SqlParameter("p_partnership_id", Types.NUMERIC),
+                        new SqlParameter("p_plan_stage", Types.VARCHAR),
+                        new SqlParameter("p_ws_plan_token", Types.VARCHAR),
+                        new SqlParameter("p_user_id", Types.NUMERIC),
+                        new SqlOutParameter("o_status", Types.VARCHAR),
+                        new SqlOutParameter("o_message", Types.VARCHAR)
+                );
 
+        Map<String, Object> inParams = new HashMap<>();
+        inParams.put("p_partner_plan_id", mppData.getPartnerPlanId());
+        inParams.put("p_reference_type", mppData.getReferenceType());
+        inParams.put("p_reference_key", mppData.getReferenceKey());
+        inParams.put("p_plan_name", mppData.getPlanName());
+        inParams.put("p_track", mppData.getTrack());
+        inParams.put("p_partnership_id", mppData.getPartnershipId());
+        inParams.put("p_plan_stage", mppData.getPlanStage());
+        inParams.put("p_ws_plan_token", mppData.getWsPlanToken());
+        inParams.put("p_user_id", mppData.getUserId());
+
+        Map<String, Object> outParams = jdbcCall.execute(inParams);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("o_status", outParams.get("o_status"));
+        response.put("o_message", outParams.get("o_message"));
+        response.put("p_partner_plan_id", outParams.get("p_partner_plan_id"));
+        
+
+//        if ("S".equals(outParams.get("o_status"))) {
+//            String query = "SELECT * FROM xxpf_partner_plans WHERE partner_plan_id = ?";
+//            Map<String, Object> partnerPlan = jdbcTemplate.queryForMap(query, outParams.get("p_partner_plan_id"));
+//            response.put("partner_plan", partnerPlan);
+//        } else {
+//            response.put("partner_plan", new HashMap<>());
+//        }
+
+        return ResponseEntity.ok(response);
+    }
+
+    @Override
+    public ResponseEntity<Map<String, Object>> saveOrUpdateManagePartnerPlanAllocations(ManagePartnerPlansAllocationsDTO mppaData) {
+        System.out.println("mppaData ======> " + mppaData.toString());
+
+        SimpleJdbcCall jdbcCall = jdbcCallBuilder.buildSimpleJdbcCall(dataSource, "APPS", "xxpf_partner_plan_utils_pkg", "manage_Partner_plan_allocations")
+                .declareParameters(
+                        new SqlInOutParameter("p_plan_allocation_id", Types.NUMERIC),
+                        new SqlParameter("p_partner_plan_id", Types.NUMERIC),
+                        new SqlParameter("p_interval_name", Types.VARCHAR),
+                        new SqlParameter("p_amount", Types.NUMERIC),
+                        new SqlParameter("p_user_id", Types.NUMERIC),
+                        new SqlOutParameter("o_status", Types.VARCHAR),
+                        new SqlOutParameter("o_message", Types.VARCHAR)
+                );
+
+        Map<String, Object> inParams = new HashMap<>();
+        inParams.put("p_plan_allocation_id", mppaData.getPlanAllocationId());
+        inParams.put("p_partner_plan_id", mppaData.getPartnerPlanId());
+        inParams.put("p_interval_name", mppaData.getIntervalName());
+        inParams.put("p_amount", mppaData.getAmount());
+        inParams.put("p_user_id", mppaData.getUserId());
+
+        Map<String, Object> outParams = jdbcCall.execute(inParams);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("o_status", outParams.get("o_status"));
+        response.put("o_message", outParams.get("o_message"));
+        response.put("p_partner_plan_id", outParams.get("p_plan_allocation_id"));
+
+//        if ("S".equals(outParams.get("o_status"))) {
+//            String query = "SELECT * FROM xxpf_partner_plan_allocations WHERE plan_allocation_id = ?";
+//            Map<String, Object> partnerPlanAllocation = jdbcTemplate.queryForMap(query, outParams.get("p_plan_allocation_id"));
+//            response.put("partner_plan_allocation", partnerPlanAllocation);
+//        } else {
+//            response.put("partner_plan_allocation", new HashMap<>());
+//        }
+
+        return ResponseEntity.ok(response);
+    }
+
+    
 }
