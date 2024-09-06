@@ -360,6 +360,12 @@ public class FundPagesServiceImpl implements FundPagesService {
         String query = "SELECT * FROM xxpf_page_features where page_id = ?";
         return jdbcTemplate.queryForList(query,page_id);
     }
+
+	@Override
+	public List<Map<String, Object>> getUserFungRole() {
+        String query = "SELECT * FROM xxpf_user_fund_roles";
+        return jdbcTemplate.queryForList(query);
+	}
 //	@Override
 //	public List<Map<String, Object>> getRoleBasedFundBpaDetails() {
 //		String sql = "select * from xxpf_fund_bpa where bpa_type = 'Role Based'";

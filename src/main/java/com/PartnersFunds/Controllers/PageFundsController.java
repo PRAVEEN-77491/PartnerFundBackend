@@ -98,6 +98,12 @@ public class PageFundsController {
 	public List<Map<String, Object>> getManagePageFeaturesDetails() {
 		return ser.getManagePageFeaturesDetails();
 	}
+	
+	//@Secured("ROLE_ADMIN")
+	@GetMapping("/getPageFeaturesByPageId")
+	public List<Map<String, Object>> getPageFeaturesByPageId(@RequestParam("page_id") int page_id) {
+	    return ser.getPageFeaturesByPageId(page_id);
+	}
 
 	//@Secured("ROLE_ADMIN")
 	@GetMapping("/getManagePageFeatureRbacDetails")
@@ -260,14 +266,7 @@ public class PageFundsController {
 	public List<Map<String, Object>> getManagePageDetails() {
 	    return ser.getManagePageDetails();
 	}
-	
-	//@Secured("ROLE_ADMIN")
-	@GetMapping("/getPageFeaturesByPageId")
-	public List<Map<String, Object>> getPageFeaturesByPageId(@RequestParam("page_id") int page_id) {
-	    return ser.getPageFeaturesByPageId(page_id);
-	}
-			
-    
+	    
 	//	@Secured("ROLE_ADMIN")
     @GetMapping("/getChartFundProgrammDetails")
     public List<Map<String, Object>> getChartFundProgrammDetails() {
@@ -278,6 +277,12 @@ public class PageFundsController {
     @GetMapping("/getChartFundProgramAllocationDetails")
     public List<Map<String, Object>> getChartFundProgramAllocationDetails() {
     	return ser.getChartFundProgramAllocationDetails();
+    }
+
+    //	@Secured("ROLE_ADMIN")
+    @GetMapping("/getUserFungRole")
+    public List<Map<String, Object>> getUserFungRole() {
+    	return ser.getUserFungRole();
     }
 		
 //	//@Secured("ROLE_ADMIN")

@@ -176,6 +176,8 @@ public interface FundPagesService {
 
 	public List<Map<String, Object>> getManagePageRuleCriteriaDetailsByRuleId(int pageRuleId);
 
+	public List<Map<String, Object>> getUserFungRole();
+
 //	List<Map<String, Object>> getRoleBasedFundBpaDetails();
 	
 	
