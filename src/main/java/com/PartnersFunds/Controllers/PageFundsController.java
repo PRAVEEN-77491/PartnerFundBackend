@@ -242,6 +242,7 @@ public class PageFundsController {
 	public List<Map<String, Object>> getManagePartnerPlansAllocationsDetails() {
 	    return ser.getManagePartnerPlansAllocationsDetails();
 	}
+<<<<<<< Updated upstream
 	
 	//@Secured("ROLE_ADMIN")
 	@GetMapping("/getManagePageDetails")
@@ -255,6 +256,21 @@ public class PageFundsController {
 	    return ser.getPageFeaturesByPageId(page_id);
 	}
 			
+=======
+    
+	//	@Secured("ROLE_ADMIN")
+    @PostMapping("/getChartFundProgrammDetails")
+    public List<Map<String, Object>> getChartFundProgrammDetails() {
+    	return ser.getChartFundProgrammDetails();
+    }
+
+    //	@Secured("ROLE_ADMIN")
+    @PostMapping("/getChartFundProgramAllocationDetails")
+    public List<Map<String, Object>> getChartFundProgramAllocationDetails() {
+    	return ser.getChartFundProgramAllocationDetails();
+    }
+		
+>>>>>>> Stashed changes
 //	//@Secured("ROLE_ADMIN")
 //	@PostMapping("/getRoleBasedFundBpaDetails")
 //	public List<Map<String, Object>> getRoleBasedFundBpaDetails() {
@@ -440,7 +456,6 @@ public class PageFundsController {
     @PostMapping("/saveOrUpdateManagePartnerPlanAllocations")
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePartnerPlanAllocations(@RequestBody ManagePartnerPlansAllocationsDTO mppaData) {
     	return ser.saveOrUpdateManagePartnerPlanAllocations(mppaData);
-	}
-  
+	} 
   
 }

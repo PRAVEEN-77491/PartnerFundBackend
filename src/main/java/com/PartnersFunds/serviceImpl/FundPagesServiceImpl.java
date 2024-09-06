@@ -314,11 +314,27 @@ public class FundPagesServiceImpl implements FundPagesService {
         return jdbcTemplate.queryForList(query);
     }
 	
+<<<<<<< Updated upstream
 	@Override
     public List<Map<String, Object>> getManagePageDetails() {
         String query = "SELECT * FROM xxpf_pages";
         return jdbcTemplate.queryForList(query);
     }
+=======
+// Charts
+	
+	@Override
+	public List<Map<String, Object>> getChartFundProgrammDetails() {
+        String query = "SELECT * FROM xxpf_fund_programs";
+        return jdbcTemplate.queryForList(query);
+	}
+
+	@Override
+	public List<Map<String, Object>> getChartFundProgramAllocationDetails() {
+        String query = "SELECT * FROM xxpf_fund_program_allocations";
+        return jdbcTemplate.queryForList(query);
+	}
+>>>>>>> Stashed changes
 
 	@Override
     public List<Map<String, Object>> getPageFeaturesByPageId(int page_id) {
@@ -1649,6 +1665,5 @@ public class FundPagesServiceImpl implements FundPagesService {
 
         return ResponseEntity.ok(response);
     }
-
     
 }
