@@ -147,11 +147,11 @@ public class PageFundsController {
 	    return ser.getManageLookupTypesDetails();
 	}
 	
-	//@Secured("ROLE_ADMIN")
-	@GetMapping("/getManageLookupCodesDetails")
-	public List<Map<String, Object>> getManageLookupCodesDetails(@RequestParam("lookup_type") String lookup_type) {
-	    return ser.getManageLookupCodesDetails(lookup_type);
-	}
+//	//@Secured("ROLE_ADMIN")
+//	@GetMapping("/getManageLookupCodesDetails")
+//	public List<Map<String, Object>> getManageLookupCodesDetails(@RequestParam("lookup_type") String lookup_type) {
+//	    return ser.getManageLookupCodesDetails(lookup_type);
+//	}
 	
 	//@Secured("ROLE_ADMIN")
 	@GetMapping("/getManagePageRulesDetails")
@@ -160,9 +160,21 @@ public class PageFundsController {
 	}
 	
 	//@Secured("ROLE_ADMIN")
+	@GetMapping("/getManagePageFeatureRulesDetails")
+	public List<Map<String, Object>> getManagePageFeatureRulesDetails() {
+	    return ser.getManagePageFeatureRulesDetails();
+	}
+	
+	//@Secured("ROLE_ADMIN")
 	@GetMapping("/getManagePageRuleCriteriaDetails")
 	public List<Map<String, Object>> getManagePageRuleCriteriaDetails() {
 	    return ser.getManagePageRuleCriteriaDetails();
+	}
+
+	//@Secured("ROLE_ADMIN")
+	@GetMapping("/getManagePageRuleCriteriaDetailsByRuleId")
+	public List<Map<String, Object>> getManagePageRuleCriteriaDetailsByRuleId(@RequestParam("pageRuleId") int pageRuleId) {
+		return ser.getManagePageRuleCriteriaDetailsByRuleId(pageRuleId);
 	}
 	
 	//@Secured("ROLE_ADMIN")
@@ -257,13 +269,13 @@ public class PageFundsController {
 			
     
 	//	@Secured("ROLE_ADMIN")
-    @PostMapping("/getChartFundProgrammDetails")
+    @GetMapping("/getChartFundProgrammDetails")
     public List<Map<String, Object>> getChartFundProgrammDetails() {
     	return ser.getChartFundProgrammDetails();
     }
 
     //	@Secured("ROLE_ADMIN")
-    @PostMapping("/getChartFundProgramAllocationDetails")
+    @GetMapping("/getChartFundProgramAllocationDetails")
     public List<Map<String, Object>> getChartFundProgramAllocationDetails() {
     	return ser.getChartFundProgramAllocationDetails();
     }

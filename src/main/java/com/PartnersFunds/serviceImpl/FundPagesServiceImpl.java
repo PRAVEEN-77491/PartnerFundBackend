@@ -193,11 +193,33 @@ public class FundPagesServiceImpl implements FundPagesService {
 		System.out.println("queryResult : " + queryResult);
 		return queryResult;
 	}
+	
+	@Override
+	public List<Map<String, Object>> getManagePageFeatureRulesDetails() {
+//		String sql = "select * from xxpf_page_rules";
+		
+		String sql = "SELECT pr.*, p.page_name AS pageName, pf.feature_name AS pageFeatureName " +
+                "FROM xxpf_page_rules pr " +
+                "JOIN xxpf_pages p ON pr.page_id = p.page_id " +
+                "JOIN xxpf_page_features pf ON pr.feature_id = pf.feature_id";
+		
+		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
+		System.out.println("queryResult : " + queryResult);
+		return queryResult;
+	}
 
 	@Override
 	public List<Map<String, Object>> getManagePageRuleCriteriaDetails() {
 		String sql = "select * from xxpf_page_rule_criteria";
 		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
+		System.out.println("queryResult : " + queryResult);
+		return queryResult;
+	}
+	
+	@Override
+	public List<Map<String, Object>> getManagePageRuleCriteriaDetailsByRuleId(int pageRuleId) {
+		String sql = "select * from xxpf_page_rule_criteria where page_rule_id = ?";
+		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql, pageRuleId);
 		System.out.println("queryResult : " + queryResult);
 		return queryResult;
 	}

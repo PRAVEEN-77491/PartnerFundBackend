@@ -172,6 +172,10 @@ public interface FundPagesService {
 
 	public List<Map<String, Object>> getChartFundProgramAllocationDetails();
 
+	public List<Map<String, Object>> getManagePageFeatureRulesDetails();
+
+	public List<Map<String, Object>> getManagePageRuleCriteriaDetailsByRuleId(int pageRuleId);
+
 //	List<Map<String, Object>> getRoleBasedFundBpaDetails();
 	
 	
