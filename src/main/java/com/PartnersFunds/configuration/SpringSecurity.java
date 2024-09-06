@@ -29,7 +29,7 @@ public class SpringSecurity {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests()
 				.requestMatchers("/signup", "/login").permitAll()
-				.requestMatchers("/funds/**").authenticated()
+				.requestMatchers("/pages/**").authenticated()
 //				.requestMatchers("/admin/**").hasRole("ADMIN")
 				.anyRequest().permitAll();
 		

@@ -165,6 +165,8 @@ public interface FundPagesService {
 
 	List<Map<String, Object>> getManagePartnerPlansAllocationsDetails();
 
+	List<Map<String, Object>> getManagePageDetails();
+
 //	List<Map<String, Object>> getRoleBasedFundBpaDetails();
 	
 	

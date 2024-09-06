@@ -313,6 +313,12 @@ public class FundPagesServiceImpl implements FundPagesService {
         String query = "SELECT * FROM xxpf_partner_plan_allocations";
         return jdbcTemplate.queryForList(query);
     }
+	
+	@Override
+    public List<Map<String, Object>> getManagePageDetails() {
+        String query = "SELECT * FROM xxpf_pages";
+        return jdbcTemplate.queryForList(query);
+    }
 
 //	@Override
 //	public List<Map<String, Object>> getRoleBasedFundBpaDetails() {
@@ -1603,7 +1609,7 @@ public class FundPagesServiceImpl implements FundPagesService {
     public ResponseEntity<Map<String, Object>> saveOrUpdateManagePartnerPlanAllocations(ManagePartnerPlansAllocationsDTO mppaData) {
         System.out.println("mppaData ======> " + mppaData.toString());
 
-        SimpleJdbcCall jdbcCall = jdbcCallBuilder.buildSimpleJdbcCall(dataSource, "APPS", "xxpf_partner_plan_utils_pkg", "manage_Partner_plan_allocations")
+        SimpleJdbcCall jdbcCall = jdbcCallBuilder.buildSimpleJdbcCall(dataSource, "APPS", "xxpf_partner_fund_utils_pkg", "manage_Partner_plan_allocations")
                 .declareParameters(
                         new SqlInOutParameter("p_plan_allocation_id", Types.NUMERIC),
                         new SqlParameter("p_partner_plan_id", Types.NUMERIC),
