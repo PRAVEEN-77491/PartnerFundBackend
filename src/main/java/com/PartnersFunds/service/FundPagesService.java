@@ -167,6 +167,8 @@ public interface FundPagesService {
 
 	List<Map<String, Object>> getManagePageDetails();
 
+	List<Map<String, Object>> getPageFeaturesByPageId(int page_id);
+
 //	List<Map<String, Object>> getRoleBasedFundBpaDetails();
 	
 	

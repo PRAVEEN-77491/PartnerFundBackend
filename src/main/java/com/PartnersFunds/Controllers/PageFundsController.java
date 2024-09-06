@@ -248,6 +248,12 @@ public class PageFundsController {
 	public List<Map<String, Object>> getManagePageDetails() {
 	    return ser.getManagePageDetails();
 	}
+	
+	//@Secured("ROLE_ADMIN")
+	@GetMapping("/getPageFeaturesByPageId")
+	public List<Map<String, Object>> getPageFeaturesByPageId(@RequestParam("page_id") int page_id) {
+	    return ser.getPageFeaturesByPageId(page_id);
+	}
 			
 //	//@Secured("ROLE_ADMIN")
 //	@PostMapping("/getRoleBasedFundBpaDetails")
