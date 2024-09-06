@@ -149,8 +149,8 @@ public class PageFundsController {
 	
 	//@Secured("ROLE_ADMIN")
 	@GetMapping("/getManageLookupCodesDetails")
-	public List<Map<String, Object>> getManageLookupCodesDetails() {
-	    return ser.getManageLookupCodesDetails();
+	public List<Map<String, Object>> getManageLookupCodesDetails(@RequestParam("lookup_type") String lookup_type) {
+	    return ser.getManageLookupCodesDetails(lookup_type);
 	}
 	
 	//@Secured("ROLE_ADMIN")

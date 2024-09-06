@@ -110,7 +110,7 @@ public interface FundPagesService {
 
 	List<Map<String, Object>> getManageLookupTypesDetails();
 
-	List<Map<String, Object>> getManageLookupCodesDetails();
+	List<Map<String, Object>> getManageLookupCodesDetails(String lookup_type);
 
 	List<Map<String, Object>> getManagePageRulesDetails();
 

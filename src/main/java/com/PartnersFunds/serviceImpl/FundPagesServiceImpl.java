@@ -179,9 +179,9 @@ public class FundPagesServiceImpl implements FundPagesService {
 	}
 
 	@Override
-	public List<Map<String, Object>> getManageLookupCodesDetails() {
-		String sql = "select * from xxpf_lookup_codes";
-		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql);
+	public List<Map<String, Object>> getManageLookupCodesDetails(String lookup_type) {
+		String sql = "select * from xxpf_lookup_codes where lookup_type = ?";
+		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql,lookup_type);
 		System.out.println("queryResult : " + queryResult);
 		return queryResult;
 	}
