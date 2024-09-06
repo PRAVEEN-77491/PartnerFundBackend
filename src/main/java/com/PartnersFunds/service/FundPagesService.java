@@ -165,15 +165,12 @@ public interface FundPagesService {
 
 	List<Map<String, Object>> getManagePartnerPlansAllocationsDetails();
 
-<<<<<<< Updated upstream
 	List<Map<String, Object>> getManagePageDetails();
 
 	List<Map<String, Object>> getPageFeaturesByPageId(int page_id);
-=======
 	public List<Map<String, Object>> getChartFundProgrammDetails();
 
 	public List<Map<String, Object>> getChartFundProgramAllocationDetails();
->>>>>>> Stashed changes
 
 //	List<Map<String, Object>> getRoleBasedFundBpaDetails();
 	

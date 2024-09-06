@@ -242,7 +242,6 @@ public class PageFundsController {
 	public List<Map<String, Object>> getManagePartnerPlansAllocationsDetails() {
 	    return ser.getManagePartnerPlansAllocationsDetails();
 	}
-<<<<<<< Updated upstream
 	
 	//@Secured("ROLE_ADMIN")
 	@GetMapping("/getManagePageDetails")
@@ -256,7 +255,6 @@ public class PageFundsController {
 	    return ser.getPageFeaturesByPageId(page_id);
 	}
 			
-=======
     
 	//	@Secured("ROLE_ADMIN")
     @PostMapping("/getChartFundProgrammDetails")
@@ -270,7 +268,6 @@ public class PageFundsController {
     	return ser.getChartFundProgramAllocationDetails();
     }
 		
->>>>>>> Stashed changes
 //	//@Secured("ROLE_ADMIN")
 //	@PostMapping("/getRoleBasedFundBpaDetails")
 //	public List<Map<String, Object>> getRoleBasedFundBpaDetails() {
