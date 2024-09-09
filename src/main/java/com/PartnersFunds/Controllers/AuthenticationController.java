@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -27,6 +28,7 @@ import com.PartnersFunds.serviceImpl.UserDetailsServiceImpl;
 import com.PartnersFunds.utils.JwtUtil;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class AuthenticationController {
 
 	@Autowired
@@ -96,7 +98,7 @@ public class AuthenticationController {
 
 	    String newToken = jwtUtil.generateToken(userDetails.getUsername(), newRole);
 
-	    return ResponseEntity.ok().body("New token generated with updated role: " + newToken);
+	    return ResponseEntity.ok().body(newToken);
 	}
 
 }

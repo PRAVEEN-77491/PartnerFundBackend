@@ -57,25 +57,25 @@ public class PageFundsController {
 	@Autowired
 	FundPagesService ser;
 
-	@Secured({"ROLE_Collaborator"})
+//	@Secured({"ROLE_Collaborator"})
 	@GetMapping("/getFundDetails")
 	public List<Map<String, Object>> getFundDetails() {
 		return ser.getFundDetails();
 	}
 
-	@Secured("ROLE_Funds Manager Admin")
+//	@Secured("ROLE_Funds Manager Admin")
 	@GetMapping("/getRoleDetails")
 	public List<Map<String, Object>> getRoleDetails() {
 		return ser.getRoleDetails();
 	}
 
-	@Secured("ROLE_Participant")
+//	@Secured("ROLE_Participant")
 	@GetMapping("/getFundRoleDetails")
 	public List<Map<String, Object>> getFundroleDetails() {
 		return ser.getFundroleDetails();
 	}
 
-	@Secured("ROLE_ADMIN")
+//	@Secured("ROLE_ADMIN")
 	@GetMapping("/getManageFundPagesDetails")
 	public List<Map<String, Object>> getManageFundPagesDetails() {
 		return ser.getManageFundPagesDetails();
