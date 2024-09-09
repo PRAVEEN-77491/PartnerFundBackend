@@ -61,8 +61,6 @@ public class AuthenticationController {
 			
 			UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(userCredentials.getCiscoCecId());
 			
-//			System.out.println("userDetails ====> " + userDetails);
-            // Convert authorities to a String[]
             String[] roles = userDetails.getAuthorities().stream()
                     .map(GrantedAuthority::getAuthority)
                     .toArray(String[]::new);
