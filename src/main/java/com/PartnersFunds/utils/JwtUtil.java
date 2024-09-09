@@ -12,10 +12,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Component
 public class JwtUtil {
+
+	private static final Map<String, Boolean> blacklistedTokens = new ConcurrentHashMap<>();
 
 	private String SECRET_KEY = "TaK+HaV^uvCHEFsEVfypW#7g9^k*Z8$V";
 //	String SECRET_KEY = Jwts.SIG.HS256.key().build().toString();
@@ -69,5 +72,14 @@ public class JwtUtil {
 	public Boolean validateToken(String token) {
 		return !isTokenExpired(token);
 	}
+	
+    
+    public void blacklistToken(String token) {
+        blacklistedTokens.put(token, true);
+    }
+    
+    public boolean isTokenBlacklisted(String token) {
+        return blacklistedTokens.containsKey(token);
+    }
 
 }

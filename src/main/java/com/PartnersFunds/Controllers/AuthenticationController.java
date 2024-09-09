@@ -76,7 +76,7 @@ public class AuthenticationController {
 	}
 	
 	@PostMapping("/updateRole")
-	public ResponseEntity<?> updateRole(@RequestHeader("Authorization") String token, @RequestParam("role") String[] newRole) {
+	public ResponseEntity<?> updateRole(@RequestHeader("Authorization") String token, @RequestBody String[] newRole) {
 	    
 		String tokenWithoutBearer = token.substring(7);
 	    	    
@@ -95,6 +95,9 @@ public class AuthenticationController {
 	    if (!roleExists) {
 	        return ResponseEntity.badRequest().body("The role does not exist in the user's current roles.");
 	    }
+	    
+	    // Invalidate the previous token
+	    jwtUtil.blacklistToken(tokenWithoutBearer);
 
 	    String newToken = jwtUtil.generateToken(userDetails.getUsername(), newRole);
 

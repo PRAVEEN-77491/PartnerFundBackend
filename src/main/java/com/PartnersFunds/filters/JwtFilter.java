@@ -51,10 +51,14 @@ public class JwtFilter  extends OncePerRequestFilter{
             System.out.println("username : " + username);
             System.out.println("authorities : " + authorities.toString());
             
-            if (jwtUtil.validateToken(jwt)) {
+            if (jwtUtil.validateToken(jwt) && !jwtUtil.isTokenBlacklisted(jwt)) {
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(username, null, authorities);
                 auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(auth);
+            } else {
+                // Token is invalid or blacklisted, reject the request
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
             }
         }
         chain.doFilter(request, response);
