@@ -137,6 +137,14 @@ public class FundPagesServiceImpl implements FundPagesService {
 		System.out.println("queryResult : " + queryResult);
 		return queryResult;
 	}
+	
+	@Override
+	public List<Map<String, Object>> getManageFundTimelinesDetailsById(int fund_id) {
+		String sql = "select * from xxpf_fund_timelines where fund_id = ?";
+		List<Map<String, Object>> queryResult = jdbcTemplate.queryForList(sql, fund_id);
+		System.out.println("queryResult : " + queryResult);
+		return queryResult;
+	}
 
 //	@Override
 //	public List<Map<String, Object>> getManagePlansDetails() {

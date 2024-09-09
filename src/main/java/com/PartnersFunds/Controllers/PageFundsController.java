@@ -124,6 +124,12 @@ public class PageFundsController {
 	}
 
 	//@Secured("ROLE_ADMIN")
+	@GetMapping("/getManageFundTimelinesDetailsById")
+	public List<Map<String, Object>> getManageFundTimelinesDetailsById(@RequestParam("fund_id") int fund_id) {
+		return ser.getManageFundTimelinesDetailsById(fund_id);
+	}
+
+	//@Secured("ROLE_ADMIN")
 //	@GetMapping("/getManagePlansDetails")
 //	public List<Map<String, Object>> getManagePlansDetails() {
 //	    return ser.getManagePlansDetails();

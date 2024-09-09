@@ -178,6 +178,8 @@ public interface FundPagesService {
 
 	public List<Map<String, Object>> getUserFungRole();
 
+	public List<Map<String, Object>> getManageFundTimelinesDetailsById(int fund_id);
+
 //	List<Map<String, Object>> getRoleBasedFundBpaDetails();
 	
 	
