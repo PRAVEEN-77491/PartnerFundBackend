@@ -1763,7 +1763,7 @@ public class FundPagesServiceImpl implements FundPagesService {
                         new SqlParameter("p_value", Types.VARCHAR),
                         new SqlParameter("p_condition_logical_operator", Types.VARCHAR),
                         new SqlParameter("p_user_id", Types.NUMERIC),
-                        new SqlParameter("p_action", Types.VARCHAR),
+//                        new SqlParameter("p_action", Types.VARCHAR),
                         new SqlOutParameter("o_status", Types.VARCHAR),
                         new SqlOutParameter("o_message", Types.VARCHAR)
                 );
@@ -1780,7 +1780,7 @@ public class FundPagesServiceImpl implements FundPagesService {
         inParams.put("p_value", eligibilityRulesData.getValue());
         inParams.put("p_condition_logical_operator", eligibilityRulesData.getConditionLogicalOperator());
         inParams.put("p_user_id", eligibilityRulesData.getUserId());
-        inParams.put("p_action", eligibilityRulesData.getAction());
+//        inParams.put("p_action", eligibilityRulesData.getAction());
 
         Map<String, Object> outParams = jdbcCall.execute(inParams);
 
