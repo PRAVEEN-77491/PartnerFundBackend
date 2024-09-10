@@ -16,7 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.PartnersFunds.DTO.ManageActivitiesDTO;
+import com.PartnersFunds.DTO.ManageBPAEligibilityRulesDTO;
 import com.PartnersFunds.DTO.ManageBpaWorkflowActivitiesDTO;
+import com.PartnersFunds.DTO.ManageFundBPADTO;
 import com.PartnersFunds.DTO.ManageFundBpaRbacRolesDTO;
 import com.PartnersFunds.DTO.ManageFundDTO;
 import com.PartnersFunds.DTO.ManageFundPagesDTO;
@@ -1695,6 +1697,97 @@ public class FundPagesServiceImpl implements FundPagesService {
 //        } else {
 //            response.put("partner_plan_allocation", new HashMap<>());
 //        }
+
+        return ResponseEntity.ok(response);
+    }
+
+    @Override
+    public ResponseEntity<Map<String, Object>> saveOrUpdateUpsertFundBPA(ManageFundBPADTO fundBpaData) {
+    	System.out.println("mppaData ======> " + fundBpaData.toString());
+        SimpleJdbcCall jdbcCall = jdbcCallBuilder.buildSimpleJdbcCall(dataSource, "APPS", "xxpf_bpa_eligibility_screen_pkg", "upsert_fund_bpa")
+                .declareParameters(
+                        new SqlOutParameter("p_fund_bpa_id", Types.NUMERIC),
+                        new SqlInOutParameter("p_fund_id", Types.NUMERIC),
+                        new SqlParameter("p_fund_name", Types.VARCHAR),
+                        new SqlParameter("p_bpa_usage_level", Types.VARCHAR),
+                        new SqlParameter("p_bpa_name", Types.VARCHAR),
+                        new SqlParameter("p_bpa_description", Types.VARCHAR),
+                        new SqlParameter("p_bpa_type", Types.VARCHAR),
+                        new SqlParameter("p_start_date", Types.DATE),
+                        new SqlParameter("p_end_date", Types.DATE),
+                        new SqlParameter("p_active_flag", Types.VARCHAR),
+                        new SqlParameter("p_user_id", Types.NUMERIC),
+                        new SqlParameter("p_action", Types.VARCHAR),
+                        new SqlOutParameter("o_status", Types.VARCHAR),
+                        new SqlOutParameter("o_message", Types.VARCHAR)
+                );
+
+        Map<String, Object> inParams = new HashMap<>();
+        inParams.put("p_fund_bpa_id", fundBpaData.getFundBpaId());
+        inParams.put("p_fund_id", fundBpaData.getFundId());
+        inParams.put("p_fund_name", fundBpaData.getFundName());
+        inParams.put("p_bpa_usage_level", fundBpaData.getBpaUsageLevel());
+        inParams.put("p_bpa_name", fundBpaData.getBpaName());
+        inParams.put("p_bpa_description", fundBpaData.getBpaDescription());
+        inParams.put("p_bpa_type", fundBpaData.getBpaType());
+        inParams.put("p_start_date", fundBpaData.getStartDate());
+        inParams.put("p_end_date", fundBpaData.getEndDate());
+        inParams.put("p_active_flag", fundBpaData.getActiveFlag());
+        inParams.put("p_user_id", fundBpaData.getUserId());
+        inParams.put("p_action", fundBpaData.getAction());
+
+        Map<String, Object> outParams = jdbcCall.execute(inParams);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("o_status", outParams.get("o_status"));
+        response.put("o_message", outParams.get("o_message"));
+        response.put("p_fund_bpa_id", outParams.get("p_fund_bpa_id"));
+
+        return ResponseEntity.ok(response);
+    }
+
+
+    @Override
+    public ResponseEntity<Map<String, Object>> saveOrUpdateManageBPAEligibilityRules(ManageBPAEligibilityRulesDTO eligibilityRulesData) {
+    	System.out.println("mppaData ======> " + eligibilityRulesData.toString());
+        SimpleJdbcCall jdbcCall = jdbcCallBuilder.buildSimpleJdbcCall(dataSource, "APPS", "xxpf_bpa_eligibility_screen_pkg", "manage_bpa_eligibility_rules")
+                .declareParameters(
+                        new SqlInOutParameter("p_bpa_eligib_rule_id", Types.NUMERIC),
+                        new SqlParameter("p_fund_bpa_id", Types.NUMERIC),
+                        new SqlInOutParameter("p_sequence", Types.NUMERIC),
+                        new SqlParameter("p_group_logical_operator", Types.VARCHAR),
+                        new SqlParameter("p_group_seperator", Types.VARCHAR),
+                        new SqlParameter("p_table_name", Types.VARCHAR),
+                        new SqlParameter("p_attribute_name", Types.VARCHAR),
+                        new SqlParameter("p_operator", Types.VARCHAR),
+                        new SqlParameter("p_value", Types.VARCHAR),
+                        new SqlParameter("p_condition_logical_operator", Types.VARCHAR),
+                        new SqlParameter("p_user_id", Types.NUMERIC),
+                        new SqlParameter("p_action", Types.VARCHAR),
+                        new SqlOutParameter("o_status", Types.VARCHAR),
+                        new SqlOutParameter("o_message", Types.VARCHAR)
+                );
+
+        Map<String, Object> inParams = new HashMap<>();
+        inParams.put("p_bpa_eligib_rule_id", eligibilityRulesData.getBpaEligibRuleId());
+        inParams.put("p_fund_bpa_id", eligibilityRulesData.getFundBpaId());
+        inParams.put("p_sequence", eligibilityRulesData.getSequence());
+        inParams.put("p_group_logical_operator", eligibilityRulesData.getGroupLogicalOperator());
+        inParams.put("p_group_seperator", eligibilityRulesData.getGroupSeparator());
+        inParams.put("p_table_name", eligibilityRulesData.getTableName());
+        inParams.put("p_attribute_name", eligibilityRulesData.getAttributeName());
+        inParams.put("p_operator", eligibilityRulesData.getOperator());
+        inParams.put("p_value", eligibilityRulesData.getValue());
+        inParams.put("p_condition_logical_operator", eligibilityRulesData.getConditionLogicalOperator());
+        inParams.put("p_user_id", eligibilityRulesData.getUserId());
+        inParams.put("p_action", eligibilityRulesData.getAction());
+
+        Map<String, Object> outParams = jdbcCall.execute(inParams);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("o_status", outParams.get("o_status"));
+        response.put("o_message", outParams.get("o_message"));
+        response.put("p_bpa_eligib_rule_id", outParams.get("p_bpa_eligib_rule_id"));
 
         return ResponseEntity.ok(response);
     }

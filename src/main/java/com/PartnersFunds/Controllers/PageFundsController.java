@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.PartnersFunds.DTO.ManageActivitiesDTO;
+import com.PartnersFunds.DTO.ManageBPAEligibilityRulesDTO;
 import com.PartnersFunds.DTO.ManageBpaWorkflowActivitiesDTO;
+import com.PartnersFunds.DTO.ManageFundBPADTO;
 import com.PartnersFunds.DTO.ManageFundBpaRbacRolesDTO;
 import com.PartnersFunds.DTO.ManageFundDTO;
 import com.PartnersFunds.DTO.ManageFundPagesDTO;
@@ -476,6 +478,18 @@ public class PageFundsController {
     @PostMapping("/saveOrUpdateManagePartnerPlanAllocations")
 	public ResponseEntity<Map<String, Object>> saveOrUpdateManagePartnerPlanAllocations(@RequestBody ManagePartnerPlansAllocationsDTO mppaData) {
     	return ser.saveOrUpdateManagePartnerPlanAllocations(mppaData);
-	} 
+	}
+    
+    //@Secured("ROLE_ADMIN")
+    @PostMapping("/saveOrUpdateUpsertFundBPA")
+    public ResponseEntity<Map<String, Object>> saveOrUpdateUpsertFundBPA(@RequestBody ManageFundBPADTO fundBPAData) {
+        return ser.saveOrUpdateUpsertFundBPA(fundBPAData);
+    }
+
+    //@Secured("ROLE_ADMIN")
+    @PostMapping("/saveOrUpdateManageBPAEligibilityRules")
+    public ResponseEntity<Map<String, Object>> saveOrUpdateManageBPAEligibilityRules(@RequestBody ManageBPAEligibilityRulesDTO eligibilityRulesData) {
+        return ser.saveOrUpdateManageBPAEligibilityRules(eligibilityRulesData);
+    }
   
 }

@@ -9,7 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 
 import com.PartnersFunds.DTO.ManageActivitiesDTO;
+import com.PartnersFunds.DTO.ManageBPAEligibilityRulesDTO;
 import com.PartnersFunds.DTO.ManageBpaWorkflowActivitiesDTO;
+import com.PartnersFunds.DTO.ManageFundBPADTO;
 import com.PartnersFunds.DTO.ManageFundBpaRbacRolesDTO;
 import com.PartnersFunds.DTO.ManageFundDTO;
 import com.PartnersFunds.DTO.ManageFundPagesDTO;
@@ -179,6 +181,11 @@ public interface FundPagesService {
 	public List<Map<String, Object>> getUserFungRole();
 
 	public List<Map<String, Object>> getManageFundTimelinesDetailsById(int fund_id);
+
+	public ResponseEntity<Map<String, Object>> saveOrUpdateUpsertFundBPA(ManageFundBPADTO fundBPAData);
+
+	public ResponseEntity<Map<String, Object>> saveOrUpdateManageBPAEligibilityRules(
+			ManageBPAEligibilityRulesDTO eligibilityRulesData);
 
 //	List<Map<String, Object>> getRoleBasedFundBpaDetails();
 	
