@@ -1,4 +1,4 @@
-package com.partnersFunds.serviceImpl;
+package com.PartnersFunds.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -6,9 +6,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.partnersFunds.Entities.UserEntity;
-import com.partnersFunds.Repo.UserRepo;
-import com.partnersFunds.service.UserService;
+import com.PartnersFunds.Repo.UserRepo;
+import com.PartnersFunds.entities.UserEntity;
+import com.PartnersFunds.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService{

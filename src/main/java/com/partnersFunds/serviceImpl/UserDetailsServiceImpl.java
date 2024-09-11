@@ -1,4 +1,4 @@
-package com.partnersFunds.serviceImpl;
+package com.PartnersFunds.serviceImpl;
 
 import java.util.List;
 
@@ -13,8 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.partnersFunds.Entities.UserEntity;
-import com.partnersFunds.Repo.UserRepo;
+import com.PartnersFunds.Repo.UserRepo;
+import com.PartnersFunds.entities.UserEntity;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService{

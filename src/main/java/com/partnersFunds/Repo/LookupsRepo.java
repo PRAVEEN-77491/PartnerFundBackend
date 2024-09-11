@@ -1,9 +1,8 @@
-package com.partnersFunds.Repo;
+package com.PartnersFunds.Repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-
-import com.partnersFunds.Entities.LookupsEntity;
+import com.PartnersFunds.entities.LookupsEntity;
 
 public interface LookupsRepo extends JpaRepository<LookupsEntity, Integer> {
 

@@ -1,4 +1,4 @@
-package com.partnersFunds.DTO;
+package com.PartnersFunds.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

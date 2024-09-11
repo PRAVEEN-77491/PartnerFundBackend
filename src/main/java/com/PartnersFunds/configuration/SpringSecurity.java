@@ -1,4 +1,4 @@
-package com.partnersFunds.configuration;
+package com.PartnersFunds.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,7 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.partnersFunds.filters.JwtFilter;
+import com.PartnersFunds.filters.JwtFilter;
 
 @Configuration
 @EnableWebSecurity

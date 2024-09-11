@@ -1,4 +1,4 @@
-package com.partnersFunds.service;
+package com.PartnersFunds.service;
 
 import java.security.Principal;
 
@@ -9,38 +9,38 @@ import java.util.Map;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 
-import com.partnersFunds.DTO.ManageActivitiesDTO;
-import com.partnersFunds.DTO.ManageBPAEligibilityRulesDTO;
-import com.partnersFunds.DTO.ManageBpaWorkflowActivitiesDTO;
-import com.partnersFunds.DTO.ManageFundBPADTO;
-import com.partnersFunds.DTO.ManageFundBpaRbacRolesDTO;
-import com.partnersFunds.DTO.ManageFundDTO;
-import com.partnersFunds.DTO.ManageFundPagesDTO;
-import com.partnersFunds.DTO.ManageFundProgramAllocationsDTO;
-import com.partnersFunds.DTO.ManageFundProgramsDTO;
-import com.partnersFunds.DTO.ManageRolesDTO;
-import com.partnersFunds.DTO.ManageSubProgramAllocationsDTO;
-import com.partnersFunds.DTO.ManageSubProgramsDTO;
-import com.partnersFunds.DTO.ManageWorkflowTransitionsDTO;
-import com.partnersFunds.DTO.ManageFundRolesDTO;
-import com.partnersFunds.DTO.ManageFundTablesAttrDTO;
-import com.partnersFunds.DTO.ManageFundTablesDTO;
-import com.partnersFunds.DTO.ManageFundTimelinesDTO;
-import com.partnersFunds.DTO.ManageLookupCodesDTO;
-import com.partnersFunds.DTO.ManageLookupTypesDTO;
-import com.partnersFunds.DTO.ManagePageFeatureRbacDTO;
-import com.partnersFunds.DTO.ManagePageFeaturesDTO;
-import com.partnersFunds.DTO.ManagePageRuleCriteriaDTO;
-import com.partnersFunds.DTO.ManagePageRuleSetAttrDTO;
-import com.partnersFunds.DTO.ManagePageRulesDTO;
-import com.partnersFunds.DTO.ManagePartnerPlansAllocationsDTO;
-import com.partnersFunds.DTO.ManagePartnerPlansDTO;
-import com.partnersFunds.DTO.ManagePartnershipAssociationsDTO;
-import com.partnersFunds.DTO.ManagePartnershipContactsDTO;
-import com.partnersFunds.DTO.ManagePartnershipGeographyDTO;
-import com.partnersFunds.DTO.ManagePartnershipReferencesDTO;
-import com.partnersFunds.DTO.ManagePartnershipsDTO;
-import com.partnersFunds.DTO.ManagePlansDTO;
+import com.PartnersFunds.dto.ManageActivitiesDTO;
+import com.PartnersFunds.dto.ManageBPAEligibilityRulesDTO;
+import com.PartnersFunds.dto.ManageBpaWorkflowActivitiesDTO;
+import com.PartnersFunds.dto.ManageFundBPADTO;
+import com.PartnersFunds.dto.ManageFundBpaRbacRolesDTO;
+import com.PartnersFunds.dto.ManageFundDTO;
+import com.PartnersFunds.dto.ManageFundPagesDTO;
+import com.PartnersFunds.dto.ManageFundProgramAllocationsDTO;
+import com.PartnersFunds.dto.ManageFundProgramsDTO;
+import com.PartnersFunds.dto.ManageFundRolesDTO;
+import com.PartnersFunds.dto.ManageFundTablesAttrDTO;
+import com.PartnersFunds.dto.ManageFundTablesDTO;
+import com.PartnersFunds.dto.ManageFundTimelinesDTO;
+import com.PartnersFunds.dto.ManageLookupCodesDTO;
+import com.PartnersFunds.dto.ManageLookupTypesDTO;
+import com.PartnersFunds.dto.ManagePageFeatureRbacDTO;
+import com.PartnersFunds.dto.ManagePageFeaturesDTO;
+import com.PartnersFunds.dto.ManagePageRuleCriteriaDTO;
+import com.PartnersFunds.dto.ManagePageRuleSetAttrDTO;
+import com.PartnersFunds.dto.ManagePageRulesDTO;
+import com.PartnersFunds.dto.ManagePartnerPlansAllocationsDTO;
+import com.PartnersFunds.dto.ManagePartnerPlansDTO;
+import com.PartnersFunds.dto.ManagePartnershipAssociationsDTO;
+import com.PartnersFunds.dto.ManagePartnershipContactsDTO;
+import com.PartnersFunds.dto.ManagePartnershipGeographyDTO;
+import com.PartnersFunds.dto.ManagePartnershipReferencesDTO;
+import com.PartnersFunds.dto.ManagePartnershipsDTO;
+import com.PartnersFunds.dto.ManagePlansDTO;
+import com.PartnersFunds.dto.ManageRolesDTO;
+import com.PartnersFunds.dto.ManageSubProgramAllocationsDTO;
+import com.PartnersFunds.dto.ManageSubProgramsDTO;
+import com.PartnersFunds.dto.ManageWorkflowTransitionsDTO;
 
 public interface FundPagesService {
 

@@ -1,4 +1,4 @@
-package com.partnersFunds.Entities;
+package com.PartnersFunds.entities;
 
 import java.util.Date;
 import java.util.Arrays;

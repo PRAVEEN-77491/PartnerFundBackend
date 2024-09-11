@@ -1,6 +1,6 @@
-package com.partnersFunds.service;
+package com.PartnersFunds.service;
 
-import com.partnersFunds.Entities.UserEntity;
+import com.PartnersFunds.entities.UserEntity;
 
 public interface UserService {
 

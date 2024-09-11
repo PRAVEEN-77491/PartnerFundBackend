@@ -1,4 +1,4 @@
-package com.partnersFunds.Controllers;
+package com.PartnersFunds.controllers;
 
 import java.util.Collection;
 
@@ -21,12 +21,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.partnersFunds.DTO.UserCredentialsDTO;
-import com.partnersFunds.Entities.UserEntity;
-import com.partnersFunds.Repo.UserRepo;
-import com.partnersFunds.service.UserService;
-import com.partnersFunds.serviceImpl.UserDetailsServiceImpl;
-import com.partnersFunds.utils.JwtUtil;
+import com.PartnersFunds.Repo.UserRepo;
+import com.PartnersFunds.dto.UserCredentialsDTO;
+import com.PartnersFunds.entities.UserEntity;
+import com.PartnersFunds.service.UserService;
+import com.PartnersFunds.serviceImpl.UserDetailsServiceImpl;
+import com.PartnersFunds.utils.JwtUtil;
 
 @RestController
 @CrossOrigin(origins = "*")

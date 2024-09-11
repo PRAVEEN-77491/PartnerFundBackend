@@ -1,4 +1,4 @@
-package com.partnersFunds;
+package com.PartnersFunds;
 
 import org.springframework.boot.SpringApplication;
 

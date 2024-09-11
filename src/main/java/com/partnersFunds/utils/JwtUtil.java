@@ -1,4 +1,4 @@
-package com.partnersFunds.utils;
+package com.PartnersFunds.utils;
 
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
